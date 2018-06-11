@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="object Object," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前提是知道 libxxx.a 是用什么平台编译出来的,就采用相应的工具链来操作: (1) ar  -x  libxxx.a   命令可将 .a 文件生成若干个.o 文件 (2) objdump -D -S yyy.o 把 yyy.o 反汇编成 asm 汇编文件 具体命令的使用:  nm libxxx.a  可查看 .a 所依赖的库文件及源码中的函数接口名称 objdump -S libxxx.a">
+<meta name="keywords" content="object Object">
+<meta property="og:type" content="article">
+<meta property="og:title" content="libxx.a的反汇编">
+<meta property="og:url" content="http://yoursite.com/2018/05/04/asm_1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前提是知道 libxxx.a 是用什么平台编译出来的,就采用相应的工具链来操作: (1) ar  -x  libxxx.a   命令可将 .a 文件生成若干个.o 文件 (2) objdump -D -S yyy.o 把 yyy.o 反汇编成 asm 汇编文件 具体命令的使用:  nm libxxx.a  可查看 .a 所依赖的库文件及源码中的函数接口名称 objdump -S libxxx.a">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-24T09:21:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="libxx.a的反汇编">
+<meta name="twitter:description" content="前提是知道 libxxx.a 是用什么平台编译出来的,就采用相应的工具链来操作: (1) ar  -x  libxxx.a   命令可将 .a 文件生成若干个.o 文件 (2) objdump -D -S yyy.o 把 yyy.o 反汇编成 asm 汇编文件 具体命令的使用:  nm libxxx.a  可查看 .a 所依赖的库文件及源码中的函数接口名称 objdump -S libxxx.a">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/04/asm_1/"/>
+
+
+
+
+
+  <title>libxx.a的反汇编 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/04/asm_1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">libxx.a的反汇编</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-04T17:12:32+08:00">
+                2018-05-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前提是知道 libxxx.a 是用什么平台编译出来的,就采用相应的工具链来操作:</p>
+<p>(1) ar  -x  libxxx.a   命令可将 .a 文件生成若干个.o 文件</p>
+<p>(2) objdump -D -S yyy.o 把 yyy.o 反汇编成 asm 汇编文件</p>
+<p>具体命令的使用:</p>
+<hr>
+<p>nm libxxx.a  可查看 .a 所依赖的库文件及源码中的函数接口名称</p>
+<p>objdump -S libxxx.a  反汇编成汇编语言 但与平台严重相关, 有可能命令无法识别是什么平台的</p>
+<p>ar  -x  libxxx.a   命令可将 .a 文件生成若干个.o 文件</p>
+<pre>
+  创建一个库，请输入：    ar -v -q lib.a strlen.o strcpy.o
+  显示库的目录，请输入：    ar -v -t lib.a
+  替换或添加新成员到库中，请输入： ar -v -r lib.a strlen.o strcat.o
+  指定在何处插入新成员，请输入：     ar -v -r -b strlen.o lib.a strcmp.o
+  更新一个已经更改过的成员，请输入： ar -v -r -u lib.a strcpy.o
+  更改库成员的顺序，请输入：   ar -v -m -a strcmp.o lib.a strcat.o strcpy.o
+  解压缩库成员，请输入：    ar -v -x lib.a strcat.o strcpy.o
+  解压缩并重命名一个成员，请输入： ar -p lib.a strcpy.o >stringcopy.o
+  删除一个成员，请输入：    ar -v -d lib.a strlen.o
+  从多个用 ld 命令创建的共享模块中创建一个压缩文档库，请输入： ar -r -v libshr.a shrsub.o shrsub2.o shrsub3.o ...
+  编译并链接使用 libshr.a 压缩文档库的 main 程序，请使用以下命令：cc -o main main.c -L/u/sharedlib -lshr
+  列出 lib.a 的内容（忽略任何 32 位目标文件），请输入：   ar -X64 -t -v lib.a
+  从 lib.a 解压缩所有 32 位的目标文件，请输入：     ar -X32 -x lib.a
+  列出 lib.a 中的所有文件，无论是 32 位、64 位或非对象，请输入： ar -X32_64 -t -v lib.a
+</pre>
+
+
+
+
+<p>可以用“objdump -D”命令来反编译 .o 文件, 看你在编译c/c++用的-g级数， 如果-g3编译的，用objdump返汇编出来可以看到部分c/c++代码</p>
+<p><strong>Usage: objdump</strong></p>
+<p> Display information from object .<br> At least one of the following switches must be given:</p>
+<p>  -a, –archive-headers    Display archive header information</p>
+<p>  -f, –file-headers       Display the contents of the overall file header</p>
+<p>  -p, –private-headers    Display object format specific file header contents</p>
+<p>  -h, –[section-]headers  Display the contents of the section headers</p>
+<p>  -x, –all-headers        Display the contents of all headers</p>
+<p>  -d, –disassemble        Display assembler contents of executable sections</p>
+<p>  -D, –disassemble-all    Display assembler contents of all sections</p>
+<p>  -S, –source             Intermix source code with disassembly</p>
+<p>  -s, –full-contents      Display the full contents of all sections requested</p>
+<p>  -g, –debugging          Display debug information in object file</p>
+<p>  -e, –debugging-tags     Display debug information using ctags style</p>
+<p>  -G, –stabs              Display (in raw form) any STABS info in the file</p>
+<p>  -W, –dwarf              Display DWARF info in the file</p>
+<p>  -t, –syms               Display the contents of the symbol table(s)</p>
+<p>  -T, –dynamic-syms       Display the contents of the dynamic symbol table</p>
+<p>  -r, –reloc              Display the relocation entries in the file</p>
+<p>  -R, –dynamic-reloc      Display the dynamic relocation entries in the file</p>
+<p>  -v, –version            Display this program’s version number</p>
+<p>  -i, –info               List object formats and architectures supported</p>
+<p>  -H, –help              </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/object-Object/" rel="tag"># object Object</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/26/leetcode_813/" rel="next" title="leetcode 813. Largest Sum of Averages">
+                <i class="fa fa-chevron-left"></i> leetcode 813. Largest Sum of Averages
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/09/character_utf_or_not/" rel="prev" title="如何判断一个字符串是否是UTF8编码">
+                如何判断一个字符串是否是UTF8编码 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
