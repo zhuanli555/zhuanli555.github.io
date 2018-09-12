@@ -249,7 +249,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/09/character_utf_or_not/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/29/asm_2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -268,7 +268,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/09/character_utf_or_not/" itemprop="url">如何判断一个字符串是否是UTF8编码</a></h1>
+                <a class="post-title-link" href="/2018/05/29/asm_2/" itemprop="url">常用汇编指令</a></h1>
         
 
         <div class="post-meta">
@@ -280,150 +280,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-09T16:30:51+08:00">
-                2018-05-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/c/" itemprop="url" rel="index">
-                    <span itemprop="name">c</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="编码原理"><a href="#编码原理" class="headerlink" title="编码原理"></a>编码原理</h3><p>　　先看这个模板：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">　　UCS-4 range (hex.) UTF-8 octet sequence (binary)</span><br><span class="line">　　0000 0000-0000 007F 0xxxxxxx</span><br><span class="line">　　0000 0080-0000 07FF 110xxxxx 10xxxxxx</span><br><span class="line">　　0000 0800-0000 FFFF 1110xxxx 10xxxxxx 10xxxxxx</span><br><span class="line">　　0001 0000-001F FFFF 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</span><br><span class="line">　　0020 0000-03FF FFFF 111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx</span><br><span class="line">　　0400 0000-7FFF FFFF 1111110x 10xxxxxx ... 10xxxxxx</span><br></pre></td></tr></table></figure></p>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">IsTextUTF8</span><span class="params">(<span class="keyword">char</span>* str,ULONGLONG length)</span>  </span></span><br><span class="line"><span class="function">    </span>&#123;  </span><br><span class="line">        DWORD nBytes=<span class="number">0</span>;<span class="comment">//UFT8可用1-6个字节编码,ASCII用一个字节  </span></span><br><span class="line">        UCHAR chr;  </span><br><span class="line">        BOOL bAllAscii=TRUE; <span class="comment">//如果全部都是ASCII, 说明不是UTF-8  </span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;length; ++i)  </span><br><span class="line">        &#123;  </span><br><span class="line">            chr= *(str+i);  </span><br><span class="line">            <span class="keyword">if</span>( (chr&amp;<span class="number">0x80</span>) != <span class="number">0</span> ) <span class="comment">// 判断是否ASCII编码,如果不是,说明有可能是UTF-8,ASCII用7位编码,但用一个字节存,最高位标记为0,o0xxxxxxx  </span></span><br><span class="line">                bAllAscii= FALSE;  </span><br><span class="line">            <span class="keyword">if</span>(nBytes==<span class="number">0</span>) <span class="comment">//如果不是ASCII码,应该是多字节符,计算字节数  </span></span><br><span class="line">            &#123;  </span><br><span class="line">                <span class="keyword">if</span>(chr&gt;=<span class="number">0x80</span>)  </span><br><span class="line">                &#123;  </span><br><span class="line">                    <span class="keyword">if</span>(chr&gt;=<span class="number">0xFC</span>&amp;&amp;chr&lt;=<span class="number">0xFD</span>)  </span><br><span class="line">                        nBytes=<span class="number">6</span>;  </span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(chr&gt;=<span class="number">0xF8</span>)  </span><br><span class="line">                        nBytes=<span class="number">5</span>;  </span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(chr&gt;=<span class="number">0xF0</span>)  </span><br><span class="line">                        nBytes=<span class="number">4</span>;  </span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(chr&gt;=<span class="number">0xE0</span>)  </span><br><span class="line">                        nBytes=<span class="number">3</span>;  </span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(chr&gt;=<span class="number">0xC0</span>)  </span><br><span class="line">                        nBytes=<span class="number">2</span>;  </span><br><span class="line">                    <span class="keyword">else</span>  </span><br><span class="line">                        <span class="keyword">return</span> FALSE;  </span><br><span class="line">      </span><br><span class="line">                    nBytes--;  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  </span><br><span class="line">            <span class="keyword">else</span> <span class="comment">//多字节符的非首字节,应为 10xxxxxx  </span></span><br><span class="line">            &#123;  </span><br><span class="line">                <span class="keyword">if</span>( (chr&amp;<span class="number">0xC0</span>) != <span class="number">0x80</span> )  </span><br><span class="line">                    <span class="keyword">return</span> FALSE;  </span><br><span class="line">      </span><br><span class="line">                nBytes--;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">if</span>( nBytes &gt; <span class="number">0</span> ) <span class="comment">//违返规则  </span></span><br><span class="line">            <span class="keyword">return</span> FALSE;  </span><br><span class="line">        <span class="keyword">if</span>( bAllAscii ) <span class="comment">//如果全部都是ASCII, 说明不是UTF-8  </span></span><br><span class="line">            <span class="keyword">return</span> FALSE;  </span><br><span class="line">      </span><br><span class="line">        <span class="keyword">return</span> TRUE;  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/04/asm_1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/04/asm_1/" itemprop="url">libxx.a的反汇编</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-04T17:12:32+08:00">
-                2018-05-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-29T09:48:56+08:00">
+                2018-05-29
               </time>
             
 
@@ -484,57 +342,7 @@
       
         
           
-            <p>前提是知道 libxxx.a 是用什么平台编译出来的,就采用相应的工具链来操作:</p>
-<p>(1) ar  -x  libxxx.a   命令可将 .a 文件生成若干个.o 文件</p>
-<p>(2) objdump -D -S yyy.o 把 yyy.o 反汇编成 asm 汇编文件</p>
-<p>具体命令的使用:</p>
-<hr>
-<p>nm libxxx.a  可查看 .a 所依赖的库文件及源码中的函数接口名称</p>
-<p>objdump -S libxxx.a  反汇编成汇编语言 但与平台严重相关, 有可能命令无法识别是什么平台的</p>
-<p>ar  -x  libxxx.a   命令可将 .a 文件生成若干个.o 文件</p>
-<pre>
-  创建一个库，请输入：    ar -v -q lib.a strlen.o strcpy.o
-  显示库的目录，请输入：    ar -v -t lib.a
-  替换或添加新成员到库中，请输入： ar -v -r lib.a strlen.o strcat.o
-  指定在何处插入新成员，请输入：     ar -v -r -b strlen.o lib.a strcmp.o
-  更新一个已经更改过的成员，请输入： ar -v -r -u lib.a strcpy.o
-  更改库成员的顺序，请输入：   ar -v -m -a strcmp.o lib.a strcat.o strcpy.o
-  解压缩库成员，请输入：    ar -v -x lib.a strcat.o strcpy.o
-  解压缩并重命名一个成员，请输入： ar -p lib.a strcpy.o >stringcopy.o
-  删除一个成员，请输入：    ar -v -d lib.a strlen.o
-  从多个用 ld 命令创建的共享模块中创建一个压缩文档库，请输入： ar -r -v libshr.a shrsub.o shrsub2.o shrsub3.o ...
-  编译并链接使用 libshr.a 压缩文档库的 main 程序，请使用以下命令：cc -o main main.c -L/u/sharedlib -lshr
-  列出 lib.a 的内容（忽略任何 32 位目标文件），请输入：   ar -X64 -t -v lib.a
-  从 lib.a 解压缩所有 32 位的目标文件，请输入：     ar -X32 -x lib.a
-  列出 lib.a 中的所有文件，无论是 32 位、64 位或非对象，请输入： ar -X32_64 -t -v lib.a
-</pre>
-
-
-
-
-<p>可以用“objdump -D”命令来反编译 .o 文件, 看你在编译c/c++用的-g级数， 如果-g3编译的，用objdump返汇编出来可以看到部分c/c++代码</p>
-<p><strong>Usage: objdump</strong></p>
-<p> Display information from object .<br> At least one of the following switches must be given:</p>
-<p>  -a, –archive-headers    Display archive header information</p>
-<p>  -f, –file-headers       Display the contents of the overall file header</p>
-<p>  -p, –private-headers    Display object format specific file header contents</p>
-<p>  -h, –[section-]headers  Display the contents of the section headers</p>
-<p>  -x, –all-headers        Display the contents of all headers</p>
-<p>  -d, –disassemble        Display assembler contents of executable sections</p>
-<p>  -D, –disassemble-all    Display assembler contents of all sections</p>
-<p>  -S, –source             Intermix source code with disassembly</p>
-<p>  -s, –full-contents      Display the full contents of all sections requested</p>
-<p>  -g, –debugging          Display debug information in object file</p>
-<p>  -e, –debugging-tags     Display debug information using ctags style</p>
-<p>  -G, –stabs              Display (in raw form) any STABS info in the file</p>
-<p>  -W, –dwarf              Display DWARF info in the file</p>
-<p>  -t, –syms               Display the contents of the symbol table(s)</p>
-<p>  -T, –dynamic-syms       Display the contents of the dynamic symbol table</p>
-<p>  -r, –reloc              Display the relocation entries in the file</p>
-<p>  -R, –dynamic-reloc      Display the dynamic relocation entries in the file</p>
-<p>  -v, –version            Display this program’s version number</p>
-<p>  -i, –info               List object formats and architectures supported</p>
-<p>  -H, –help              </p>
+            <p><a href="http://www.cnblogs.com/lxgeek/archive/2011/01/01/1923738.html" target="_blank" rel="noopener">http://www.cnblogs.com/lxgeek/archive/2011/01/01/1923738.html</a></p>
 
           
         
@@ -583,7 +391,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/26/leetcode_813/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/28/leetcode_391/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -602,7 +410,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/26/leetcode_813/" itemprop="url">leetcode 813. Largest Sum of Averages</a></h1>
+                <a class="post-title-link" href="/2018/05/28/leetcode_391/" itemprop="url">leetcode 391. Perfect Rectangle</a></h1>
         
 
         <div class="post-meta">
@@ -614,8 +422,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-26T15:40:08+08:00">
-                2018-04-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-28T13:16:10+08:00">
+                2018-05-28
               </time>
             
 
@@ -676,435 +484,67 @@
       
         
           
-            <p>We partition a row of numbers A into at most K adjacent (non-empty) groups, then our score is the sum of the average of each group. What is the largest score we can achieve?</p>
-<p>Note that our partition must use every number in A, and that scores are not necessarily integers.</p>
-<p><strong>Example</strong>:</p>
-<p><pre><br>Input:<br>A = [9,1,2,3,9]<br>K = 3<br>Output: 20<br>Explanation:<br>The best choice is to partition A into [9], [1, 2, 3], [9]. The answer is 9 + (1 + 2 + 3) / 3 + 9 = 20.<br>We could have also partitioned A into [9, 1], [2], [3, 9], for example.<br>That partition would lead to a score of 5 + 2 + 6 = 13, which is worse.<br></pre><br><strong>Note:</strong></p>
-<ul>
-<li><code>1 &lt;= A.length &lt;= 100.</code></li>
-<li><code>1 &lt;= A[i] &lt;= 10000.</code></li>
-<li><code>1 &lt;= K &lt;= A.length.</code></li>
-</ul>
-<p>Answers within <code>10^-6</code> of the correct answer will be accepted as correct.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">largestSumOfAverages</span><span class="params">(self, A, K)</span>:</span></span><br><span class="line">		</span><br><span class="line">        dp = [<span class="number">0</span>]*len(A)</span><br><span class="line">        s = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(A)):</span><br><span class="line">            s += A[i]</span><br><span class="line">            dp[i] = s/(i+<span class="number">1</span>)</span><br><span class="line">            </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,K):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(len(A)<span class="number">-1</span>, i<span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">                s = <span class="number">0</span></span><br><span class="line">                count = <span class="number">0</span></span><br><span class="line">                <span class="keyword">for</span> k <span class="keyword">in</span> range(j, i<span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">                    s += A[k]</span><br><span class="line">                    count += <span class="number">1</span></span><br><span class="line">                    dp[j] = max(dp[j], dp[k<span class="number">-1</span>] + s/count)</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">-1</span>]</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/26/test/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/26/test/" itemprop="url">冰雪奇缘</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-26T10:10:21+08:00">
-                2018-04-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="冰雪奇缘"><a href="#冰雪奇缘" class="headerlink" title="冰雪奇缘"></a>冰雪奇缘</h2><iframe height="498" width="510" src="http://player.youku.com/embed/XNjcyMDU4Njg0"></iframe>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/19/sql_tools/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/19/sql_tools/" itemprop="url">数据库的导入导出工具</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-19T15:12:11+08:00">
-                2018-04-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">mysql</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="导出工具ncexpdbstr"><a href="#导出工具ncexpdbstr" class="headerlink" title="导出工具ncexpdbstr"></a>导出工具<a href="/static/tools/ncexpdbstr">ncexpdbstr</a></h3><p>用法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./ncexpdbstr -u ncm   -p ncm -d ncm -o ncmsql.str</span><br></pre></td></tr></table></figure></p>
-<h3 id="导入工具ncupdatedbstr"><a href="#导入工具ncupdatedbstr" class="headerlink" title="导入工具ncupdatedbstr"></a>导入工具<a href="/static/tools/ncupdatedbstr">ncupdatedbstr</a></h3><p>用法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./ncupdatedbstr  -u ncm -p ncm -d ncm -f ncmsql.str</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/13/leetcode_120/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/13/leetcode_120/" itemprop="url">leetcode 120. Triangle</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T15:45:00+08:00">
-                2018-04-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.</p>
-<p>For example, given the following triangle</p>
+            <p>我们有 N 个与坐标轴对齐的矩形, 其中 N &gt; 0, 判断它们是否能精确地覆盖一个矩形区域。</p>
+<p>每个矩形用左下角的点和右上角的点的坐标来表示。例如， 一个单位正方形可以表示为 [1,1,2,2]。 ( 左下角的点的坐标为 (1, 1) 以及右上角的点的坐标为 (2, 2) )。</p>
+<p><div style="float:right"><br>    <img src="https://leetcode.com/static/images/problemset/rectangle_perfect.gif"><br></div><br><strong>示例1</strong></p>
 <pre>
-[
-     [2],
-    [3,4],
-   [6,5,7],
-  [4,1,8,3]
+rectangles = [
+  [1,1,3,3],
+  [3,1,4,2],
+  [3,2,4,4],
+  [1,3,2,4],
+  [2,3,3,4]
 ]
+
+返回 true。5个矩形一起可以精确地覆盖一个矩形区域。
+</pre>
+<div style="clear:both"></div>
+<div style="float:right">
+    <img src="https://leetcode.com/static/images/problemset/rectangle_separated.gif">
+</div>
+<strong>示例2</strong>
+<pre>
+rectangles = [
+  [1,1,2,3],
+  [1,3,2,4],
+  [3,1,4,2],
+  [3,2,4,4]
+]
+
+返回 false。两个矩形之间有间隔，无法覆盖成一个矩形。
+</pre>
+<div style="clear:both"></div>
+<div style="float:right">
+    <img src="https://leetcode.com/static/images/problemset/rectangle_hole.gif">
+</div>
+<strong>示例3</strong>
+<pre>
+rectangles = [
+  [1,1,3,3],
+  [3,1,4,2],
+  [1,3,2,4],
+  [3,2,4,4]
+]
+
+返回 false。图形顶端留有间隔，无法覆盖成一个矩形。
+</pre>
+<div style="clear:both"></div>
+<div style="float:right">
+    <img src="https://leetcode.com/static/images/problemset/rectangle_intersect.gif">
+</div>  
+<strong>示例4</strong>  
+<pre>
+rectangles = [
+  [1,1,3,3],
+  [3,1,4,2],
+  [1,3,2,4],
+  [2,2,4,4]
+]
+
+返回 false。因为中间有相交区域，虽然形成了矩形，但不是精确覆盖。
 </pre>
 
-<p>The minimum path sum from top to bottom is <code>11</code> (i.e., 2 + 3 + 5 + 1 = 11).</p>
-<p><strong>Note:</strong></p>
-<p>Bonus point if you are able to do this using only O(n) extra space, where n is the total number of rows in the triangle.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minimumTotal</span><span class="params">(self, triangle)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type triangle: List[List[int]]</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment">#bottom-up</span></span><br><span class="line">        <span class="comment">#dp[i] = min(dp[i],dp[i+1]) + triangle[layer][i]</span></span><br><span class="line">        dp = triangle[<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">for</span> layer <span class="keyword">in</span> xrange(len(triangle)<span class="number">-2</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> xrange(len(triangle[layer])):</span><br><span class="line">                dp[i] = min(dp[i],dp[i+<span class="number">1</span>]) + triangle[layer][i]</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">0</span>]</span><br></pre></td></tr></table></figure></p>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isRectangleCover</span><span class="params">(self, rectangles)</span>:</span></span><br><span class="line">        <span class="comment">#large rectangle area is equal to small rectangles</span></span><br><span class="line">        <span class="comment">#large rectangle points in small rectangles points</span></span><br><span class="line">        <span class="keyword">if</span> len(rectangles) == <span class="number">0</span> <span class="keyword">or</span> len(rectangles[<span class="number">0</span>]) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        x1 = float(<span class="string">"inf"</span>)</span><br><span class="line">        y1 = float(<span class="string">"inf"</span>)</span><br><span class="line">        x2 = <span class="number">0</span></span><br><span class="line">        y2 = <span class="number">0</span></span><br><span class="line">        rec = set()</span><br><span class="line">        area = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> points <span class="keyword">in</span> rectangles:</span><br><span class="line">            x1 = min(points[<span class="number">0</span>],x1)</span><br><span class="line">            y1 = min(points[<span class="number">1</span>],y1)</span><br><span class="line">            x2 = max(points[<span class="number">2</span>],x2)</span><br><span class="line">            y2 = max(points[<span class="number">3</span>],y2)</span><br><span class="line">            area += (points[<span class="number">3</span>]-points[<span class="number">1</span>])*(points[<span class="number">2</span>]-points[<span class="number">0</span>])</span><br><span class="line">            rec.remove((points[<span class="number">0</span>],points[<span class="number">3</span>])) <span class="keyword">if</span> (points[<span class="number">0</span>],points[<span class="number">3</span>]) <span class="keyword">in</span> rec <span class="keyword">else</span> rec.add((points[<span class="number">0</span>],points[<span class="number">3</span>]))</span><br><span class="line">            rec.remove((points[<span class="number">0</span>],points[<span class="number">1</span>])) <span class="keyword">if</span> (points[<span class="number">0</span>],points[<span class="number">1</span>]) <span class="keyword">in</span> rec <span class="keyword">else</span> rec.add((points[<span class="number">0</span>],points[<span class="number">1</span>]))</span><br><span class="line">            rec.remove((points[<span class="number">2</span>],points[<span class="number">3</span>])) <span class="keyword">if</span> (points[<span class="number">2</span>],points[<span class="number">3</span>]) <span class="keyword">in</span> rec <span class="keyword">else</span> rec.add((points[<span class="number">2</span>],points[<span class="number">3</span>]))</span><br><span class="line">            rec.remove((points[<span class="number">2</span>],points[<span class="number">1</span>])) <span class="keyword">if</span> (points[<span class="number">2</span>],points[<span class="number">1</span>]) <span class="keyword">in</span> rec <span class="keyword">else</span> rec.add((points[<span class="number">2</span>],points[<span class="number">1</span>]))</span><br><span class="line">        <span class="keyword">if</span> (x1,y2) <span class="keyword">not</span> <span class="keyword">in</span> rec <span class="keyword">or</span> (x2,y1) <span class="keyword">not</span> <span class="keyword">in</span> rec <span class="keyword">or</span> (x1,y1) <span class="keyword">not</span> <span class="keyword">in</span> rec <span class="keyword">or</span> (x2,y2) <span class="keyword">not</span> <span class="keyword">in</span> rec <span class="keyword">or</span> len(rec) != <span class="number">4</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">return</span> area == (y2-y1)*(x2-x1)</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1152,7 +592,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/13/leetcode_542/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/25/leetcode_392/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -1171,7 +611,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/13/leetcode_542/" itemprop="url">leetcode 542. 01 Matrix</a></h1>
+                <a class="post-title-link" href="/2018/05/25/leetcode_392/" itemprop="url">leetcode 392. Is Subsequence</a></h1>
         
 
         <div class="post-meta">
@@ -1183,8 +623,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T11:22:39+08:00">
-                2018-04-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-25T16:46:26+08:00">
+                2018-05-25
               </time>
             
 
@@ -1245,15 +685,25 @@
       
         
           
-            <p>Given a matrix consists of 0 and 1, find the distance of the nearest 0 for each cell.</p>
-<p>The distance between two adjacent cells is 1.<br><strong>Example 1: </strong></p>
-<p>Input:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0 0 0</span><br><span class="line">0 1 0</span><br><span class="line">0 0 0</span><br></pre></td></tr></table></figure></p>
-<p>Output:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0 0 0</span><br><span class="line">0 1 0</span><br><span class="line">0 0 0</span><br></pre></td></tr></table></figure></p>
-<p><strong>Example 2: </strong></p>
-<p>Input:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0 0 0</span><br><span class="line">0 1 0</span><br><span class="line">1 1 1</span><br></pre></td></tr></table></figure></p>
-<p>Output:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0 0 0</span><br><span class="line">0 1 0</span><br><span class="line">1 2 1</span><br></pre></td></tr></table></figure></p>
-<p><strong>Note:</strong></p>
-<p>The number of elements of the given matrix will not exceed 10,000.<br>There are at least one 0 in the given matrix.<br>The cells are adjacent in only four directions: up, down, left and right.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(matrix)</span>:</span></span><br><span class="line">    m,n = len(matrix),len(matrix[<span class="number">0</span>])</span><br><span class="line">    q = deque()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(m):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(n):</span><br><span class="line">            <span class="keyword">if</span> matrix[i][j] != <span class="number">0</span>:</span><br><span class="line">                matrix[i][j] = <span class="number">20000</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                q.append((i,j))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> q:</span><br><span class="line">        x,y = q.popleft()</span><br><span class="line">        <span class="keyword">for</span> r,c <span class="keyword">in</span> ((x<span class="number">-1</span>,y),(x,y<span class="number">-1</span>),(x,y+<span class="number">1</span>),(x+<span class="number">1</span>,y)):</span><br><span class="line">            z = matrix[x][y] + <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> <span class="number">0</span>&lt;=r&lt;m <span class="keyword">and</span> <span class="number">0</span>&lt;=c&lt;n <span class="keyword">and</span> matrix[r][c] &gt; z:</span><br><span class="line">                matrix[r][c] = z</span><br><span class="line">                q.append((r,c))</span><br><span class="line">    <span class="keyword">return</span> matrix</span><br></pre></td></tr></table></figure></p>
+            <p>Given a string s and a string t, check if s is subsequence of t.</p>
+<p>You may assume that there is only lower case English letters in both s and t. t is potentially a very long (length ~= 500,000) string, and s is a short string (&lt;=100).</p>
+<p>A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (ie, “ace” is a subsequence of “abcde” while “aec” is not).</p>
+<p><strong>Example 1</strong>:<br>s = “abc”, t = “ahbgdc”</p>
+<p>Return true.</p>
+<p><strong>Example 2</strong>:<br>s = “axc”, t = “ahbgdc”</p>
+<p>Return false.</p>
+<p><strong>Follow up</strong>:<br>If there are lots of incoming S, say S1, S2, … , Sk where k &gt;= 1B, and you want to check one by one to see if T has its subsequence. In this scenario, how would you change your code?</p>
+<ul>
+<li><p>solution with loop</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isSubsequence</span><span class="params">(self, s, t)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type s: str</span></span><br><span class="line"><span class="string">        :type t: str</span></span><br><span class="line"><span class="string">        :rtype: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> len(s) == <span class="number">0</span>:<span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> t:</span><br><span class="line">            <span class="keyword">if</span> c == s[count]:</span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> count == len(s):<span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>solution with two points</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isSubsequence</span><span class="params">(self, s, t)</span>:</span></span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        j = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> i &lt; len(s) <span class="keyword">and</span> j &lt; len(t):</span><br><span class="line">            <span class="keyword">if</span> s[i] == t[j]:</span><br><span class="line">                i = i + <span class="number">1</span></span><br><span class="line">                j = j + <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                j = j + <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> i == len(s)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>solution with dp，it’s slow o(n^2)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">        <span class="keyword">int</span> m = s.length(), n = t.length();</span><br><span class="line">        <span class="keyword">if</span> (m == <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[m+<span class="number">1</span>][n+<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span>  i = <span class="number">0</span>; i &lt;= m; i++) &#123;</span><br><span class="line">            dp[i] = <span class="keyword">new</span> <span class="keyword">int</span>[n+<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (s.charAt(i-<span class="number">1</span>) == t.charAt(j-<span class="number">1</span>)) &#123;</span><br><span class="line">                    dp[i][j] = dp[i-<span class="number">1</span>][j-<span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span>&#123;</span><br><span class="line">                    dp[i][j] = Math.max(dp[i-<span class="number">1</span>][j], dp[i][j-<span class="number">1</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[m][n] == m;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 
           
         
@@ -1302,7 +752,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/leetcode_200_bfs/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/24/leetcode_399/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -1321,7 +771,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/12/leetcode_200_bfs/" itemprop="url">leetcode 200. Number of Islands(bfs)</a></h1>
+                <a class="post-title-link" href="/2018/05/24/leetcode_399/" itemprop="url">leetcode 399. Evaluate Division</a></h1>
         
 
         <div class="post-meta">
@@ -1333,8 +783,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T17:41:00+08:00">
-                2018-04-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-24T10:38:58+08:00">
+                2018-05-24
               </time>
             
 
@@ -1395,13 +845,17 @@
       
         
           
-            <p>Given a 2d grid map of <code>&#39;1&#39;s</code> (land) and <code>&#39;0&#39;s</code>(water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.</p>
-<p><strong><em>Example 1:</em></strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">11110</span><br><span class="line">11010</span><br><span class="line">11000</span><br><span class="line">00000</span><br></pre></td></tr></table></figure>
-<p>Answer: 1</p>
-<p><strong><em>Example 2:</em></strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">11000</span><br><span class="line">11000</span><br><span class="line">00100</span><br><span class="line">00011</span><br></pre></td></tr></table></figure>
-<p>Answer: 3<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bfs</span><span class="params">(grid,x,y)</span>:</span></span><br><span class="line">    q = deque()</span><br><span class="line">    q.append((x,y))</span><br><span class="line">    grid[x][y] = <span class="string">'0'</span></span><br><span class="line">    <span class="keyword">while</span> q:</span><br><span class="line">        x,y = q.popleft()</span><br><span class="line">        <span class="keyword">if</span> x &gt; <span class="number">0</span> <span class="keyword">and</span> grid[x<span class="number">-1</span>][y] == <span class="string">'1'</span>:</span><br><span class="line">            q.append((x<span class="number">-1</span>,y))</span><br><span class="line">            grid[x<span class="number">-1</span>][y] = <span class="string">'0'</span></span><br><span class="line">        <span class="keyword">if</span> x &lt; len(grid) - <span class="number">1</span> <span class="keyword">and</span> grid[x+<span class="number">1</span>][y] == <span class="string">'1'</span>:</span><br><span class="line">            q.append((x+<span class="number">1</span>,y))</span><br><span class="line">            grid[x+<span class="number">1</span>][y] = <span class="string">'0'</span></span><br><span class="line">        <span class="keyword">if</span> y &gt; <span class="number">0</span> <span class="keyword">and</span> grid[x][y<span class="number">-1</span>] == <span class="string">'1'</span>:</span><br><span class="line">            q.append((x,y<span class="number">-1</span>))</span><br><span class="line">            grid[x][y<span class="number">-1</span>] = <span class="string">'0'</span></span><br><span class="line">        <span class="keyword">if</span> y &lt; len(grid[<span class="number">0</span>]) - <span class="number">1</span> <span class="keyword">and</span> grid[x][y+<span class="number">1</span>] == <span class="string">'1'</span>:</span><br><span class="line">            q.append((x,y+<span class="number">1</span>))</span><br><span class="line">            grid[x][y+<span class="number">1</span>] = <span class="string">'0'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(grid)</span>:</span></span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(grid)):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(len(grid[<span class="number">0</span>])):</span><br><span class="line">            <span class="keyword">if</span> grid[i][j] == <span class="string">'1'</span>:</span><br><span class="line">                bfs(grid,i,j)</span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> count</span><br></pre></td></tr></table></figure></p>
+            <p>Equations are given in the format <code>A / B = k</code>, where <code>A</code> and <code>B</code> are variables represented as strings, and <code>k</code> is a real number (floating point number). Given some queries, return the answers. If the answer does not exist, return <code>-1.0</code>.</p>
+<p>Example:<br>Given <code>a / b = 2.0, b / c = 3.0</code>.<br>queries are: <code>a / c = ?, b / a = ?, a / e = ?, a / a = ?, x / x = ?</code> .<br>return <code>[6.0, 0.5, -1.0, 1.0, -1.0 ]</code>.</p>
+<p>The input is: <code>vector&lt;pair&lt;string, string&gt;&gt; equations, vector&lt;double&gt;&amp; values, vector&lt;pair&lt;string, string&gt;&gt; queries</code> , where <code>equations.size() == values.size()</code>, and the values are positive. This represents the equations. Return <code>vector&lt;double&gt;</code>.</p>
+<p>According to the example above:</p>
+<pre>
+equations = [ ["a", "b"], ["b", "c"] ],
+values = [2.0, 3.0],
+queries = [ ["a", "c"], ["b", "a"], ["a", "e"], ["a", "a"], ["x", "x"] ]. 
+</pre>
+
+<p>The input is always valid. You may assume that evaluating the queries will result in no division by zero and there is no contradiction.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">calcEquation</span><span class="params">(self, equations, values, queries)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type equations: List[List[str]]</span></span><br><span class="line"><span class="string">        :type values: List[float]</span></span><br><span class="line"><span class="string">        :type queries: List[List[str]]</span></span><br><span class="line"><span class="string">        :rtype: List[float]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        graph = collections.defaultdict(dict)</span><br><span class="line">        <span class="keyword">for</span> (a,b),val <span class="keyword">in</span> zip(equations,values):</span><br><span class="line">            graph[a][b] = val</span><br><span class="line">            graph[a][a] = graph[b][b] = <span class="number">1.0</span></span><br><span class="line">            graph[b][a] = <span class="number">1</span>/val</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> graph:</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> graph[k]:</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> graph[k]:</span><br><span class="line">                    graph[i][j] = graph[i][k]*graph[k][j]</span><br><span class="line">        <span class="keyword">return</span> [graph[a].get(b,<span class="number">-1.0</span>) <span class="keyword">for</span> a,b <span class="keyword">in</span> queries]</span><br></pre></td></tr></table></figure></p>
 
           
         
@@ -1450,7 +904,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/leetcode_279/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/23/leetcode_398/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -1469,7 +923,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/12/leetcode_279/" itemprop="url">leetcode 279. Perfect Squares</a></h1>
+                <a class="post-title-link" href="/2018/05/23/leetcode_398/" itemprop="url">leetcode 398. Random Pick Index</a></h1>
         
 
         <div class="post-meta">
@@ -1481,8 +935,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T16:18:45+08:00">
-                2018-04-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-23T11:33:02+08:00">
+                2018-05-23
               </time>
             
 
@@ -1543,8 +997,18 @@
       
         
           
-            <p>Given a positive integer n, find the least number of perfect square numbers (for example, <code>1, 4, 9, 16, ...</code>) which sum to n.</p>
-<p>For example, given n = <code>12</code>, return <code>3</code> because <code>12 = 4 + 4 + 4</code>; given n = <code>13</code>, return <code>2</code> because <code>13 = 4 + 9</code>.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numSquares</span><span class="params">(self, n)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type n: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> n &lt; <span class="number">2</span>:<span class="keyword">return</span> n</span><br><span class="line">        lst = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,n):</span><br><span class="line">            <span class="keyword">if</span> i*i &lt;= n:</span><br><span class="line">                lst.append(i*i)</span><br><span class="line">            <span class="keyword">else</span>:<span class="keyword">break</span></span><br><span class="line">        cnt = <span class="number">0</span></span><br><span class="line">        nums = &#123;n&#125;</span><br><span class="line">        <span class="keyword">while</span> nums:</span><br><span class="line">            temp =set()</span><br><span class="line">            cnt += <span class="number">1</span></span><br><span class="line">            <span class="keyword">for</span> x <span class="keyword">in</span> nums:</span><br><span class="line">                <span class="keyword">for</span> y <span class="keyword">in</span> lst:</span><br><span class="line">                    <span class="keyword">if</span> x == y :</span><br><span class="line">                        <span class="keyword">return</span> cnt</span><br><span class="line">                    <span class="keyword">elif</span> x &lt; y:<span class="keyword">break</span></span><br><span class="line">                    temp.add(x-y)</span><br><span class="line">            nums = temp</span><br><span class="line">        <span class="keyword">return</span> cnt</span><br></pre></td></tr></table></figure></p>
+            <p>Given an array of integers with possible duplicates, randomly output the index of a given target number. You can assume that the given target number must exist in the array.</p>
+<p><strong>Note</strong>:<br>The array size can be very large. Solution that uses too much extra space will not pass the judge.</p>
+<p><strong>Example</strong>:</p>
+<p><pre><br>int[] nums = new int[] {1,2,3,3,3};<br>Solution solution = new Solution(nums);<br>// pick(3) should return either index 2, 3, or 4 randomly. Each index should have equal probability of returning.<br>solution.pick(3);<br>// pick(1) should return 0. Since in the array only nums[0] is equal to 1.<br>solution.pick(1);<br></pre></p>
+<ul>
+<li><p>my solution is memory limit exceeded  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        self.nums = nums</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pick</span><span class="params">(self, target)</span>:</span></span><br><span class="line">        index_dict = collections.defaultdict(list)</span><br><span class="line">        <span class="keyword">for</span> i,n <span class="keyword">in</span> enumerate(self.nums):</span><br><span class="line">            index_dict[n].append(i)</span><br><span class="line">        <span class="keyword">return</span> random.choice(index_dict[target])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Reservoir Sampling solution  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        self.nums = nums</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pick</span><span class="params">(self, target)</span>:</span></span><br><span class="line">        count, index = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i, n <span class="keyword">in</span> enumerate(self.nums):</span><br><span class="line">            <span class="keyword">if</span> n == target:</span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line">                rand = random.randint(<span class="number">1</span>, count)</span><br><span class="line">                <span class="keyword">if</span> rand == count:</span><br><span class="line">                    index = i</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> index</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 
           
         
@@ -1593,7 +1057,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/10/leetcode_473/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/22/leetcode_397/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -1612,7 +1076,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/10/leetcode_473/" itemprop="url">leetcode 473. Matchsticks to Square</a></h1>
+                <a class="post-title-link" href="/2018/05/22/leetcode_397/" itemprop="url">leetcode 397. Integer Replacement</a></h1>
         
 
         <div class="post-meta">
@@ -1624,8 +1088,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-10T11:07:57+08:00">
-                2018-04-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-22T14:44:04+08:00">
+                2018-05-22
               </time>
             
 
@@ -1686,16 +1150,662 @@
       
         
           
-            <p>Remember the story of Little Match Girl? By now, you know exactly what matchsticks the little match girl has, please find out a way you can make one square by using up all those matchsticks. You should not break any stick, but you can link them up, and each matchstick must be used <strong>exactly</strong> one time.</p>
-<p>Your input will be several matchsticks the girl has, represented with their stick length. Your output will either be true or false, to represent whether you could make one square using all the matchsticks the little match girl has.</p>
-<p><strong>Example 1:</strong></p>
-<p><pre><br>Input: [1,1,2,2,2]<br>Output: true<br>Explanation: You can form a square with length 2, one side of the square came two sticks with length 1.<br></pre><br><strong>Example 2:</strong></p>
-<p><pre><br>Input: [3,3,3,3,4]<br>Output: false<br>Explanation: You cannot find a way to form a square with all the matchsticks.<br></pre><br><strong>Note:</strong></p>
+            <p>Given a positive integer n and you can do operations as follow:</p>
 <ol>
-<li>The length sum of the given matchsticks is in the range of <code>0</code> to <code>10^9.</code></li>
-<li>The length of the given matchstick array will not exceed <code>15.</code></li>
+<li>If n is even, replace n with <code>n/2</code>.</li>
+<li>If n is odd, you can replace n with either<code>n + 1</code> or <code>n - 1</code>.</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">makesquare</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :rtype: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(nums,pos,target)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> pos == len(nums):</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">4</span>):</span><br><span class="line">                <span class="keyword">if</span> target[i] &gt;= nums[pos]:</span><br><span class="line">                    target[i] -= nums[pos]</span><br><span class="line">                    <span class="keyword">if</span> dfs(nums,pos+<span class="number">1</span>,target):</span><br><span class="line">                        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">                    target[i] += nums[pos]</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">if</span> len(nums) &lt; <span class="number">4</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        numsum = sum(nums)</span><br><span class="line">        <span class="keyword">if</span> numsum%<span class="number">4</span> != <span class="number">0</span>:<span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        nums.sort(reverse=<span class="keyword">True</span>)</span><br><span class="line">        target = [numsum/<span class="number">4</span>]*<span class="number">4</span></span><br><span class="line">        <span class="keyword">return</span> dfs(nums,<span class="number">0</span>,target)</span><br></pre></td></tr></table></figure>
+<p>What is the minimum number of replacements needed for n to become 1?</p>
+<p><strong>Example 1</strong>:</p>
+<pre>
+Input:
+8
+Output:
+3
+Explanation:
+8 -> 4 -> 2 -> 1
+</pre>
+
+<p><strong>Example 2</strong>:</p>
+<p><pre><br>Input:<br>7<br>Output:<br>4<br>Explanation:<br>7 -&gt; 8 -&gt; 4 -&gt; 2 -&gt; 1<br>or<br>7 -&gt; 6 -&gt; 3 -&gt; 2 -&gt; 1<br></pre></p>
+<ul>
+<li>clear solution:</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">integerReplacement</span><span class="params">(self, n)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type n: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        d = &#123;&#125;</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(n)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">            <span class="keyword">if</span> n <span class="keyword">in</span> d:</span><br><span class="line">                <span class="keyword">return</span> d[n]</span><br><span class="line">            val = <span class="number">0</span></span><br><span class="line">            <span class="keyword">if</span> n%<span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">                val = <span class="number">1</span> + helper(n/<span class="number">2</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                val = min(<span class="number">1</span>+helper(n<span class="number">-1</span>),<span class="number">1</span>+helper(n+<span class="number">1</span>))</span><br><span class="line">            d[n] = val</span><br><span class="line">            <span class="keyword">return</span> val</span><br><span class="line">        <span class="keyword">return</span> helper(n)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>my solution:</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">integerReplacement</span><span class="params">(self, n)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type n: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(n)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">            <span class="keyword">if</span> n == <span class="number">3</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">2</span></span><br><span class="line">            val = <span class="number">0</span></span><br><span class="line">            <span class="keyword">if</span> n%<span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">                val = <span class="number">1</span> + helper(n/<span class="number">2</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                val = min(<span class="number">1</span>+helper(n<span class="number">-1</span>),<span class="number">1</span>+helper(n+<span class="number">1</span>))</span><br><span class="line">           </span><br><span class="line">            <span class="keyword">return</span> val</span><br><span class="line">        <span class="keyword">return</span> helper(n)</span><br></pre></td></tr></table></figure>
+<p>my solution recursion do not store  ,slower than clear solution</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/21/leetcode_396/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/21/leetcode_396/" itemprop="url">leetcode 396. Rotate Function</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-21T15:21:04+08:00">
+                2018-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given an array of integers A and let n to be its length.</p>
+<p>Assume <code>Bk</code> to be an array obtained by rotating the array <code>A</code> k positions clock-wise, we define a “rotation function” F on A as follow:</p>
+<p><code>F(k) = 0 * Bk[0] + 1 * Bk[1] + ... + (n-1) * Bk[n-1].</code></p>
+<p>Calculate the maximum value of <code>F(0), F(1), ..., F(n-1).</code></p>
+<p><strong>Note:</strong><br>n is guaranteed to be less than 10^5.</p>
+<p><strong>Example:</strong></p>
+<p><pre><br>A = [4, 3, 2, 6]<br>F(0) = (0 <em> 4) + (1 </em> 3) + (2 <em> 2) + (3 </em> 6) = 0 + 3 + 4 + 18 = 25<br>F(1) = (0 <em> 6) + (1 </em> 4) + (2 <em> 3) + (3 </em> 2) = 0 + 4 + 6 + 6 = 16<br>F(2) = (0 <em> 2) + (1 </em> 6) + (2 <em> 4) + (3 </em> 3) = 0 + 6 + 8 + 9 = 23<br>F(3) = (0 <em> 3) + (1 </em> 2) + (2 <em> 6) + (3 </em> 4) = 0 + 2 + 12 + 12 = 26<br></pre><br>So the maximum value of F(0), F(1), F(2), F(3) is F(3) = 26.</p>
+<ul>
+<li>my solution:</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxRotateFunction</span><span class="params">(self, A)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> len(A) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        n = len(A)</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(A,k)</span>:</span></span><br><span class="line">            B = (A+A)[k:k+n]</span><br><span class="line">            v = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">                v += i*B[i]</span><br><span class="line">            <span class="keyword">return</span> v</span><br><span class="line">        <span class="keyword">return</span> max(f(A,i) <span class="keyword">for</span> i <span class="keyword">in</span> range(n))</span><br></pre></td></tr></table></figure>
+<p>this solution is o(n^2), cost 14s</p>
+<ul>
+<li>clear solution:</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxRotateFunction</span><span class="params">(self, A)</span>:</span></span><br><span class="line">        n = len(A)</span><br><span class="line">        v = <span class="number">0</span></span><br><span class="line">        sumA = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">            v += i * A[i]</span><br><span class="line">            sumA += A[i]</span><br><span class="line">        max_v = v</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n - <span class="number">1</span>, <span class="number">0</span>, <span class="number">-1</span>):</span><br><span class="line">            v = v + sumA - n * A[i]</span><br><span class="line">            max_v = max(max_v, v)</span><br><span class="line">        <span class="keyword">return</span> max_v</span><br></pre></td></tr></table></figure>
+<p>this solution cost 0.02s</p>
+<p>because f(k+1)-f(k) = nA[k] - sumA</p>
+<p>f(k+1) = 0*A[k+1] + A[k+2] + 2*A[k+3]+…+(n-1)A[k+1+n-1]</p>
+<p>A[k+n] = A[k]</p>
+<p>f(k+1) = (n-1)*A[k]+0*A[k+1] + A[k+2] + 2*A[k+3]+…+(n-2)A[k+n-1]</p>
+<p>f(k) = 0*A[k] + A[k+1] + 2*A[k+2]+…+(n-1)A[k+n-1]</p>
+<p>so f(k+1)-f(k) = n*A[k] - (A[k] + A[k+1] +…+A[k+n-1])</p>
+<p>= n*A[k] - sumA</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/21/leetcode_395/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/21/leetcode_395/" itemprop="url">leetcode 395. Longest Substring with At Least K Repeating Characters</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-21T14:46:59+08:00">
+                2018-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Find the length of the longest substring T of a given string (consists of lowercase letters only) such that every character in T appears no less than k times.</p>
+<p><strong>Example 1:</strong></p>
+<p><pre><br>Input:<br>s = “aaabb”, k = 3<br>Output:<br>3<br>The longest substring is “aaa”, as ‘a’ is repeated 3 times.<br></pre><br><strong>Example 2:</strong></p>
+<p><pre><br>Input:<br>s = “ababbc”, k = 2<br>Output:<br>5<br>The longest substring is “ababb”, as ‘a’ is repeated 2 times and ‘b’ is repeated 3 times.<br></pre><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestSubstring</span><span class="params">(self, s, k)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type s: str</span></span><br><span class="line"><span class="string">        :type k: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> set(s):</span><br><span class="line">            <span class="keyword">if</span> s.count(c) &lt; k:</span><br><span class="line">                <span class="keyword">return</span> max(self.longestSubstring(t,k) <span class="keyword">for</span> t <span class="keyword">in</span> s.split(c))</span><br><span class="line">        <span class="keyword">return</span> len(s)</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/18/leetcode_376/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/18/leetcode_376/" itemprop="url">leetcode  376. Wiggle Subsequence</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-18T09:30:08+08:00">
+                2018-05-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>A sequence of numbers is called a <strong>wiggle sequence</strong> if the differences between successive numbers strictly alternate between positive and negative. The first difference (if one exists) may be either positive or negative. A sequence with fewer than two elements is trivially a wiggle sequence.</p>
+<p>For example, <code>[1,7,4,9,2,5]</code>is a wiggle sequence because the differences (6,-3,5,-7,3) are alternately positive and negative. In contrast,<code>[1,4,7,2,5]</code> and <code>[1,7,4,5,5]</code> are not wiggle sequences, the first because its first two differences are positive and the second because its last difference is zero.</p>
+<p>Given a sequence of integers, return the length of the longest subsequence that is a wiggle sequence. A subsequence is obtained by deleting some number of elements (eventually, also zero) from the original sequence, leaving the remaining elements in their original order.</p>
+<p><strong>Examples:</strong>  </p>
+<pre>
+Input: [1,7,4,9,2,5]
+Output: 6
+The entire sequence is a wiggle sequence.
+
+Input: [1,17,5,10,13,15,10,5,16,8]
+Output: 7
+There are several subsequences that achieve this length. One is [1,17,10,13,10,16,8].
+
+Input: [1,2,3,4,5,6,7,8,9]
+Output: 2
+</pre>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wiggleMaxLength</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> len(nums) &lt;= <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> len(nums)</span><br><span class="line">        dp = [<span class="number">0</span>]*len(nums)</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> nums[<span class="number">1</span>] == nums[<span class="number">0</span>]:</span><br><span class="line">            dp[<span class="number">1</span>] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            dp[<span class="number">1</span>] = <span class="number">2</span></span><br><span class="line">        target = nums[<span class="number">1</span>] - nums[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>,len(nums)):</span><br><span class="line">            target2 = nums[i] - nums[i<span class="number">-1</span>]</span><br><span class="line">            <span class="keyword">if</span> target*target2 &lt; <span class="number">0</span> :<span class="comment">#bu tong hao</span></span><br><span class="line">                dp[i] = dp[i<span class="number">-1</span>] + <span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> target == <span class="number">0</span> <span class="keyword">and</span> target2 != <span class="number">0</span>:</span><br><span class="line">                dp[i] = dp[i<span class="number">-1</span>] + <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                dp[i] = dp[i<span class="number">-1</span>]</span><br><span class="line">            <span class="keyword">if</span> target2 != <span class="number">0</span> :</span><br><span class="line">                target = target2</span><br><span class="line">        <span class="keyword">return</span> dp[len(nums)<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/17/leetcode_393/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/17/leetcode_393/" itemprop="url">leetcode 393. UTF-8 Validation</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-17T11:15:39+08:00">
+                2018-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>A character in UTF8 can be from <code>1 to 4 bytes</code> long, subjected to the following rules:</p>
+<ol>
+<li>For 1-byte character, the first bit is a 0, followed by its unicode code.</li>
+<li>For n-bytes character, the first n-bits are all one’s, the n+1 bit is 0, followed by n-1 bytes with most significant 2 bits being 10.</li>
+</ol>
+<p>This is how the UTF-8 encoding would work:</p>
+<table><br><tr><br><th>Char. number range  (hexadecimal)</th><br><th>UTF-8 octet sequence  (binary)</th><br></tr><br><tr><br><td>0000 0000-0000 007F</td><br><td>0xxxxxxx</td><br></tr><br><tr><br><td>0000 0000-0000 07FF</td><br><td>110xxxxx 10xxxxxx</td><br></tr><br><tr><br><td>0000 0800-0000 FFFF</td><br><td>1110xxxx 10xxxxxx 10xxxxxx</td><br></tr><br><tr><br><td>0001 0000-0010 FFFF</td><br><td>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</td><br></tr><br></table>
+
+<p>Given an array of integers representing the data, return whether it is a valid utf-8 encoding.</p>
+<p><strong>Note</strong>:<br>The input is an array of integers. Only the <code>least significant 8 bits</code> of each integer is used to store the data. This means each integer represents only 1 byte of data.</p>
+<p><strong>Example 1</strong>:  </p>
+<pre>
+data = [197, 130, 1], which represents the octet sequence: 11000101 10000010 00000001.
+Return true.
+It is a valid utf-8 encoding for a 2-bytes character followed by a 1-byte character.
+</pre>
+
+<p><strong>Example 2</strong>:</p>
+<p><pre><br>data = [235, 140, 4], which represented the octet sequence: 11101011 10001100 00000100.<br>Return false.<br>The first 3 bits are all one’s and the 4th bit is 0 means it is a 3-bytes character.<br>The next byte is a continuation byte which starts with 10 and that’s correct.<br>But the second continuation byte does not start with 10, so it is invalid.<br></pre><br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">validUtf8</span><span class="params">(<span class="keyword">int</span>* data,<span class="keyword">int</span> length)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> nBytes = <span class="number">0</span>;<span class="comment">//UFT8可用1-4个字节编码,ASCII用一个字节  </span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> chr;  </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; ++i)  </span><br><span class="line">    &#123;  </span><br><span class="line">        chr = data[i];  </span><br><span class="line">        <span class="keyword">if</span>(nBytes == <span class="number">0</span>) <span class="comment">//如果不是ASCII码,应该是多字节符,计算字节数  </span></span><br><span class="line">        &#123;  </span><br><span class="line">            <span class="keyword">if</span>(chr &gt;= <span class="number">0x80</span>)  </span><br><span class="line">            &#123;  </span><br><span class="line">                <span class="keyword">if</span>(chr &gt;= <span class="number">0xF0</span> &amp;&amp; chr &lt;= <span class="number">0xF7</span>)  <span class="comment">//11110xxx</span></span><br><span class="line">                    nBytes=<span class="number">4</span>;  </span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(chr &gt;= <span class="number">0xE0</span> &amp;&amp; chr &lt;= <span class="number">0xEF</span>)  <span class="comment">//1110xxxx</span></span><br><span class="line">                    nBytes=<span class="number">3</span>;  </span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(chr &gt;= <span class="number">0xC0</span> &amp;&amp; chr &lt;= <span class="number">0xDF</span>)  <span class="comment">//110xxxxx</span></span><br><span class="line">                    nBytes=<span class="number">2</span>;  </span><br><span class="line">                <span class="keyword">else</span>  </span><br><span class="line">                    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">                nBytes--;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">else</span> <span class="comment">//多字节符的非首字节,应为 10xxxxxx  </span></span><br><span class="line">        &#123;  </span><br><span class="line">            <span class="keyword">if</span>( (chr&amp;<span class="number">0xC0</span>) != <span class="number">0x80</span> )  </span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">            nBytes--;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">if</span>( nBytes &gt; <span class="number">0</span>) <span class="comment">//违返规则  </span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
           
         
       
@@ -1734,7 +1844,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1780,7 +1890,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">139</span>
+                  <span class="site-state-item-count">151</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1802,7 +1912,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

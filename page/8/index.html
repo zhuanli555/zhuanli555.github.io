@@ -249,7 +249,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/12/leetcode_365/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/22/leetcode_341/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -268,7 +268,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/12/leetcode_365/" itemprop="url">leetcode 365. 水壶问题</a></h1>
+                <a class="post-title-link" href="/2018/06/22/leetcode_341/" itemprop="url">leetcode 341. Flatten Nested List Iterator</a></h1>
         
 
         <div class="post-meta">
@@ -280,8 +280,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-12T10:19:19+08:00">
-                2018-06-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-22T15:40:57+08:00">
+                2018-06-22
               </time>
             
 
@@ -342,27 +342,13 @@
       
         
           
-            <p>有两个容量分别为 x升 和 y升 的水壶以及无限多的水。请判断能否通过使用这两个水壶，从而可以得到恰好 z升 的水？</p>
-<p>如果可以，最后请用以上水壶中的一或两个来盛放取得的 z升 水。</p>
-<p>你允许：</p>
-<ul>
-<li>装满任意一个水壶</li>
-<li>清空任意一个水壶</li>
-<li>从一个水壶向另外一个水壶倒水，直到装满或者倒空</li>
-</ul>
-<p><strong>示例1</strong>: </p>
-<pre>
-输入: x = 3, y = 5, z = 4
-输出: True
-</pre>
-
-<p><strong>示例2</strong>:</p>
-<pre>
-输入: x = 2, y = 6, z = 5
-输出: False
-</pre>
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">canMeasureWater</span><span class="params">(self, x, y, z)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type x: int</span></span><br><span class="line"><span class="string">        :type y: int</span></span><br><span class="line"><span class="string">        :type z: int</span></span><br><span class="line"><span class="string">        :rtype: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment">#贝祖定理 ax+by = gcd(x,y)</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">gcd</span><span class="params">(x,y)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> x &lt; y:<span class="keyword">return</span> gcd(y,x)</span><br><span class="line">            <span class="keyword">if</span> y == <span class="number">0</span>:<span class="keyword">return</span> x</span><br><span class="line">            <span class="keyword">elif</span> x%<span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">if</span> y%<span class="number">2</span> == <span class="number">0</span>:<span class="keyword">return</span> gcd(x&gt;&gt;<span class="number">1</span>,y&gt;&gt;<span class="number">1</span>)&lt;&lt;<span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:<span class="keyword">return</span> gcd(x&gt;&gt;<span class="number">1</span>,y)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">if</span> y%<span class="number">2</span> == <span class="number">0</span>:<span class="keyword">return</span> gcd(x,y&gt;&gt;<span class="number">1</span>)</span><br><span class="line">                <span class="keyword">else</span>:<span class="keyword">return</span> gcd(y,x-y)</span><br><span class="line">                </span><br><span class="line">        <span class="keyword">if</span> z &gt; x+y:<span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">if</span> z == y <span class="keyword">or</span> z == x <span class="keyword">or</span> z == x+y:<span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">return</span> z%gcd(x,y) == <span class="number">0</span></span><br></pre></td></tr></table></figure>
+            <p>Given a nested list of integers, implement an iterator to flatten it.</p>
+<p>Each element is either an integer, or a list – whose elements may also be integers or other lists.</p>
+<p><strong>Example 1</strong>:<br>Given the list <code>[[1,1],2,[1,1]]</code>,</p>
+<p>By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: <code>[1,1,2,1,1]</code>.</p>
+<p><strong>Example 2</strong>:<br>Given the list <code>[1,[4,[6]]]</code>,</p>
+<p>By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: <code>[1,4,6]</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># """</span></span><br><span class="line"><span class="comment"># This is the interface that allows for creating nested lists.</span></span><br><span class="line"><span class="comment"># You should not implement it, or speculate about its implementation</span></span><br><span class="line"><span class="comment"># """</span></span><br><span class="line"><span class="comment">#class NestedInteger(object):</span></span><br><span class="line"><span class="comment">#    def isInteger(self):</span></span><br><span class="line"><span class="comment">#        """</span></span><br><span class="line"><span class="comment">#        @return True if this NestedInteger holds a single integer, rather than a nested list.</span></span><br><span class="line"><span class="comment">#        :rtype bool</span></span><br><span class="line"><span class="comment">#        """</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#    def getInteger(self):</span></span><br><span class="line"><span class="comment">#        """</span></span><br><span class="line"><span class="comment">#        @return the single integer that this NestedInteger holds, if it holds a single integer</span></span><br><span class="line"><span class="comment">#        Return None if this NestedInteger holds a nested list</span></span><br><span class="line"><span class="comment">#        :rtype int</span></span><br><span class="line"><span class="comment">#        """</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#    def getList(self):</span></span><br><span class="line"><span class="comment">#        """</span></span><br><span class="line"><span class="comment">#        @return the nested list that this NestedInteger holds, if it holds a nested list</span></span><br><span class="line"><span class="comment">#        Return None if this NestedInteger holds a single integer</span></span><br><span class="line"><span class="comment">#        :rtype List[NestedInteger]</span></span><br><span class="line"><span class="comment">#        """</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NestedIterator</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, nestedList)</span>:</span></span><br><span class="line">        self.stack = [[nestedList, <span class="number">0</span>]]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">next</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.hasNext()</span><br><span class="line">        nestedList, i = self.stack[<span class="number">-1</span>]</span><br><span class="line">        self.stack[<span class="number">-1</span>][<span class="number">1</span>] += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> nestedList[i].getInteger()</span><br><span class="line">            </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hasNext</span><span class="params">(self)</span>:</span></span><br><span class="line">        s = self.stack</span><br><span class="line">        <span class="keyword">while</span> s:</span><br><span class="line">            nestedList, i = s[<span class="number">-1</span>]</span><br><span class="line">            <span class="keyword">if</span> i == len(nestedList):</span><br><span class="line">                s.pop()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                x = nestedList[i]</span><br><span class="line">                <span class="keyword">if</span> x.isInteger():</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">                s[<span class="number">-1</span>][<span class="number">1</span>] += <span class="number">1</span></span><br><span class="line">                s.append([x.getList(), <span class="number">0</span>])</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"><span class="comment"># class NestedIterator(object):</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#     def __init__(self, nestedList):</span></span><br><span class="line"><span class="comment">#         """</span></span><br><span class="line"><span class="comment">#         Initialize your data structure here.</span></span><br><span class="line"><span class="comment">#         :type nestedList: List[NestedInteger]</span></span><br><span class="line"><span class="comment">#         """</span></span><br><span class="line"><span class="comment">#         self._ind = 0</span></span><br><span class="line"><span class="comment">#         self._nest = self._flat(nestedList)</span></span><br><span class="line">        </span><br><span class="line"><span class="comment">#     def _flat(self,nestlist):</span></span><br><span class="line"><span class="comment">#         res = []</span></span><br><span class="line"><span class="comment">#         stack = [(nestlist,0)]</span></span><br><span class="line"><span class="comment">#         while stack:</span></span><br><span class="line"><span class="comment">#             nest,i = stack.pop()</span></span><br><span class="line"><span class="comment">#             if i &gt;= len(nest):</span></span><br><span class="line"><span class="comment">#                 continue</span></span><br><span class="line"><span class="comment">#             tmp = nest[i]</span></span><br><span class="line"><span class="comment">#             stack.append((nest,i+1))</span></span><br><span class="line"><span class="comment">#             if tmp.isInteger():</span></span><br><span class="line"><span class="comment">#                 res.append(tmp)</span></span><br><span class="line"><span class="comment">#             else:</span></span><br><span class="line"><span class="comment">#                 stack.append((tmp,0))</span></span><br><span class="line"><span class="comment">#         return res</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#     def next(self):</span></span><br><span class="line"><span class="comment">#         """</span></span><br><span class="line"><span class="comment">#         :rtype: int</span></span><br><span class="line"><span class="comment">#         """</span></span><br><span class="line"><span class="comment">#         i = self._ind</span></span><br><span class="line"><span class="comment">#         self._ind += 1</span></span><br><span class="line"><span class="comment">#         return self._nest[i]</span></span><br><span class="line">            </span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"><span class="comment">#     def hasNext(self):</span></span><br><span class="line"><span class="comment">#         """</span></span><br><span class="line"><span class="comment">#         :rtype: bool</span></span><br><span class="line"><span class="comment">#         """</span></span><br><span class="line"><span class="comment">#         return self._ind &lt; len(self._nest)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Your NestedIterator object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"># i, v = NestedIterator(nestedList), []</span></span><br><span class="line"><span class="comment"># while i.hasNext(): v.append(i.next())</span></span><br></pre></td></tr></table></figure>
           
         
       
@@ -410,7 +396,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/12/hexo_github_blog/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/21/leetcode_343/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -429,7 +415,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/12/hexo_github_blog/" itemprop="url">用hexo+github搭建自己的博客</a></h1>
+                <a class="post-title-link" href="/2018/06/21/leetcode_343/" itemprop="url">leetcode 343. 整数拆分</a></h1>
         
 
         <div class="post-meta">
@@ -441,8 +427,772 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-12T09:02:23+08:00">
-                2018-06-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-21T11:12:48+08:00">
+                2018-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>给定一个正整数 n，将其拆分为至少两个正整数的和，并使这些整数的乘积最大化。 返回你可以获得的最大乘积。</p>
+<p>例如，给定 n = 2，返回1（2 = 1 + 1）；给定 n = 10，返回36（10 = 3 + 3 + 4）。</p>
+<p>注意：你可以假设 n 不小于2且不大于58。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">integerBreak</span><span class="params">(self, n)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type n: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">2</span>:<span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> n == <span class="number">3</span>:<span class="keyword">return</span> <span class="number">2</span></span><br><span class="line">        <span class="keyword">elif</span> n%<span class="number">3</span> == <span class="number">0</span>:<span class="keyword">return</span> <span class="number">3</span>**(n/<span class="number">3</span>)</span><br><span class="line">        <span class="keyword">elif</span> n%<span class="number">3</span> == <span class="number">1</span>:<span class="keyword">return</span> <span class="number">4</span>*<span class="number">3</span>**((n<span class="number">-4</span>)/<span class="number">3</span>)</span><br><span class="line">        <span class="keyword">else</span>:<span class="keyword">return</span> <span class="number">2</span>*<span class="number">3</span>**(n/<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/21/leetcode_344/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/21/leetcode_344/" itemprop="url">数组循环移位</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-21T10:13:34+08:00">
+                2018-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>字符串或数组的翻转，比如输入’hello’, return ‘olleh’.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class Solution(object):</span><br><span class="line">    def reverseString(self, s):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        :type s: str</span><br><span class="line">        :rtype: str</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        slist = list(s)</span><br><span class="line">        def reverse(str1,index1,index2):</span><br><span class="line">            while index1 &lt; index2:</span><br><span class="line">                str1[index1],str1[index2]=str1[index2],str1[index1]</span><br><span class="line">                index1 += 1</span><br><span class="line">                index2 -= 1</span><br><span class="line">        reverse(slist,0,len(slist)-1)</span><br><span class="line">        return &apos;&apos;.join(slist)</span><br></pre></td></tr></table></figure>
+<p>如果要求把字符串或数组向左或右移动k位，也可以通过reverse的方法做</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reverseString</span><span class="params">(self, s,k)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type s: str</span></span><br><span class="line"><span class="string">        :rtype: str</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        slist = list(s)</span><br><span class="line">        N = len(s)</span><br><span class="line">        k %= N</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">reverse</span><span class="params">(str1,index1,index2)</span>:</span></span><br><span class="line">            <span class="keyword">while</span> index1 &lt; index2:</span><br><span class="line">                str1[index1],str1[index2]=str1[index2],str1[index1]</span><br><span class="line">                index1 += <span class="number">1</span></span><br><span class="line">                index2 -= <span class="number">1</span></span><br><span class="line">        reverse(slist,<span class="number">0</span>,N-k<span class="number">-1</span>)</span><br><span class="line">        reverse(slist,N-k,N<span class="number">-1</span>)</span><br><span class="line">        reverse(slist,<span class="number">0</span>,N<span class="number">-1</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">''</span>.join(slist)</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/20/leetcode_347/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/20/leetcode_347/" itemprop="url">leetcode 347. Top K Frequent Elements</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T15:09:04+08:00">
+                2018-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a non-empty array of integers, return the k most frequent elements.</p>
+<p>For example,<br>Given <code>[1,1,1,2,2,3]</code> and k = 2, return <code>[1,2]</code>.</p>
+<p><strong>Note</strong>:   </p>
+<ul>
+<li>You may assume k is always valid, 1 ≤ k ≤ number of unique elements.</li>
+<li>Your algorithm’s time complexity must be better than O(n log n), where n is the array’s size.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">topKFrequent</span><span class="params">(self, nums, k)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :type k: int</span></span><br><span class="line"><span class="string">        :rtype: List[int]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        d = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> nums:</span><br><span class="line">            <span class="keyword">if</span> i <span class="keyword">not</span> <span class="keyword">in</span> d:d[i] = <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>: d[i] += <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> heapq.nlargest(k,d,key=<span class="keyword">lambda</span> x:d[x])</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/20/leetcode_355/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/20/leetcode_355/" itemprop="url">leetcode 355. Design Twitter</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T13:20:27+08:00">
+                2018-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Design a simplified version of Twitter where users can post tweets, follow/unfollow another user and is able to see the 10 most recent tweets in the user’s news feed. Your design should support the following methods:</p>
+<ol>
+<li><strong>postTweet(userId, tweetId)</strong>: Compose a new tweet.</li>
+<li><strong>getNewsFeed(userId)</strong>: Retrieve the 10 most recent tweet ids in the user’s news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent.</li>
+<li><strong>follow(followerId, followeeId)</strong>: Follower follows a followee.</li>
+<li><strong>unfollow(followerId, followeeId)</strong>: Follower unfollows a followee.</li>
+</ol>
+<p><strong>Example</strong>:</p>
+<pre>
+Twitter twitter = new Twitter();
+
+// User 1 posts a new tweet (id = 5).
+twitter.postTweet(1, 5);
+
+// User 1's news feed should return a list with 1 tweet id -> [5].
+twitter.getNewsFeed(1);
+
+// User 1 follows user 2.
+twitter.follow(1, 2);
+
+// User 2 posts a new tweet (id = 6).
+twitter.postTweet(2, 6);
+
+// User 1's news feed should return a list with 2 tweet ids -> [6, 5].
+// Tweet id 6 should precede tweet id 5 because it is posted after tweet id 5.
+twitter.getNewsFeed(1);
+
+// User 1 unfollows user 2.
+twitter.unfollow(1, 2);
+
+// User 1's news feed should return a list with 1 tweet id -> [5],
+// since user 1 is no longer following user 2.
+twitter.getNewsFeed(1);
+</pre>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Twitter</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Initialize your data structure here.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.follows = collections.defaultdict(set)</span><br><span class="line">        self.usertwitter = collections.defaultdict(list)</span><br><span class="line">        self.order = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">postTweet</span><span class="params">(self, userId, tweetId)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Compose a new tweet.</span></span><br><span class="line"><span class="string">        :type userId: int</span></span><br><span class="line"><span class="string">        :type tweetId: int</span></span><br><span class="line"><span class="string">        :rtype: void</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.usertwitter[userId] += (self.order, tweetId), </span><br><span class="line">        self.order -= <span class="number">1</span></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getNewsFeed</span><span class="params">(self, userId)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent.</span></span><br><span class="line"><span class="string">        :type userId: int</span></span><br><span class="line"><span class="string">        :rtype: List[int]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        tw = sorted(tw <span class="keyword">for</span> i <span class="keyword">in</span> self.follows[userId] | &#123;userId&#125; <span class="keyword">for</span> tw <span class="keyword">in</span> self.usertwitter[i])[:<span class="number">10</span>]</span><br><span class="line">        <span class="keyword">return</span> [news <span class="keyword">for</span> i, news <span class="keyword">in</span> tw]</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">follow</span><span class="params">(self, followerId, followeeId)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Follower follows a followee. If the operation is invalid, it should be a no-op.</span></span><br><span class="line"><span class="string">        :type followerId: int</span></span><br><span class="line"><span class="string">        :type followeeId: int</span></span><br><span class="line"><span class="string">        :rtype: void</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.follows[followerId].add(followeeId)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">unfollow</span><span class="params">(self, followerId, followeeId)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Follower unfollows a followee. If the operation is invalid, it should be a no-op.</span></span><br><span class="line"><span class="string">        :type followerId: int</span></span><br><span class="line"><span class="string">        :type followeeId: int</span></span><br><span class="line"><span class="string">        :rtype: void</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.follows[followerId].discard(followeeId)</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/19/leetcode_363/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/19/leetcode_363/" itemprop="url">leetcode 363. Max Sum of Rectangle No Larger Than K</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-19T17:33:00+08:00">
+                2018-06-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Given a non-empty 2D matrix matrix and an integer k, find the max sum of a rectangle in the <em>matrix</em> such that its sum is no larger than k.</p>
+<p><strong>Example</strong>:</p>
+<pre>
+Given matrix = [
+  [1,  0, 1],
+  [0, -2, 3]
+]
+k = 2
+</pre>
+
+<p>The answer is <code>2</code>. Because the sum of rectangle <code>[[0, 1], [-2, 3]]</code> is 2 and 2 is the max number no larger than k (k = 2).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxSubArray</span><span class="params">(self,nums,k)</span>:</span></span><br><span class="line">        </span><br><span class="line">        cumset=[]</span><br><span class="line">        cumset.append(<span class="number">0</span>)</span><br><span class="line">        maxsum=<span class="number">-1</span>&lt;&lt;<span class="number">32</span></span><br><span class="line">        cursum=<span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)):</span><br><span class="line">            cursum+=nums[i]</span><br><span class="line">            <span class="comment"># find the lower bound of the index</span></span><br><span class="line">            idx=bisect.bisect_left(cumset,cursum-k)</span><br><span class="line">            <span class="comment"># find max in sum[right]-sum[left]&lt;=k</span></span><br><span class="line">            <span class="keyword">if</span> <span class="number">0</span>&lt;=idx&lt;len(cumset):</span><br><span class="line">                maxsum=max(maxsum,cursum-cumset[idx])</span><br><span class="line">            <span class="comment"># using insort instead of append since bisect_left reason</span></span><br><span class="line">            bisect.insort(cumset,cursum)</span><br><span class="line">        <span class="keyword">return</span> maxsum</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxSumSubmatrix</span><span class="params">(self,matrix, k)</span>:</span></span><br><span class="line">    </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> matrix <span class="keyword">or</span> <span class="keyword">not</span> matrix[<span class="number">0</span>]:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        row,col=len(matrix),len(matrix[<span class="number">0</span>])</span><br><span class="line">        res=-(<span class="number">1</span>&lt;&lt;<span class="number">32</span>)</span><br><span class="line">        <span class="keyword">for</span> left <span class="keyword">in</span> range(col):</span><br><span class="line">            cursums=[<span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> range(row)]</span><br><span class="line">            right=left</span><br><span class="line">            <span class="keyword">while</span> right&lt;col:</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> range(row):</span><br><span class="line">                    cursums[i]+=matrix[i][right]</span><br><span class="line">                curarrmax=self.maxSubArray(cursums,k)</span><br><span class="line">                res=max(res,curarrmax)</span><br><span class="line">                right+=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/19/git_hexo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/19/git_hexo/" itemprop="url">git+hexo博客绑定域名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-19T09:47:45+08:00">
+                2018-06-19
               </time>
             
 
@@ -504,27 +1254,12 @@
         
           
             <ol>
-<li>安装git客户端</li>
-<li>安装node.js</li>
-<li><p>使用npm安装hexo</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<li>买一个域名，在你的域名管理有一个解析的选项，添加两条记录类型为CNAME的解析，一条主机记录为@，一条主机记录为www，记录值都为你的格式为xxxx.github.io的地址。</li>
+<li><p>在你的本地hexo博客文件的source文件夹下创建一个CNAME文件，记住不要有文件后缀名。编辑CNAME文件，里面写你在第一步申请的域名，例如xxxx.cn，记住不要有www，不要有http://。</p>
 </li>
-<li><p>初始化博客文件夹</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo i blog</span><br></pre></td></tr></table></figure>
+<li><p>在你本地博客文件里运行hexo g，再运行hexo d。</p>
 </li>
-<li><p>选择主题（非必选），把主题包放在themes文件夹下，修改_config.yml文件中theme字段改为主题名称</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/iissnan/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>github账号注册，创建仓库yourname.github.io</p>
-</li>
-<li><p>修改hexo站点的配置文件_config.yml</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">      type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">      repository:</span> <span class="string">git@github.com:zhuanli555/zhuanli555.github.io.git</span></span><br><span class="line"><span class="attr">      branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>部署到github</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br><span class="line">hexo new "postname"</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>打开<a href="http://zhuanli555.github.io" target="_blank" rel="noopener">http://zhuanli555.github.io</a> 访问</p>
-</li>
+<li>访问你的域名</li>
 </ol>
 
           
@@ -574,7 +1309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/leetcode_368/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/15/leetcode_300/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -593,7 +1328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/11/leetcode_368/" itemprop="url">leetcode 368. Largest Divisible Subset</a></h1>
+                <a class="post-title-link" href="/2018/06/15/leetcode_300/" itemprop="url">leetcode 300. 最长递增子序列</a></h1>
         
 
         <div class="post-meta">
@@ -605,8 +1340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-11T15:19:16+08:00">
-                2018-06-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-15T16:24:17+08:00">
+                2018-06-15
               </time>
             
 
@@ -667,21 +1402,174 @@
       
         
           
-            <p>Given a set of distinct positive integers, find the largest subset such that every pair (Si, Sj) of elements in this subset satisfies: Si % Sj = 0 or Sj % Si = 0.</p>
-<p>If there are multiple solutions, return any subset is fine.</p>
-<p><strong>Example 1</strong>:</p>
+            <p>给定一个无序的整数数组，找到其中最长递增子序列的长度。</p>
+<p>示例:</p>
 <pre>
-nums: [1,2,3]
-Result: [1,2] (of course, [1,3] will also be ok)
+输入: [10,9,2,5,3,7,101,18]
+输出: 4 
+解释: 最长的递增子序列是 [2,3,7,101]，它的长度是 4。
 </pre>
 
-<p><strong>Example 2</strong>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bisect <span class="keyword">import</span> bisect_left</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">lengthOfLIS</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> nums:</span><br><span class="line">            index = bisect_left(res,i)</span><br><span class="line">            <span class="keyword">if</span> index == len(res):</span><br><span class="line">                res.append(i)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res[index] = i</span><br><span class="line">        <span class="keyword">return</span> len(res)</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/15/leetcode_354/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/15/leetcode_354/" itemprop="url">leetcode 354. 俄罗斯套娃信封问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-15T15:46:58+08:00">
+                2018-06-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>给定一些标记了宽度和高度的信封，宽度和高度以整数对形式 (w, h) 出现。当另一个信封的宽度和高度都比这个信封大的时候，这个信封就可以放进另一个信封里，如同俄罗斯套娃一样。</p>
+<p>请计算最多能有多少个信封能组成一组“俄罗斯套娃”信封（即可以把一个信封放到另一个信封里面）。</p>
+<p>示例:</p>
 <pre>
-nums: [1,2,4,8]
-Result: [1,2,4,8]
+输入: envelopes = [[5,4],[6,4],[6,7],[2,3]]
+输出: 3 
+解释: 最多信封的个数为 3, 组合为: [2,3] => [5,4] => [6,7]。
 </pre>
 
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">largestDivisibleSubset</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :rtype: List[int]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> nums:<span class="keyword">return</span> []</span><br><span class="line">        nums.sort()</span><br><span class="line">        n = len(nums)</span><br><span class="line">        dp = [<span class="number">1</span>]*n</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,n):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i<span class="number">-1</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">                <span class="keyword">if</span> nums[i]%nums[j] == <span class="number">0</span>:</span><br><span class="line">                    dp[i] = max(dp[i],dp[j] + <span class="number">1</span>)</span><br><span class="line">        <span class="comment">#根据dp数组找出符合规定的一条数据</span></span><br><span class="line">        out = []</span><br><span class="line">        curval = <span class="number">0</span></span><br><span class="line">        curlen = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(dp)):</span><br><span class="line">            <span class="keyword">if</span> curlen &lt; dp[i]:</span><br><span class="line">                curlen = dp[i]</span><br><span class="line">                curval = nums[i]</span><br><span class="line">        out.append(curval)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n<span class="number">-1</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">            <span class="keyword">if</span> curval%nums[i] == <span class="number">0</span> <span class="keyword">and</span> dp[i] == curlen - <span class="number">1</span>:</span><br><span class="line">                curlen = curlen<span class="number">-1</span></span><br><span class="line">                curval = nums[i]</span><br><span class="line">                out.append(curval)</span><br><span class="line">        <span class="keyword">return</span> out</span><br></pre></td></tr></table></figure>
+<ul>
+<li>o(n^2) solution</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxEnvelopes</span><span class="params">(self, envelopes)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type envelopes: List[List[int]]</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> envelopes:<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        nums = sorted(envelopes,key=<span class="keyword">lambda</span> x: x)</span><br><span class="line">        dp = [<span class="number">1</span>]*len(nums)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,len(nums)):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i<span class="number">-1</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">                <span class="keyword">if</span> nums[i][<span class="number">0</span>] &gt; nums[j][<span class="number">0</span>] <span class="keyword">and</span> nums[i][<span class="number">1</span>] &gt; nums[j][<span class="number">1</span>]:</span><br><span class="line">                    dp[i] = max(dp[i],dp[j]+<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">        <span class="keyword">return</span> max(dp)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>o(n*logn) solution</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> bisect</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxEnvelopes</span><span class="params">(self, envelopes)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type envelopes: List[List[int]]</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> envelopes:<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        envs = sorted(envelopes,key=<span class="keyword">lambda</span> (x,y): (x,-y))</span><br><span class="line">        tails=[]</span><br><span class="line">        <span class="keyword">for</span> (w,h) <span class="keyword">in</span> envs:</span><br><span class="line">            idx=bisect.bisect_left(tails, h)</span><br><span class="line">            <span class="keyword">if</span> idx==len(tails):</span><br><span class="line">                tails.append(h)                        </span><br><span class="line">            <span class="keyword">elif</span> idx==<span class="number">0</span> <span class="keyword">or</span> tails[idx<span class="number">-1</span>]&lt;h:</span><br><span class="line">                tails[idx]=h</span><br><span class="line">        <span class="keyword">return</span> len(tails)</span><br></pre></td></tr></table></figure>
+<p>解释：通过对w升序排列，对h降序排列，然后h的最长递增子序列长度就是题目要求的长度；求最长递增子序列通过二分法优化成o(n*logn)</p>
+
           
         
       
@@ -729,7 +1617,7 @@ Result: [1,2,4,8]
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/10/leetcode_372/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/14/leetcode_ksum/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -748,7 +1636,7 @@ Result: [1,2,4,8]
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/10/leetcode_372/" itemprop="url">leetcode 372. Super Pow</a></h1>
+                <a class="post-title-link" href="/2018/06/14/leetcode_ksum/" itemprop="url">关于leetcode 2sum、3sum、4sum到ksum的情况分析</a></h1>
         
 
         <div class="post-meta">
@@ -760,8 +1648,8 @@ Result: [1,2,4,8]
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-10T22:05:25+08:00">
-                2018-06-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-14T11:26:42+08:00">
+                2018-06-14
               </time>
             
 
@@ -822,944 +1710,8 @@ Result: [1,2,4,8]
       
         
           
-            <p>Your task is to calculate a**b mod 1337 where a is a positive integer and b is an extremely large positive integer given in the form of an array.   </p>
-<p><strong>Example1</strong>:</p>
-<p><pre><br>a = 2<br>b = [3]</pre></p>
-<p>Result: 8<br><br><strong>Example2</strong>:</p>
-<p><pre><br>a = 2<br>b = [1,0]</pre></p>
-<p>Result: 1024<br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">superPow</span><span class="params">(self, a, b)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type a: int</span></span><br><span class="line"><span class="string">        :type b: List[int]</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment">#f(a,123456) = f(a,123450)*pow(a,6)=f(pow(a,10),12345)*pow(a,6)</span></span><br><span class="line">        <span class="comment">#n1*n2%k = (n1%k)(n2%k)%k</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> b:<span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> pow(a, b.pop(), <span class="number">1337</span>)*self.superPow(pow(a, <span class="number">10</span>, <span class="number">1337</span>), b)%<span class="number">1337</span></span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/08/python_unicode/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/08/python_unicode/" itemprop="url">python2和python3的字符编码问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-08T15:31:00+08:00">
-                2018-06-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Python2和Python3在字符串编码上是有明显的区别。</p>
-<p>在Python2中，字符串无法完全地支持国际字符集和Unicode编码。为了解决这种限制，Python2对Unicode数据使用了单独的字符串类型。要输入Unicode字符串字面量，要在第一个引号前加上’u’。Python2中普通字符串实际上就是已经编码(非Unicode)的字节字符串。</p>
-<p>在Python3中，不必加入这个前缀字符，否则是语法错误，这是因为所有的字符串默认已经是Unicode编码了。</p>
-<h3 id="python2实例："><a href="#python2实例：" class="headerlink" title="python2实例："></a>python2实例：</h3><p>>&gt;&gt; ‘张三’  #python2 会自动将字符串转换为合适编码的字节字符串<br>‘\xe5\xbc\xa0\xe4\xbf\x8a’ #自动转换为utf-8编码的字节字符串</p>
-<p>>&gt;&gt; u’张三’ #显式指定字符串类型为unicode类型， 此类型字符串没有编码，保存的是字符在unicode字符集中的代码序号<br>u’\u5f20\u4fca’</p>
-<p>>&gt;&gt; ‘张三’.encode(‘utf-8’)  #python2 已经自动将其转化为utf-8类型编码，因此再次编码(python2会将该字符串当作用ascii或unicode编码过)会出现错误。<br>Traceback (most recent call last):<br>File “<stdin>“, line 1, in <module><br>UnicodeDecodeError: ‘ascii’ codec can’t decode byte 0xe5 in position 0: ordinal not in range(128)</module></stdin></p>
-<p>>&gt;&gt; ‘张三’.decode(‘utf-8’)  #python2 可以正常解码，返回的字符串类是无编码的unicode类型<br>u’\u5f20\u4fca’</p>
-<p>>&gt;&gt; b’张三’   # ‘张三’ 已被python2转换为utf-8编码，因此已为字节字符串<br>‘\xe5\xbc\xa0\xe4\xbf\x8a’</p>
-<p>>&gt;&gt; print ‘张三’<br>张三</p>
-<p>>&gt;&gt; print u’张三’<br>张三</p>
-<p>>&gt;&gt; print b’张三’<br>张三</p>
-<h3 id="python3实例："><a href="#python3实例：" class="headerlink" title="python3实例："></a>python3实例：</h3><p>>&gt;&gt; ‘张三’ #python3的字符串默认为unicode格式(无编码)<br>‘张三’</p>
-<p>>&gt;&gt; u’张三’ #由于默认为unicode格式，因此字符串不用像python2一样显式地指出其类型，否则是语法错误。<br>File “<stdin>“, line 1<br>u’张三’<br>^<br>SyntaxError: invalid syntax</stdin></p>
-<p>>&gt;&gt; type(‘张三’) #python3中文本字符串和字节字符串是严格区分的，默认为unicode格式的文本字符串</p>
-<class 'str'="">
-
-<p>>&gt;&gt; ‘张三’.decode(‘utf-8’) #因为默认的文本字符串为unicode格式，因此文本字符串没有decode方法<br>Traceback (most recent call last):<br>File “<stdin>“, line 1, in <module><br>AttributeError: ‘str’ object has no attribute ‘decode’</module></stdin></p>
-<p>>&gt;&gt; ‘张三’.encode(‘utf-8’) #将文本字符串编码，转换为已编码的字节字符串类型<br>b’\xe5\xbc\xa0\xe4\xbf\x8a’</p>
-<p>>&gt;&gt; type(‘张三’.encode(‘utf-8’))</p>
-<class 'bytes'="">
-
-<p>>&gt;&gt; print (‘张三’.encode(‘utf-8’)) #对于已编码的字节字符串，文本字符串的许多特性和方法已经不能使用。<br>b’\xe5\xbc\xa0\xe4\xbf\x8a’</p>
-<p>>&gt;&gt;print (‘张三’.encode(‘utf-8’))<br>b’\xe5\xbc\xa0\xe4\xbf\x8a’</p>
-<p>>&gt;&gt; print (‘张三’.encode(‘utf-8’).decode(‘utf-8’))  #必须将字节字符串解码后才能打印出来<br>张三</p>
-</class></class>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/08/leetcode_375/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/08/leetcode_375/" itemprop="url">leetcode 375. Guess Number Higher or Lower II</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-08T09:28:41+08:00">
-                2018-06-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>We are playing the Guess Game. The game is as follows:</p>
-<p>I pick a number from 1 to n. You have to guess which number I picked.</p>
-<p>Every time you guess wrong, I’ll tell you whether the number I picked is higher or lower.</p>
-<p>However, when you guess a particular number x, and you guess wrong, you pay $x. You win the game when you guess the number I picked.</p>
-<p><strong>Example</strong>:</p>
-<p><pre><br>n = 10, I pick 8.</pre></p>
-<p>First round:  You guess 5, I tell you that it’s higher. You pay $5.<br>Second round: You guess 7, I tell you that it’s higher. You pay $7.<br>Third round:  You guess 9, I tell you that it’s lower. You pay $9.</p>
-<p>Game over. 8 is the number I picked.</p>
-<p>You end up paying $5 + $7 + $9 = $21.<br><br>Given a particular <code>n ≥ 1</code>, find out how much money you need to have to guarantee a win.</p>
-<ul>
-<li>dfs</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getMoneyAmount</span><span class="params">(self, n)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type n: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        :dfs</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment">#dp[i][j] = x + max(dp[i][x-1],dp[x+1][j])</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(dp,left,right)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> left &gt;= right:<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">            <span class="keyword">if</span> dp[left][right]: <span class="keyword">return</span> dp[left][right]</span><br><span class="line">            ans = float(<span class="string">"inf"</span>)</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(left,right+<span class="number">1</span>):</span><br><span class="line">                ans = min(ans,i+max(dfs(dp,left,i<span class="number">-1</span>),dfs(dp,i+<span class="number">1</span>,right)))</span><br><span class="line">            dp[left][right] = ans</span><br><span class="line">            <span class="keyword">return</span> ans</span><br><span class="line">        </span><br><span class="line">        dp = [[<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(n+<span class="number">1</span>)] <span class="keyword">for</span> j <span class="keyword">in</span> range(n+<span class="number">1</span>) ]</span><br><span class="line">        dfs(dp,<span class="number">1</span>,n)</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">1</span>][n]</span><br></pre></td></tr></table></figure>
-<ul>
-<li>dp</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getMoneyAmountDP</span><span class="params">(self, n)</span>:</span></span><br><span class="line">        dp = [[<span class="number">0</span>] * (n+<span class="number">1</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> xrange(n+<span class="number">1</span>)]</span><br><span class="line">        <span class="keyword">for</span> l <span class="keyword">in</span> xrange(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">1</span>, n-l+<span class="number">2</span>):</span><br><span class="line">                min_cost = float(<span class="string">'inf'</span>)</span><br><span class="line">                j = i + l - <span class="number">1</span></span><br><span class="line">                <span class="keyword">for</span> p <span class="keyword">in</span> xrange(i, j):</span><br><span class="line">                    res = p + max(dp[i][p<span class="number">-1</span>], dp[p+<span class="number">1</span>][j])</span><br><span class="line">                    min_cost = min(min_cost, res)</span><br><span class="line">                dp[i][j] = min_cost</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/07/leetcode_373/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/07/leetcode_373/" itemprop="url">leetcode 373. Find K Pairs with Smallest Sums</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-07T13:07:09+08:00">
-                2018-06-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>You are given two integer arrays <strong>nums1</strong> and <strong>nums2</strong> sorted in ascending order and an integer <strong>k</strong>.</p>
-<p>Define a pair <code>(u,v)</code> which consists of one element from the first array and one element from the second array.</p>
-<p>Find the k pairs <strong>(u1,v1),(u2,v2) …(uk,vk)</strong> with the smallest sums.</p>
-<p><strong>Example 1</strong>:</p>
-<p><pre><br>Given nums1 = [1,7,11], nums2 = [2,4,6],  k = 3</pre></p>
-<p>Return: [1,2],[1,4],[1,6]</p>
-<p>The first 3 pairs are returned from the sequence:<br>[1,2],[1,4],[1,6],[7,2],[7,4],[11,2],[7,6],[11,4],[11,6]<br><br><strong>Example 2</strong>:</p>
-<p><pre><br>Given nums1 = [1,1,2], nums2 = [1,2,3],  k = 2</pre></p>
-<p>Return: [1,1],[1,1]</p>
-<p>The first 2 pairs are returned from the sequence:<br>[1,1],[1,1],[1,2],[2,1],[1,2],[2,2],[1,3],[1,3],[2,3]<br><br><strong>Example 3</strong>:  </p>
-<p><pre><br>Given nums1 = [1,2], nums2 = [3],  k = 3 </pre></p>
-<p>Return: [1,3],[2,3]</p>
-<p>All possible pairs are returned from the sequence:<br>[1,3],[2,3]<br></p>
-<ul>
-<li>mysolution the limit exceeded  </li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">kSmallestPairs</span><span class="params">(self, nums1, nums2, k)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type nums1: List[int]</span></span><br><span class="line"><span class="string">        :type nums2: List[int]</span></span><br><span class="line"><span class="string">        :type k: int</span></span><br><span class="line"><span class="string">        :rtype: List[List[int]]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        tmp = []</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> nums1 <span class="keyword">or</span> <span class="keyword">not</span> nums2:</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> nums1:</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> nums2:</span><br><span class="line">                tmp.append([i+j,i,j])</span><br><span class="line">        tmp = sorted(tmp,key=<span class="keyword">lambda</span> x:x[<span class="number">0</span>])</span><br><span class="line">        out = []</span><br><span class="line">        <span class="keyword">for</span> l <span class="keyword">in</span> tmp:</span><br><span class="line">            out.append(l[<span class="number">1</span>:])</span><br><span class="line">        <span class="keyword">if</span> k &gt; len(out):<span class="keyword">return</span> out</span><br><span class="line">        <span class="keyword">return</span> out[:k]</span><br></pre></td></tr></table></figure>
-<ul>
-<li>a o(k*logk) solution</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> heapq <span class="keyword">import</span> *</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">kSmallestPairs</span><span class="params">(self, nums1, nums2, k)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type nums1: List[int]</span></span><br><span class="line"><span class="string">        :type nums2: List[int]</span></span><br><span class="line"><span class="string">        :type k: int</span></span><br><span class="line"><span class="string">        :rtype: List[List[int]]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> nums1 <span class="keyword">or</span> <span class="keyword">not</span> nums2:</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line">        </span><br><span class="line">        heap = [(nums1[<span class="number">0</span>] + nums2[<span class="number">0</span>], <span class="number">0</span>, <span class="number">0</span>)] </span><br><span class="line">        visited = set()</span><br><span class="line">        output = []</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> len(output) &lt; k <span class="keyword">and</span> heap:</span><br><span class="line">            val = heappop(heap)</span><br><span class="line">            output.append([nums1[val[<span class="number">1</span>]], nums2[val[<span class="number">2</span>]]])</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> val[<span class="number">1</span>] &lt; len(nums1) - <span class="number">1</span> <span class="keyword">and</span> (val[<span class="number">1</span>]+<span class="number">1</span>, val[<span class="number">2</span>]) <span class="keyword">not</span> <span class="keyword">in</span> visited:</span><br><span class="line">                visited.add((val[<span class="number">1</span>]+<span class="number">1</span>, val[<span class="number">2</span>]))</span><br><span class="line">                heappush(heap, (nums1[val[<span class="number">1</span>] + <span class="number">1</span>] + nums2[val[<span class="number">2</span>]], val[<span class="number">1</span>] + <span class="number">1</span>, val[<span class="number">2</span>]))</span><br><span class="line">            <span class="keyword">if</span> val[<span class="number">2</span>] &lt; len(nums2) - <span class="number">1</span> <span class="keyword">and</span> (val[<span class="number">1</span>], val[<span class="number">2</span>] + <span class="number">1</span>) <span class="keyword">not</span> <span class="keyword">in</span> visited:</span><br><span class="line">                visited.add((val[<span class="number">1</span>], val[<span class="number">2</span>] + <span class="number">1</span>))</span><br><span class="line">                heappush(heap, (nums1[val[<span class="number">1</span>]] + nums2[val[<span class="number">2</span>] + <span class="number">1</span>], val[<span class="number">1</span>], val[<span class="number">2</span>] + <span class="number">1</span>))</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> output</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/07/git_search/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/07/git_search/" itemprop="url">git操作速查表</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-07T10:07:46+08:00">
-                2018-06-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tools/" itemprop="url" rel="index">
-                    <span itemprop="name">tools</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="/static/img/git_search.jpg" alt="git速查表"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/06/leetcode_378/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/06/leetcode_378/" itemprop="url">leetcode 378. Kth Smallest Element in a Sorted Matrix</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-06T09:57:57+08:00">
-                2018-06-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a n x n matrix where each of the rows and columns are sorted in ascending order, find the kth smallest element in the matrix.</p>
-<p>Note that it is the kth smallest element in the sorted order, not the kth distinct element.</p>
-<p><strong>Example:</strong></p>
-<p><pre><br>matrix = [<br>   [ 1,  5,  9],<br>   [10, 11, 13],<br>   [12, 13, 15]<br>],<br>k = 8,</pre></p>
-<p>return 13.<br><br><strong>Note</strong>:<br>You may assume k is always valid, 1 ≤ k ≤ n2.</p>
-<ul>
-<li>simple solution   </li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">kthSmallest</span><span class="params">(self, matrix, k)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type matrix: List[List[int]]</span></span><br><span class="line"><span class="string">        :type k: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        slist = []</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> matrix:</span><br><span class="line">            slist.extend(row)</span><br><span class="line">        slist.sort()</span><br><span class="line">        <span class="keyword">return</span> slist[k<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#binary search</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">kthSmallest</span><span class="params">(self, matrix, k)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type matrix: List[List[int]]</span></span><br><span class="line"><span class="string">        :type k: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        m, n = len(matrix), len(matrix[<span class="number">0</span>])</span><br><span class="line">        left, right = matrix[<span class="number">0</span>][<span class="number">0</span>], matrix[m<span class="number">-1</span>][n<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">while</span> left &lt; right:</span><br><span class="line">            mid = left+(right-left)//<span class="number">2</span></span><br><span class="line">            cnt = <span class="number">0</span></span><br><span class="line">            j = n<span class="number">-1</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(m):</span><br><span class="line">                <span class="keyword">while</span> j &gt;= <span class="number">0</span> <span class="keyword">and</span> matrix[i][j] &gt; mid:</span><br><span class="line">                    j -= <span class="number">1</span></span><br><span class="line">                cnt += (j+<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">if</span> cnt &lt; k: left = mid+<span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>: right = mid</span><br><span class="line">        <span class="keyword">return</span> left</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/05/leetcode_381/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/05/leetcode_381/" itemprop="url">leetcode 381. Insert Delete GetRandom O(1) - Duplicates allowed</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-05T14:34:07+08:00">
-                2018-06-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Design a data structure that supports all following operations in average <code>O(1)</code> time.</p>
-<p><strong>Note: Duplicate elements are allowed</strong>.  </p>
-<ol>
-<li><code>insert(val)</code>: Inserts an item val to the collection.</li>
-<li><code>remove(val)</code>: Removes an item val from the collection if present.</li>
-<li><code>getRandom</code>: Returns a random element from current collection of elements. The probability of each element being returned is <strong>linearly related</strong> to the number of same value the collection contains.</li>
-</ol>
-<p><strong>Example</strong>:</p>
-<p><pre><br>// Init an empty collection.<br>RandomizedCollection collection = new RandomizedCollection();</pre></p>
-<p>// Inserts 1 to the collection. Returns true as the collection did not contain 1.<br>collection.insert(1);</p>
-<p>// Inserts another 1 to the collection. Returns false as the collection contained 1. Collection now contains [1,1].<br>collection.insert(1);</p>
-<p>// Inserts 2 to the collection, returns true. Collection now contains [1,1,2].<br>collection.insert(2);</p>
-<p>// getRandom should return 1 with the probability 2/3, and returns 2 with the probability 1/3.<br>collection.getRandom();</p>
-<p>// Removes 1 from the collection, returns true. Collection now contains [1,2].<br>collection.remove(1);</p>
-<p>// getRandom should return 1 and 2 both equally likely.<br>collection.getRandom();<br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RandomizedCollection</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Initialize your data structure here.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.nums = []</span><br><span class="line">        self.dic = collections.defaultdict(set)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">insert</span><span class="params">(self, val)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Inserts a value to the collection. Returns true if the collection did not already contain the specified element.</span></span><br><span class="line"><span class="string">        :type val: int</span></span><br><span class="line"><span class="string">        :rtype: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.nums.append(val)</span><br><span class="line">        self.dic[val].add(len(self.nums) - <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> len(self.dic[val]) == <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">remove</span><span class="params">(self, val)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Removes a value from the collection. Returns true if the collection contained the specified element.</span></span><br><span class="line"><span class="string">        :type val: int</span></span><br><span class="line"><span class="string">        :rtype: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> self.dic[val]:</span><br><span class="line">            rmindex,lastval = self.dic[val].pop(),self.nums[<span class="number">-1</span>]</span><br><span class="line">            self.nums[rmindex] = lastval</span><br><span class="line">            self.dic[lastval].add(rmindex)</span><br><span class="line">            self.dic[lastval].discard(len(self.nums)<span class="number">-1</span>)</span><br><span class="line">            self.nums.pop()</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getRandom</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Get a random element from the collection.</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">import</span> random</span><br><span class="line">        <span class="keyword">return</span> random.choice(self.nums)</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Your RandomizedCollection object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"># obj = RandomizedCollection()</span></span><br><span class="line"><span class="comment"># param_1 = obj.insert(val)</span></span><br><span class="line"><span class="comment"># param_2 = obj.remove(val)</span></span><br><span class="line"><span class="comment"># param_3 = obj.getRandom()</span></span><br></pre></td></tr></table></figure></p>
-
+            <p>通过<a href="http://118.25.45.162:8360/about" target="_blank" rel="noopener">#2sum</a>,<a href="http://118.25.45.162:8360/post/leetcode_15.html" target="_blank" rel="noopener">#3sum</a>,<a href="http://118.25.45.162:8360/post/leetcode_18.html" target="_blank" rel="noopener">#4sum</a><br>推广到ksum的情况</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findKsum</span><span class="params">(self, nums, target, N, result, results)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> len(nums) &lt; N <span class="keyword">or</span> N&lt;<span class="number">2</span> <span class="keyword">or</span> target &lt; nums[<span class="number">0</span>]*N <span class="keyword">or</span> target&gt;nums[<span class="number">-1</span>]*N :</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line">        <span class="keyword">if</span> N ==<span class="number">2</span>:</span><br><span class="line">            l=<span class="number">0</span></span><br><span class="line">            r = len(nums)<span class="number">-1</span></span><br><span class="line">            <span class="keyword">while</span> l&lt;r:</span><br><span class="line">                s = nums[l]+nums[r]</span><br><span class="line">                <span class="keyword">if</span> s == target:</span><br><span class="line">                    results.append(result + [nums[l], nums[r]])</span><br><span class="line">                    l +=<span class="number">1</span></span><br><span class="line">                    <span class="keyword">while</span> l&lt;r <span class="keyword">and</span> nums[l]==nums[l<span class="number">-1</span>]:</span><br><span class="line">                        l += <span class="number">1</span></span><br><span class="line">                <span class="keyword">elif</span> s&lt;target:</span><br><span class="line">                    l+=<span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    r-=<span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">for</span> i, x <span class="keyword">in</span> enumerate(nums[:-(N<span class="number">-1</span>)]):</span><br><span class="line">                <span class="keyword">if</span> i&gt;<span class="number">0</span> <span class="keyword">and</span> nums[i]==nums[i<span class="number">-1</span>]:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                self.findKsum(nums[i+<span class="number">1</span>:], target - x, N<span class="number">-1</span>, result + [x], results)</span><br><span class="line">        <span class="keyword">return</span> results</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1798,7 +1750,7 @@ Result: [1,2,4,8]
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1844,7 +1796,7 @@ Result: [1,2,4,8]
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">139</span>
+                  <span class="site-state-item-count">151</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1866,7 +1818,7 @@ Result: [1,2,4,8]
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

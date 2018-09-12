@@ -249,7 +249,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/20/leetcode_347/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/05/leetcode_330/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -268,7 +268,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/20/leetcode_347/" itemprop="url">leetcode 347. Top K Frequent Elements</a></h1>
+                <a class="post-title-link" href="/2018/07/05/leetcode_330/" itemprop="url">leetcode 330. 按要求补齐数组</a></h1>
         
 
         <div class="post-meta">
@@ -280,8 +280,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T15:09:04+08:00">
-                2018-06-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-05T14:28:38+08:00">
+                2018-07-05
               </time>
             
 
@@ -342,14 +342,40 @@
       
         
           
-            <p>Given a non-empty array of integers, return the k most frequent elements.</p>
-<p>For example,<br>Given <code>[1,1,1,2,2,3]</code> and k = 2, return <code>[1,2]</code>.</p>
-<p><strong>Note</strong>:   </p>
+            <p>给定一个已排序的正整数数组 nums，和一个正整数 n 。从 <code>[1, n]</code> 区间内选取任意个数字补充到 nums 中，使得 <code>[1, n]</code> 区间内的任何数字都可以用 nums 中某几个数字的和来表示。请输出满足上述要求的最少需要补充的数字个数。</p>
+<p>示例 1:</p>
+<pre>
+输入: nums = [1,3], n = 6
+输出: 1 
+解释:
+根据 nums 里现有的组合 [1], [3], [1,3]，可以得出 1, 3, 4。
+现在如果我们将 2 添加到 nums 中， 组合变为: [1], [2], [3], [1,3], [2,3], [1,2,3]。
+其和可以表示数字 1, 2, 3, 4, 5, 6，能够覆盖 [1, 6] 区间里所有的数。
+所以我们最少需要添加一个数字。
+</pre>
+
+<p>示例 2:</p>
+<pre>
+输入: nums = [1,5,10], n = 20
+输出: 2
+解释: 我们需要添加 [2, 4]。
+</pre>
+
+<p>示例 3:</p>
+<pre>
+输入: nums = [1,2,2], n = 5
+输出: 0
+</pre>
+
 <ul>
-<li>You may assume k is always valid, 1 ≤ k ≤ number of unique elements.</li>
-<li>Your algorithm’s time complexity must be better than O(n log n), where n is the array’s size.</li>
+<li>mysolution </li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">topKFrequent</span><span class="params">(self, nums, k)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :type k: int</span></span><br><span class="line"><span class="string">        :rtype: List[int]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        d = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> nums:</span><br><span class="line">            <span class="keyword">if</span> i <span class="keyword">not</span> <span class="keyword">in</span> d:d[i] = <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>: d[i] += <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> heapq.nlargest(k,d,key=<span class="keyword">lambda</span> x:d[x])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">greedy</span><span class="params">(nums,n)</span>:</span></span><br><span class="line">    needed = set(range(<span class="number">1</span>,n+<span class="number">1</span>))<span class="comment">#all need to </span></span><br><span class="line">    covered = set()<span class="comment">#cover to all</span></span><br><span class="line">    tmpcover = []</span><br><span class="line">    full = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> nums:</span><br><span class="line">        <span class="keyword">if</span> i &lt;= n:full.append(i)</span><br><span class="line">    pick = needed-set(full)<span class="comment">#can choose num</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> full:</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> covered:</span><br><span class="line">            tmpcover.append(i+j)</span><br><span class="line">        tmpcover.append(i)</span><br><span class="line">        covered = set(tmpcover)</span><br><span class="line">    needed -= covered</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> needed:</span><br><span class="line">        state_covered = set()</span><br><span class="line">        k = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> pick:<span class="comment">#find suitable picknum to maxsuit needed</span></span><br><span class="line">            tmpcover = []</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> covered:</span><br><span class="line">                tmpcover.append(i+j)</span><br><span class="line">            tmpcover.append(i)</span><br><span class="line">            state_covered = set(tmpcover)</span><br><span class="line">            state_covered = needed&amp;state_covered</span><br><span class="line">            <span class="keyword">if</span> len(state_covered) &gt; k:</span><br><span class="line">                k = len(state_covered)</span><br><span class="line">                covered = state_covered</span><br><span class="line">        needed -= covered</span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> count</span><br></pre></td></tr></table></figure>
+<ul>
+<li>clear solution</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">greedy</span><span class="params">(nums,n)</span>:</span></span><br><span class="line">    miss,added,i=<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> miss &lt;= n: </span><br><span class="line">        <span class="keyword">if</span> i &lt; len(nums) <span class="keyword">and</span> nums[i] &lt;= miss:</span><br><span class="line">            miss += nums[i]</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            miss += miss</span><br><span class="line">            added += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> added</span><br></pre></td></tr></table></figure>
+
           
         
       
@@ -397,7 +423,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/20/leetcode_355/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/04/leetcode_331/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -416,7 +442,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/20/leetcode_355/" itemprop="url">leetcode 355. Design Twitter</a></h1>
+                <a class="post-title-link" href="/2018/07/04/leetcode_331/" itemprop="url">leetcode 331. 验证二叉树的前序序列化</a></h1>
         
 
         <div class="post-meta">
@@ -428,8 +454,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T13:20:27+08:00">
-                2018-06-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-04T13:29:17+08:00">
+                2018-07-04
               </time>
             
 
@@ -490,194 +516,40 @@
       
         
           
-            <p>Design a simplified version of Twitter where users can post tweets, follow/unfollow another user and is able to see the 10 most recent tweets in the user’s news feed. Your design should support the following methods:</p>
-<ol>
-<li><strong>postTweet(userId, tweetId)</strong>: Compose a new tweet.</li>
-<li><strong>getNewsFeed(userId)</strong>: Retrieve the 10 most recent tweet ids in the user’s news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent.</li>
-<li><strong>follow(followerId, followeeId)</strong>: Follower follows a followee.</li>
-<li><strong>unfollow(followerId, followeeId)</strong>: Follower unfollows a followee.</li>
-</ol>
-<p><strong>Example</strong>:</p>
+            <p>序列化二叉树的一种方法是使用前序遍历。当我们遇到一个非空节点时，我们可以记录下这个节点的值。如果它是一个空节点，我们可以使用一个标记值记录，例如 #。</p>
 <pre>
-Twitter twitter = new Twitter();
-
-// User 1 posts a new tweet (id = 5).
-twitter.postTweet(1, 5);
-
-// User 1's news feed should return a list with 1 tweet id -> [5].
-twitter.getNewsFeed(1);
-
-// User 1 follows user 2.
-twitter.follow(1, 2);
-
-// User 2 posts a new tweet (id = 6).
-twitter.postTweet(2, 6);
-
-// User 1's news feed should return a list with 2 tweet ids -> [6, 5].
-// Tweet id 6 should precede tweet id 5 because it is posted after tweet id 5.
-twitter.getNewsFeed(1);
-
-// User 1 unfollows user 2.
-twitter.unfollow(1, 2);
-
-// User 1's news feed should return a list with 1 tweet id -> [5],
-// since user 1 is no longer following user 2.
-twitter.getNewsFeed(1);
+     _9_
+    /   \
+   3     2
+  / \   / \
+ 4   1  #  6
+/ \ / \   / \
+# # # #   # #
 </pre>
 
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Twitter</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Initialize your data structure here.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.follows = collections.defaultdict(set)</span><br><span class="line">        self.usertwitter = collections.defaultdict(list)</span><br><span class="line">        self.order = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">postTweet</span><span class="params">(self, userId, tweetId)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Compose a new tweet.</span></span><br><span class="line"><span class="string">        :type userId: int</span></span><br><span class="line"><span class="string">        :type tweetId: int</span></span><br><span class="line"><span class="string">        :rtype: void</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.usertwitter[userId] += (self.order, tweetId), </span><br><span class="line">        self.order -= <span class="number">1</span></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getNewsFeed</span><span class="params">(self, userId)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent.</span></span><br><span class="line"><span class="string">        :type userId: int</span></span><br><span class="line"><span class="string">        :rtype: List[int]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        tw = sorted(tw <span class="keyword">for</span> i <span class="keyword">in</span> self.follows[userId] | &#123;userId&#125; <span class="keyword">for</span> tw <span class="keyword">in</span> self.usertwitter[i])[:<span class="number">10</span>]</span><br><span class="line">        <span class="keyword">return</span> [news <span class="keyword">for</span> i, news <span class="keyword">in</span> tw]</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">follow</span><span class="params">(self, followerId, followeeId)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Follower follows a followee. If the operation is invalid, it should be a no-op.</span></span><br><span class="line"><span class="string">        :type followerId: int</span></span><br><span class="line"><span class="string">        :type followeeId: int</span></span><br><span class="line"><span class="string">        :rtype: void</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.follows[followerId].add(followeeId)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">unfollow</span><span class="params">(self, followerId, followeeId)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Follower unfollows a followee. If the operation is invalid, it should be a no-op.</span></span><br><span class="line"><span class="string">        :type followerId: int</span></span><br><span class="line"><span class="string">        :type followeeId: int</span></span><br><span class="line"><span class="string">        :rtype: void</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.follows[followerId].discard(followeeId)</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/19/leetcode_363/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/19/leetcode_363/" itemprop="url">leetcode 363. Max Sum of Rectangle No Larger Than K</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-19T17:33:00+08:00">
-                2018-06-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a non-empty 2D matrix matrix and an integer k, find the max sum of a rectangle in the <em>matrix</em> such that its sum is no larger than k.</p>
-<p><strong>Example</strong>:</p>
+<p>例如，上面的二叉树可以被序列化为字符串 <code>&quot;9,3,4,#,#,1,#,#,2,#,6,#,#&quot;</code>，其中 # 代表一个空节点。</p>
+<p>给定一串以逗号分隔的序列，验证它是否是正确的二叉树的前序序列化。编写一个在不重构树的条件下的可行算法。</p>
+<p>每个以逗号分隔的字符或为一个整数或为一个表示 null 指针的 <code>&#39;#&#39;</code>。</p>
+<p>你可以认为输入格式总是有效的，例如它永远不会包含两个连续的逗号，比如 <code>&quot;1,,3&quot;</code> 。</p>
+<p>示例 1:</p>
 <pre>
-Given matrix = [
-  [1,  0, 1],
-  [0, -2, 3]
-]
-k = 2
+输入: "9,3,4,#,#,1,#,#,2,#,6,#,#"
+输出: true
+</pre>  
+
+<p>示例 2:</p>
+<pre>
+输入: "1,#"
+输出: false
+</pre> 
+
+<p>示例 3:</p>
+<pre>
+输入: "9,#,#,1"
+输出: false
 </pre>
 
-<p>The answer is <code>2</code>. Because the sum of rectangle <code>[[0, 1], [-2, 3]]</code> is 2 and 2 is the max number no larger than k (k = 2).</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxSubArray</span><span class="params">(self,nums,k)</span>:</span></span><br><span class="line">        </span><br><span class="line">        cumset=[]</span><br><span class="line">        cumset.append(<span class="number">0</span>)</span><br><span class="line">        maxsum=<span class="number">-1</span>&lt;&lt;<span class="number">32</span></span><br><span class="line">        cursum=<span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)):</span><br><span class="line">            cursum+=nums[i]</span><br><span class="line">            <span class="comment"># find the lower bound of the index</span></span><br><span class="line">            idx=bisect.bisect_left(cumset,cursum-k)</span><br><span class="line">            <span class="comment"># find max in sum[right]-sum[left]&lt;=k</span></span><br><span class="line">            <span class="keyword">if</span> <span class="number">0</span>&lt;=idx&lt;len(cumset):</span><br><span class="line">                maxsum=max(maxsum,cursum-cumset[idx])</span><br><span class="line">            <span class="comment"># using insort instead of append since bisect_left reason</span></span><br><span class="line">            bisect.insort(cumset,cursum)</span><br><span class="line">        <span class="keyword">return</span> maxsum</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxSumSubmatrix</span><span class="params">(self,matrix, k)</span>:</span></span><br><span class="line">    </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> matrix <span class="keyword">or</span> <span class="keyword">not</span> matrix[<span class="number">0</span>]:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        row,col=len(matrix),len(matrix[<span class="number">0</span>])</span><br><span class="line">        res=-(<span class="number">1</span>&lt;&lt;<span class="number">32</span>)</span><br><span class="line">        <span class="keyword">for</span> left <span class="keyword">in</span> range(col):</span><br><span class="line">            cursums=[<span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> range(row)]</span><br><span class="line">            right=left</span><br><span class="line">            <span class="keyword">while</span> right&lt;col:</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> range(row):</span><br><span class="line">                    cursums[i]+=matrix[i][right]</span><br><span class="line">                curarrmax=self.maxSubArray(cursums,k)</span><br><span class="line">                res=max(res,curarrmax)</span><br><span class="line">                right+=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isValidSerialization</span><span class="params">(self, preorder)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type preorder: str</span></span><br><span class="line"><span class="string">        :rtype: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        diff = <span class="number">1</span></span><br><span class="line">        prelist = preorder.split(<span class="string">','</span>)</span><br><span class="line">        <span class="keyword">for</span> node <span class="keyword">in</span> prelist:</span><br><span class="line">            diff -= <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> diff &lt; <span class="number">0</span>:<span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">            <span class="keyword">if</span> node != <span class="string">'#'</span>:</span><br><span class="line">                diff += <span class="number">2</span></span><br><span class="line">        <span class="keyword">return</span> diff == <span class="number">0</span></span><br></pre></td></tr></table></figure>
           
         
       
@@ -725,7 +597,7 @@ k = 2
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/19/git_hexo/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/03/c_gdb_2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -744,7 +616,7 @@ k = 2
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/19/git_hexo/" itemprop="url">git+hexo博客绑定域名</a></h1>
+                <a class="post-title-link" href="/2018/07/03/c_gdb_2/" itemprop="url">c/c++调试工具gdb使用</a></h1>
         
 
         <div class="post-meta">
@@ -756,8 +628,8 @@ k = 2
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-19T09:47:45+08:00">
-                2018-06-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-03T17:51:48+08:00">
+                2018-07-03
               </time>
             
 
@@ -779,8 +651,8 @@ k = 2
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tools/" itemprop="url" rel="index">
-                    <span itemprop="name">tools</span>
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
                   </a>
                 </span>
 
@@ -818,14 +690,26 @@ k = 2
       
         
           
-            <ol>
-<li>买一个域名，在你的域名管理有一个解析的选项，添加两条记录类型为CNAME的解析，一条主机记录为@，一条主机记录为www，记录值都为你的格式为xxxx.github.io的地址。</li>
-<li><p>在你的本地hexo博客文件的source文件夹下创建一个CNAME文件，记住不要有文件后缀名。编辑CNAME文件，里面写你在第一步申请的域名，例如xxxx.cn，记住不要有www，不要有http://。</p>
-</li>
-<li><p>在你本地博客文件里运行hexo g，再运行hexo d。</p>
-</li>
-<li>访问你的域名</li>
-</ol>
+            <h2 id="gdb之前"><a href="#gdb之前" class="headerlink" title="gdb之前"></a>gdb之前</h2><p>gdb是gcc的调试工具，主要用于c/c++这两种语言的编程的调试。功能强大，主要体现在以下几点：</p>
+<ul>
+<li>可以按照用户自定义的要求随心所欲的运行程序</li>
+<li>可以设置断点，让程序在断点处停住</li>
+<li>当程序停住时，可以检查此时程序中运行状态</li>
+</ul>
+<p>要调试程序，首先在编译的时候，必须把调试信息加到可执行文件中，使用gcc/g++ 的-g参数可以做到,如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -g -o hello hello.cpp</span><br></pre></td></tr></table></figure>
+<p>启动gdb的方法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdb hello</span><br></pre></td></tr></table></figure>
+<p>hello是你的执行文件，一般在当前目录下</p>
+<h2 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h2><p>接下来看一个例子<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line">        a = a + <span class="number">6</span>;</span><br><span class="line">        <span class="keyword">char</span> p[] = <span class="string">"you are amazing"</span>;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;p&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"hello world\n"</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -g -o hello hello.cpp</span><br></pre></td></tr></table></figure></p>
+<p>编译之后，输入gdb hello，启动gdb。<br>结果如图1 <img src="/static/img/gdb_start.png" alt="如图1 启动"><br>图1 启动</p>
+<p>输入l，表示list，从第一行开始列出源码，如图2，再按下enter键，表示重复上一次命令<br> <img src="/static/img/gdb_l.png" alt="如图2 列出源码"><br>图2 列出源码</p>
+<p>执行’b 6‘表示设置再源码6行处设置断点，执行‘b main’表示再main函数处设置断点，执行‘info break’表示查看断点信息，图3 <img src="/static/img/gdb_b.png" alt="如图3 断点"><br>图3 断点</p>
+<p>执行r命令，表示运行程序图4 <img src="/static/img/gdb_r.png" alt="如图4 运行"><br>图4 运行</p>
+<p>输入n表示单条语句执行，输入p a，p p表示分别打印a的值和p数组的值，打印ascii码值，输入x/s p，输入bt查看函数堆栈，图5<img src="/static/img/gdb_p.png" alt="如图5 显示"><br>图5 显示</p>
+<p>输入finish推出函数，输入q结束调试。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>上面的例子一个使用了以下命令：l,b,r,n,p,bt,x/s,finish,q，调试一些简单的程序已经够用了，但是想要更加深入了解gdb，可以参考<a href="https://wizardforcel.gitbooks.io/100-gdb-tips" target="_blank" rel="noopener">链接</a></p>
 
           
         
@@ -874,7 +758,7 @@ k = 2
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/15/leetcode_300/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/03/leetcode_332/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -893,7 +777,7 @@ k = 2
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/15/leetcode_300/" itemprop="url">leetcode 300. 最长递增子序列</a></h1>
+                <a class="post-title-link" href="/2018/07/03/leetcode_332/" itemprop="url">leetcode 332. Reconstruct Itinerary</a></h1>
         
 
         <div class="post-meta">
@@ -905,8 +789,8 @@ k = 2
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-15T16:24:17+08:00">
-                2018-06-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-03T13:44:56+08:00">
+                2018-07-03
               </time>
             
 
@@ -967,15 +851,182 @@ k = 2
       
         
           
-            <p>给定一个无序的整数数组，找到其中最长递增子序列的长度。</p>
+            <p>Given a list of airline tickets represented by pairs of departure and arrival airports <code>[from, to]</code>, reconstruct the itinerary in order. All of the tickets belong to a man who departs from <code>JFK</code>. Thus, the itinerary must begin with <code>JFK</code>.</p>
+<p>Note:</p>
+<ul>
+<li>If there are multiple valid itineraries, you should return the itinerary that has the smallest lexical order when read as a single string. For example, the itinerary <code>[&quot;JFK&quot;, &quot;LGA&quot;]</code> has a smaller lexical order than <code>[&quot;JFK&quot;, &quot;LGB&quot;]</code>.</li>
+<li>All airports are represented by three capital letters (IATA code).</li>
+<li>You may assume all tickets form at least one valid itinerary.</li>
+</ul>
+<p>Example 1:</p>
+<pre>
+Input: tickets = [["MUC", "LHR"], ["JFK", "MUC"], ["SFO", "SJC"], ["LHR", "SFO"]]
+Output: ["JFK", "MUC", "LHR", "SFO", "SJC"]
+</pre>
+
+<p>Example 2:</p>
+<pre>
+Input: tickets = [["JFK","SFO"],["JFK","ATL"],["SFO","ATL"],["ATL","JFK"],["ATL","SFO"]]
+Output: ["JFK","ATL","JFK","SFO","ATL","SFO"]
+Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"]. But it is larger in lexical order.
+</pre>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findItinerary</span><span class="params">(self, tickets)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type tickets: List[List[str]]</span></span><br><span class="line"><span class="string">        :rtype: List[str]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> tickets:<span class="keyword">return</span> []</span><br><span class="line">        dic = collections.defaultdict(list)</span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">for</span> fr,to <span class="keyword">in</span> tickets:</span><br><span class="line">            heapq.heappush(dic[fr],to)</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(city)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> city <span class="keyword">in</span> dic:</span><br><span class="line">                <span class="keyword">while</span> dic[city]:</span><br><span class="line">                    dfs(heapq.heappop(dic[city]))</span><br><span class="line">            res.append(city)</span><br><span class="line">        dfs(<span class="string">'JFK'</span>)</span><br><span class="line">        <span class="keyword">return</span> res[::<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/02/leetcode_334/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/02/leetcode_334/" itemprop="url">leetcode 334. 递增的三元子序列</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-02T09:58:14+08:00">
+                2018-07-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>给定一个未排序的数组，请判断这个数组中是否存在长度为3的递增的子序列。</p>
+<p>正式的数学表达如下:</p>
+<p>如果存在这样的 i, j, k,  且满足 0 ≤ i &lt; j &lt; k ≤ n-1，<br>使得 arr[i] &lt; arr[j] &lt; arr[k] ，返回 true ; 否则返回 false 。<br>要求算法时间复杂度为O(n)，空间复杂度为O(1) 。</p>
 <p>示例:</p>
 <pre>
-输入: [10,9,2,5,3,7,101,18]
-输出: 4 
-解释: 最长的递增子序列是 [2,3,7,101]，它的长度是 4。
+输入 [1, 2, 3, 4, 5],
+输出 true.
+
+输入 [5, 4, 3, 2, 1],
+输出 false.
 </pre>
 
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bisect <span class="keyword">import</span> bisect_left</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">lengthOfLIS</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> nums:</span><br><span class="line">            index = bisect_left(res,i)</span><br><span class="line">            <span class="keyword">if</span> index == len(res):</span><br><span class="line">                res.append(i)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res[index] = i</span><br><span class="line">        <span class="keyword">return</span> len(res)</span><br></pre></td></tr></table></figure>
+<p>like #最长递增子序列 的特殊情况<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> bisect</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">increasingTriplet</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :rtype: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        res = [float(<span class="string">"inf"</span>)]*<span class="number">2</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> nums:</span><br><span class="line">            index = bisect.bisect_left(res,i)</span><br><span class="line">            <span class="keyword">if</span> index == <span class="number">2</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">            res[index] = i</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br></pre></td></tr></table></figure></p>
+<p>a clear solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">increasingTriplet</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :rtype: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        c1,c2 = float(<span class="string">'inf'</span>),float(<span class="string">'inf'</span>)</span><br><span class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> nums:</span><br><span class="line">            <span class="keyword">if</span> n &lt;= c1:</span><br><span class="line">                c1 = n</span><br><span class="line">            <span class="keyword">elif</span> n &lt;= c2:</span><br><span class="line">                c2 = n</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br></pre></td></tr></table></figure>
           
         
       
@@ -1023,7 +1074,7 @@ k = 2
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/15/leetcode_354/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/29/leetcode_335/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -1042,7 +1093,7 @@ k = 2
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/15/leetcode_354/" itemprop="url">leetcode 354. 俄罗斯套娃信封问题</a></h1>
+                <a class="post-title-link" href="/2018/06/29/leetcode_335/" itemprop="url">leetcode 335. Self Crossing</a></h1>
         
 
         <div class="post-meta">
@@ -1054,8 +1105,8 @@ k = 2
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-15T15:46:58+08:00">
-                2018-06-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-29T16:56:59+08:00">
+                2018-06-29
               </time>
             
 
@@ -1116,323 +1167,42 @@ k = 2
       
         
           
-            <p>给定一些标记了宽度和高度的信封，宽度和高度以整数对形式 (w, h) 出现。当另一个信封的宽度和高度都比这个信封大的时候，这个信封就可以放进另一个信封里，如同俄罗斯套娃一样。</p>
-<p>请计算最多能有多少个信封能组成一组“俄罗斯套娃”信封（即可以把一个信封放到另一个信封里面）。</p>
-<p>示例:</p>
+            <p>给定一个含有 n 个正数的数组 x。从点(0,0)开始，向北移动x[0]米，然后向西移动x[1]米，向南移动x[2]米，向东移动x[3]米，持续进行。换句话说，每次移动后你的方向都会逆时针变化。</p>
+<p>以 O(1)的空间复杂度写一个一遍扫描算法，判断你的路径是否交叉。</p>
+<p>示例 1:</p>
 <pre>
-输入: envelopes = [[5,4],[6,4],[6,7],[2,3]]
-输出: 3 
-解释: 最多信封的个数为 3, 组合为: [2,3] => [5,4] => [6,7]。
+给定 x = [2, 1, 1, 2],
+?????
+?   ?
+???????>
+    ?
+
+返回 true (路径交叉了)
 </pre>
 
-<ul>
-<li>o(n^2) solution</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxEnvelopes</span><span class="params">(self, envelopes)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type envelopes: List[List[int]]</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> envelopes:<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        nums = sorted(envelopes,key=<span class="keyword">lambda</span> x: x)</span><br><span class="line">        dp = [<span class="number">1</span>]*len(nums)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,len(nums)):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i<span class="number">-1</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">                <span class="keyword">if</span> nums[i][<span class="number">0</span>] &gt; nums[j][<span class="number">0</span>] <span class="keyword">and</span> nums[i][<span class="number">1</span>] &gt; nums[j][<span class="number">1</span>]:</span><br><span class="line">                    dp[i] = max(dp[i],dp[j]+<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">        <span class="keyword">return</span> max(dp)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>o(n*logn) solution</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> bisect</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxEnvelopes</span><span class="params">(self, envelopes)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type envelopes: List[List[int]]</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> envelopes:<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        envs = sorted(envelopes,key=<span class="keyword">lambda</span> (x,y): (x,-y))</span><br><span class="line">        tails=[]</span><br><span class="line">        <span class="keyword">for</span> (w,h) <span class="keyword">in</span> envs:</span><br><span class="line">            idx=bisect.bisect_left(tails, h)</span><br><span class="line">            <span class="keyword">if</span> idx==len(tails):</span><br><span class="line">                tails.append(h)                        </span><br><span class="line">            <span class="keyword">elif</span> idx==<span class="number">0</span> <span class="keyword">or</span> tails[idx<span class="number">-1</span>]&lt;h:</span><br><span class="line">                tails[idx]=h</span><br><span class="line">        <span class="keyword">return</span> len(tails)</span><br></pre></td></tr></table></figure>
-<p>解释：通过对w升序排列，对h降序排列，然后h的最长递增子序列长度就是题目要求的长度；求最长递增子序列通过二分法优化成o(n*logn)</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/14/leetcode_ksum/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/14/leetcode_ksum/" itemprop="url">关于leetcode 2sum、3sum、4sum到ksum的情况分析</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-14T11:26:42+08:00">
-                2018-06-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>通过<a href="http://118.25.45.162:8360/about" target="_blank" rel="noopener">#2sum</a>,<a href="http://118.25.45.162:8360/post/leetcode_15.html" target="_blank" rel="noopener">#3sum</a>,<a href="http://118.25.45.162:8360/post/leetcode_18.html" target="_blank" rel="noopener">#4sum</a><br>推广到ksum的情况</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findKsum</span><span class="params">(self, nums, target, N, result, results)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> len(nums) &lt; N <span class="keyword">or</span> N&lt;<span class="number">2</span> <span class="keyword">or</span> target &lt; nums[<span class="number">0</span>]*N <span class="keyword">or</span> target&gt;nums[<span class="number">-1</span>]*N :</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line">        <span class="keyword">if</span> N ==<span class="number">2</span>:</span><br><span class="line">            l=<span class="number">0</span></span><br><span class="line">            r = len(nums)<span class="number">-1</span></span><br><span class="line">            <span class="keyword">while</span> l&lt;r:</span><br><span class="line">                s = nums[l]+nums[r]</span><br><span class="line">                <span class="keyword">if</span> s == target:</span><br><span class="line">                    results.append(result + [nums[l], nums[r]])</span><br><span class="line">                    l +=<span class="number">1</span></span><br><span class="line">                    <span class="keyword">while</span> l&lt;r <span class="keyword">and</span> nums[l]==nums[l<span class="number">-1</span>]:</span><br><span class="line">                        l += <span class="number">1</span></span><br><span class="line">                <span class="keyword">elif</span> s&lt;target:</span><br><span class="line">                    l+=<span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    r-=<span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">for</span> i, x <span class="keyword">in</span> enumerate(nums[:-(N<span class="number">-1</span>)]):</span><br><span class="line">                <span class="keyword">if</span> i&gt;<span class="number">0</span> <span class="keyword">and</span> nums[i]==nums[i<span class="number">-1</span>]:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                self.findKsum(nums[i+<span class="number">1</span>:], target - x, N<span class="number">-1</span>, result + [x], results)</span><br><span class="line">        <span class="keyword">return</span> results</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/14/leetcode_18/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/14/leetcode_18/" itemprop="url">leetcode 18. 四数之和</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-14T10:51:12+08:00">
-                2018-06-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>给定一个包含 n 个整数的数组 <code>nums</code> 和一个目标值 <code>target</code>，判断 <code>nums</code> 中是否存在四个元素 a，b，c 和 d ，使得 <code>a + b + c + d</code> 的值与 <code>target</code> 相等？找出所有满足条件且不重复的四元组。</p>
-<p><strong>注意</strong>：</p>
-<p>答案中不可以包含重复的四元组。</p>
-<p><strong>示例</strong>：</p>
+<p>示例 2:</p>
 <pre>
-给定数组 nums = [1, 0, -1, 0, -2, 2]，和 target = 0。
+给定 x = [1, 2, 3, 4],
+????????
+?      ?
+?
+?
+?????????????>
 
-满足要求的四元组集合为：
-[
-  [-1,  0, 0, 1],
-  [-2, -1, 1, 2],
-  [-2,  0, 0, 2]
-]
+返回 false (路径没有相交)
 </pre>
 
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fourSum</span><span class="params">(self, nums, target)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :type target: int</span></span><br><span class="line"><span class="string">        :rtype: List[List[int]]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        nums.sort()</span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)<span class="number">-2</span>):</span><br><span class="line">            <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> nums[i] == nums[i<span class="number">-1</span>]:<span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>,len(nums)<span class="number">-2</span>):</span><br><span class="line">                <span class="keyword">if</span> j &gt; i+<span class="number">1</span> <span class="keyword">and</span> nums[j] == nums[j<span class="number">-1</span>]:<span class="keyword">continue</span></span><br><span class="line">                l,r = j + <span class="number">1</span>,len(nums)<span class="number">-1</span></span><br><span class="line">                <span class="keyword">while</span> l &lt; r:</span><br><span class="line">                    s = nums[i] + nums[j] + nums[r] + nums[l]</span><br><span class="line">                    <span class="keyword">if</span> s &lt;target:</span><br><span class="line">                        l += <span class="number">1</span></span><br><span class="line">                    <span class="keyword">elif</span> s &gt; target:</span><br><span class="line">                        r -= <span class="number">1</span></span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        res.append([nums[i] ,nums[j] ,nums[r] , nums[l]])</span><br><span class="line">                        <span class="keyword">while</span> l &lt; r <span class="keyword">and</span> nums[l] == nums[l + <span class="number">1</span>]:</span><br><span class="line">                            l += <span class="number">1</span></span><br><span class="line">                        <span class="keyword">while</span> l &lt; r <span class="keyword">and</span> nums[r] == nums[r - <span class="number">1</span>]:</span><br><span class="line">                            r -= <span class="number">1</span></span><br><span class="line">                        l += <span class="number">1</span></span><br><span class="line">                        r -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p>示例 3:</p>
+<pre>
+给定 x = [1, 1, 1, 1],
+?????
+?   ?
+?????>
+
+返回 true (路径相交了)
+</pre>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isSelfCrossing</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type x: List[int]</span></span><br><span class="line"><span class="string">        :rtype: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        n = len(x)</span><br><span class="line">        <span class="keyword">if</span> n &lt; <span class="number">4</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">        i = <span class="number">3</span></span><br><span class="line">        <span class="keyword">while</span> i &lt; n:</span><br><span class="line">            <span class="keyword">if</span> x[i] &gt;= x[i - <span class="number">2</span>] <span class="keyword">and</span> x[i - <span class="number">1</span>] &lt;= x[i - <span class="number">3</span>]:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">            <span class="keyword">if</span> i &gt;= <span class="number">4</span>:</span><br><span class="line">                <span class="keyword">if</span> x[i - <span class="number">1</span>] == x[i - <span class="number">3</span>] <span class="keyword">and</span> x[i] + x[i - <span class="number">4</span>] &gt;= x[i - <span class="number">2</span>]:</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">            <span class="keyword">if</span> i &gt;= <span class="number">5</span>:</span><br><span class="line">                <span class="keyword">if</span> x[i] &gt;= x[i - <span class="number">2</span>] - x[i - <span class="number">4</span>] &gt;= <span class="number">0</span> <span class="keyword">and</span> x[i - <span class="number">3</span>] - x[i - <span class="number">5</span>] &lt;= x[i - <span class="number">1</span>] &lt;= x[i - <span class="number">3</span>]:</span><br><span class="line">                <span class="comment">#if x[i] + x[i - 4] &gt;= x[i - 2] and x[i - 3] &lt;= x[i - 5] + x[i - 1]:</span></span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br></pre></td></tr></table></figure>
           
         
       
@@ -1480,7 +1250,7 @@ k = 2
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/13/leetcode_357/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/28/leetcode_336/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -1499,7 +1269,7 @@ k = 2
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/13/leetcode_357/" itemprop="url">leetcode 357. Count Numbers with Unique Digits</a></h1>
+                <a class="post-title-link" href="/2018/06/28/leetcode_336/" itemprop="url">leetcode 336. 回文对</a></h1>
         
 
         <div class="post-meta">
@@ -1511,8 +1281,8 @@ k = 2
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-13T15:28:59+08:00">
-                2018-06-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-28T10:01:14+08:00">
+                2018-06-28
               </time>
             
 
@@ -1573,9 +1343,10 @@ k = 2
       
         
           
-            <p>Given a non-negative integer n, count all numbers with unique digits, x, where 0 ≤ x &lt; 10^n.</p>
-<p><strong>Example</strong>:<br>Given n = 2, return 91. (The answer should be the total numbers in the range of 0 ≤ x &lt; 100, excluding <code>[11,22,33,44,55,66,77,88,99])</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">countNumbersWithUniqueDigits</span><span class="params">(self, n)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type n: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        res = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">                cur = <span class="number">9</span></span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> range(i): cur *= <span class="number">9</span> - j</span><br><span class="line">                res += cur</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+            <p>给定一组独特的单词， 找出在给定列表中不同 的索引对<code>(i, j)</code>,使得关联的两个单词，例如：<code>words[i] + words[j]</code>形成回文。</p>
+<p>示例 1:<br>给定 <code>words = [&quot;bat&quot;, &quot;tab&quot;, &quot;cat&quot;]</code><br>返回 <code>[[0, 1], [1, 0]]</code><br>回文是 <code>[&quot;battab&quot;, &quot;tabbat&quot;]</code></p>
+<p>示例 2:<br>给定 <code>words = [&quot;abcd&quot;, &quot;dcba&quot;, &quot;lls&quot;, &quot;s&quot;, &quot;sssll&quot;]</code><br>返回 <code>[[0, 1], [1, 0], [3, 2], [2, 4]]</code><br>回文是 <code>[&quot;dcbaabcd&quot;, &quot;abcddcba&quot;, &quot;slls&quot;, &quot;llssssll&quot;]`</code>  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">palindromePairs</span><span class="params">(self, words)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type words: List[str]</span></span><br><span class="line"><span class="string">        :rtype: List[List[int]]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">is_reverse</span><span class="params">(word)</span>:</span></span><br><span class="line">            <span class="keyword">return</span> word==word[::<span class="number">-1</span>]</span><br><span class="line">        </span><br><span class="line">        words = &#123;word:k <span class="keyword">for</span> k,word <span class="keyword">in</span> enumerate(words)&#125;</span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">for</span> word,k <span class="keyword">in</span> words.iteritems():</span><br><span class="line">            n = len(word)</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(n+<span class="number">1</span>):</span><br><span class="line">                pre = word[:i]</span><br><span class="line">                suf = word[i:]</span><br><span class="line">                <span class="keyword">if</span> is_reverse(pre):</span><br><span class="line">                    back = suf[::<span class="number">-1</span>]</span><br><span class="line">                    <span class="keyword">if</span> back != word <span class="keyword">and</span> back <span class="keyword">in</span> words:</span><br><span class="line">                        res.append([words[back],k])</span><br><span class="line">                <span class="keyword">if</span> i != n <span class="keyword">and</span> is_reverse(suf):</span><br><span class="line">                    back = pre[::<span class="number">-1</span>]</span><br><span class="line">                    <span class="keyword">if</span> back != word <span class="keyword">and</span> back <span class="keyword">in</span> words:</span><br><span class="line">                        res.append([k,words[back]])</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1623,7 +1394,7 @@ k = 2
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/12/http_get_post/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/27/leetcode_213/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -1642,7 +1413,7 @@ k = 2
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/12/http_get_post/" itemprop="url">GET和POST的区别</a></h1>
+                <a class="post-title-link" href="/2018/06/27/leetcode_213/" itemprop="url">leetcode 213. 打家劫舍 II</a></h1>
         
 
         <div class="post-meta">
@@ -1654,8 +1425,8 @@ k = 2
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-12T17:23:59+08:00">
-                2018-06-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-27T09:21:35+08:00">
+                2018-06-27
               </time>
             
 
@@ -1677,8 +1448,8 @@ k = 2
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/html-css-js/" itemprop="url" rel="index">
-                    <span itemprop="name">html/css/js</span>
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
                   </a>
                 </span>
 
@@ -1716,40 +1487,331 @@ k = 2
       
         
           
-            <blockquote>
-<p>转自微信公众号WebTechGarden</p>
-</blockquote>
-<p>GET和POST是HTTP请求的两种基本方法，要说他们的区别，接触过WEB开发的人都能说出一二。</p>
-<p>最直观的区别就是GET把参数包含在URL中，POST通过request body传递参数。</p>
-<p>你可能自己写过无数个GET和POST请求，或者已经看过很多权威网站总结出的他们的区别，你非常清楚的知道什么时候该用什么。</p>
-<p>当你在面试中遇到这个问题时，你的内心充满了喜悦。</p>
-<p>你轻轻松松的给出了一个“标准答案”： </p>
-<ol>
-<li>GET在浏览器回退时是无害的，而POST会再次提交请求。 </li>
-<li>GET产生的URL地址可以被Bookmark，而POST不可以。 </li>
-<li>GET请求会被浏览器主动cache，而POST不会，除非手动设置。 </li>
-<li>GET请求的参数会完整的被保存在历史记录里，POST不会。 </li>
-<li>GET请求参数放在URL中，POST放在request body中。 </li>
-<li>GET请求只能进行url编码，POST请求支持多种编码方式。 </li>
-<li>对于参数类型，GET只接受ASCII字符，而POST没有限制。 </li>
-<li>GET请求在URL中传递的参数是有长度限制的，而POST没有。 </li>
-<li>GET比POST更不安全，因为参数直接暴露在URL中，所以不能传递敏感信息。</li>
-</ol>
-<p>but，这不是我们想要的回答！！！！</p>
-<p>如果我告诉你GET和POST本质上没有区别，你信吗？</p>
-<p>GET和POST是什么？<br>HTTP中两种发送请求的方法。</p>
-<p>HTTP是什么？<br>HTTP是基于TCP/IP的关于数据如何在万维网中传递的通信协议。</p>
-<p>HTTP的底层是TCP/IP，所以GET和POST底层也是TCP/IP，也就是说GET和POST都是TCP链接。GET和POST能做的事情是一样的。你要给GET加上request body或者给POST带上url参数技术上是完全行的通的。</p>
-<p>在我大万维网世界中，TCP就像汽车，我们用TCP来运输数据，它很可靠，从来不会发生丢件少件的现象。但是如果路上跑的全是看起来一模一样的汽车，那这个世界看起来是一团混乱，送急件的汽车可能被前面满载货物的汽车拦堵在路上，整个交通系统一定会瘫痪。为了避免这种情况发生，交通规则HTTP诞生了。HTTP给汽车运输设定了好几个服务类别，有GET, POST, PUT, DELETE等等，HTTP规定，当执行GET请求的时候，要给汽车贴上GET的标签（设置method为GET），而且要求把传送的数据放在车顶上（url中）以方便记录。如果是POST请求，就要在车上贴上POST的标签，并把货物放在车厢里。当然，你也可以在GET的时候往车厢内偷偷藏点货物，但是这是很不光彩；也可以在POST的时候在车顶上也放一些数据，让人觉得傻乎乎的。HTTP只是个行为准则，而TCP才是GET和POST怎么实现的基本。</p>
-<p>但是，我们只看到HTTP对GET和POST参数的传送渠道（url还是requrest body）提出了要求。“标准答案”里关于参数大小的限制又是从哪来的呢？</p>
-<p>在我大万维网世界中，还有另一个重要的角色：运输公司。不同的浏览器（发起http请求）和服务器（接受http请求）就是不同的运输公司。 虽然理论上，你可以在车顶上无限的堆货物（url中无限加参数）。但是运输公司可不傻，装货和卸货也是有很大成本的，他们会限制单次运输量来控制风险，数据量太大对浏览器和服务器都是很大负担。业界不成文的规定是，（大多数）浏览器通常都会限制url长度在2K个字节，而（大多数）服务器最多处理64K大小的url。超过的部分，恕不处理。如果你用GET服务，在request body偷偷藏了数据，不同服务器的处理方式也是不同的，有些服务器会帮你卸货，读出数据，有些服务器直接忽略，所以，虽然GET可以带request body，也不能保证一定能被接收到哦。</p>
-<p>好了，现在你知道，GET和POST本质上就是TCP链接，并无差别。但是由于HTTP的规定和浏览器/服务器的限制，导致他们在应用过程中体现出一些不同。</p>
-<p>GET和POST还有一个重大区别，简单的说：<br>GET产生一个TCP数据包；POST产生两个TCP数据包。</p>
-<p>总的来说：<br>对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据）；<br>而对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok（返回数据）。</p>
-<p>也就是说，GET只需要汽车跑一趟就把货送到了，而POST得跑两趟，第一趟，先去和服务器打个招呼“嗨，我等下要送一批货来，你们打开门迎接我”，然后再回头把货送过去。</p>
-<p>因为POST需要两步，时间上消耗的要多一点，看起来GET比POST更有效。因此Yahoo团队有推荐用GET替换POST来优化网站性能。但这是一个坑！跳入需谨慎。为什么？</p>
-<p>GET与POST都有自己的语义，不能随便混用。<br>据研究，在网络环境好的情况下，发一次包的时间和发两次包的时间差别基本可以无视。而在网络环境差的情况下，两次包的TCP在验证数据包完整性上，有非常大的优点。<br>并不是所有浏览器都会在POST中发送两次包，Firefox就只发送一次。</p>
+            <p>你是一个专业的小偷，计划偷窃沿街的房屋，每间房内都藏有一定的现金。这个地方所有的房屋都围成一圈，这意味着第一个房屋和最后一个房屋是紧挨着的。同时，相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。</p>
+<p>给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。</p>
+<p>示例 1:</p>
+<pre>
+输入: [2,3,2]
+输出: 3
+解释: 你不能先偷窃 1 号房屋（金额 = 2），然后偷窃 3 号房屋（金额 = 2）, 因为他们是相邻的。
+</pre>
 
+<p>示例 2:</p>
+<pre>
+输入: [1,2,3,1]
+输出: 4
+解释: 你可以先偷窃 1 号房屋（金额 = 1），然后偷窃 3 号房屋（金额 = 3）。
+     偷窃到的最高金额 = 1 + 3 = 4 。
+</pre>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rob</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> len(nums) == <span class="number">0</span>:<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">if</span> len(nums) &lt;= <span class="number">3</span>:<span class="keyword">return</span> max(nums)</span><br><span class="line">        dp1 = nums[:<span class="number">-1</span>]</span><br><span class="line">        dp1[<span class="number">1</span>] = max(nums[<span class="number">0</span>],nums[<span class="number">1</span>])</span><br><span class="line">        dp2 = nums[<span class="number">1</span>:]</span><br><span class="line">        dp2[<span class="number">1</span>] = max(nums[<span class="number">1</span>],nums[<span class="number">2</span>])</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>,len(nums)<span class="number">-1</span>):</span><br><span class="line">            dp1[i] = max(dp1[i<span class="number">-2</span>] + nums[i],dp1[i<span class="number">-1</span>])</span><br><span class="line">            dp2[i] = max(dp2[i<span class="number">-2</span>] + nums[i+<span class="number">1</span>],dp2[i<span class="number">-1</span>])</span><br><span class="line">        <span class="keyword">return</span> max(dp1[<span class="number">-1</span>],dp2[<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/26/leetcode_337/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/26/leetcode_337/" itemprop="url">leetcode 337. 打家劫舍 III</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-26T14:53:11+08:00">
+                2018-06-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>小偷又发现一个新的可行窃的地点。 这个地区只有一个入口，称为“根”。 除了根部之外，每栋房子有且只有一个父房子。 一番侦察之后，聪明的小偷意识到“这个地方的所有房屋形成了一棵二叉树”。 如果两个直接相连的房子在同一天晚上被打劫，房屋将自动报警。</p>
+<p>在不触动警报的情况下，计算小偷一晚能盗取的最高金额。</p>
+<p>示例 1:</p>
+<p><pre><br>     3<br>    / \<br>   2   3<br>    \   \<br>     3   1<br></pre><br>能盗取的最高金额 = 3 + 3 + 1 = 7.</p>
+<p>示例 2:</p>
+<p><pre><br>     3<br>    / \<br>   4   5<br>  / \   \<br> 1   3   1<br></pre><br>能盗取的最高金额 = 4 + 5 = 9.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    return [i, j] i is max value include root, j is max value exclude root</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="comment"># corner case</span></span><br><span class="line">        <span class="keyword">if</span> root == <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">return</span> [<span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line">        <span class="keyword">if</span> root.left == <span class="keyword">None</span> <span class="keyword">and</span> root.right == <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">return</span> [root.val, <span class="number">0</span>]</span><br><span class="line">        left = self.helper(root.left)</span><br><span class="line">        right = self.helper(root.right)</span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        when root is included, then we only add left and right node's max value which does not include themselves</span></span><br><span class="line"><span class="string">        when root is not included, then we should add max of left and max of right, i.e. consider situations that either include left node or not include left node, choose the larger value</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        <span class="keyword">return</span> [root.val+left[<span class="number">1</span>]+right[<span class="number">1</span>], max(left)+max(right)]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rob</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type root: TreeNode</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> max(self.helper(root))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>a clear solution</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"># class TreeNode(object):</span></span><br><span class="line"><span class="comment">#     def __init__(self, x):</span></span><br><span class="line"><span class="comment">#         self.val = x</span></span><br><span class="line"><span class="comment">#         self.left = None</span></span><br><span class="line"><span class="comment">#         self.right = None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">Let</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">f1(node) be the value of maximum money we can rob from the subtree with node as root ( we can rob node if necessary).</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">f2(node) be the value of maximum money we can rob from the subtree with node as root but without robbing node.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Then we have</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">f2(node) = f1(node.left) + f1(node.right) and</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">f1(node) = max( f2(node.left)+f2(node.right)+node.value, f2(node) ).</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rob</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type root: TreeNode</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> self.robDFS(root)[<span class="number">1</span>];</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">robDFS</span><span class="params">(self,node)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> node <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">return</span> (<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line">        l = self.robDFS(node.left)</span><br><span class="line">        r = self.robDFS(node.right)</span><br><span class="line">        <span class="keyword">return</span> (l[<span class="number">1</span>] + r[<span class="number">1</span>], max(l[<span class="number">1</span>] + r[<span class="number">1</span>], l[<span class="number">0</span>] + r[<span class="number">0</span>] + node.val))</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/25/leetcode_338/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/25/leetcode_338/" itemprop="url">leetcode 338. Bit位计数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-25T09:59:38+08:00">
+                2018-06-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>给定一个非负整数 num。 对于范围 0 ≤ i ≤ num 中的每个数字 i ，计算其二进制数中的1的数目并将它们作为数组返回。</p>
+<p>示例：<br>比如给定 num = 5 ，应该返回 [0,1,1,2,1,2].</p>
+<p>进阶：</p>
+<ul>
+<li>给出时间复杂度为O(n * sizeof(integer)) 的解答非常容易。 但是你可以在线性时间O(n)内用一次遍历做到吗？</li>
+<li>要求算法的空间复杂度为O(n)。</li>
+<li><p>你能进一步完善解法吗？ 在c ++或任何其他语言中不使用任何内置函数（如c++里的 __builtin_popcount）来执行此操作。</p>
+</li>
+<li><p>my solution</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">countBits</span><span class="params">(self, num)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type num: int</span></span><br><span class="line"><span class="string">        :rtype: List[int]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">countv</span><span class="params">(v)</span>:</span></span><br><span class="line">            vlen = <span class="number">0</span></span><br><span class="line">            <span class="keyword">while</span> v:</span><br><span class="line">                v &amp;= (v<span class="number">-1</span>)</span><br><span class="line">                vlen += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> vlen</span><br><span class="line">        res = [<span class="number">0</span>]*(num+<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,num+<span class="number">1</span>,<span class="number">4</span>):</span><br><span class="line">            vlen = countv(i)</span><br><span class="line">            res[i] = vlen</span><br><span class="line">            <span class="keyword">if</span> i + <span class="number">1</span> &gt; num:<span class="keyword">break</span></span><br><span class="line">            res[i+<span class="number">1</span>] = vlen+<span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> i + <span class="number">2</span> &gt; num:<span class="keyword">break</span></span><br><span class="line">            res[i+<span class="number">2</span>] = vlen+<span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> i + <span class="number">3</span> &gt; num:<span class="keyword">break</span></span><br><span class="line">            res[i+<span class="number">3</span>] = vlen+<span class="number">2</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<ul>
+<li>a faster solution </li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">countBits</span><span class="params">(self, num)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type num: int</span></span><br><span class="line"><span class="string">        :rtype: List[int]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> num == <span class="number">0</span>:<span class="keyword">return</span> [<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">if</span> num == <span class="number">1</span>:<span class="keyword">return</span> [<span class="number">0</span>,<span class="number">1</span>]</span><br><span class="line">        res = [<span class="number">0</span>]*(num+<span class="number">1</span>)</span><br><span class="line">        res[<span class="number">1</span>] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>,num+<span class="number">1</span>):</span><br><span class="line">            res[i] = res[i&gt;&gt;<span class="number">1</span>] + i%<span class="number">2</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1788,7 +1850,7 @@ k = 2
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1834,7 +1896,7 @@ k = 2
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">139</span>
+                  <span class="site-state-item-count">151</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1856,7 +1918,7 @@ k = 2
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
