@@ -249,6 +249,951 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/15/linux_crontab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/15/linux_crontab/" itemprop="url">linux使用corntab定时查询特定用户登录与工作</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-15T09:55:21+08:00">
+                2018-11-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>闲着无聊，想看看其他用户在我的服务器上什么时候登录，在干些什么，写了个脚本设置每小时查一次。</p>
+<p>login.sh<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">str=`w|grep userxx`</span><br><span class="line">i=0</span><br><span class="line">if [ ! $&#123;#str&#125; -eq 0 ] </span><br><span class="line">then</span><br><span class="line">    for line in `echo $str`</span><br><span class="line">    do  </span><br><span class="line">        let "i++"</span><br><span class="line">        if [ $(($i % 8)) -eq 0 ] </span><br><span class="line">        then</span><br><span class="line">            #查询干了些什么，在什么时候</span><br><span class="line">            echo "`date`,$line"&gt;&gt; login.log</span><br><span class="line">        fi  </span><br><span class="line">    done</span><br><span class="line">fi</span><br></pre></td></tr></table></figure></p>
+<p>设置定时<br>crontab -e<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* */1 * * * /home/xxx/login.sh &gt; /dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/14/python_format/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/14/python_format/" itemprop="url">python格式化字符串</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-14T13:52:45+08:00">
+                2018-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="formatting"><a href="#formatting" class="headerlink" title="%-formatting"></a>%-formatting</h3><p>使用<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">"Eric"</span></span><br><span class="line"><span class="string">"Hello, %s."</span> % name</span><br></pre></td></tr></table></figure></p>
+<p>插入多个变量需要元组</p>
+<p>“Hello, %s. You are %s.” % (name, age)</p>
+<p>这种格式不是很好，因为它是冗长的，会导致错误，比如不能正确显示元组或字典</p>
+<h3 id="str-format"><a href="#str-format" class="headerlink" title="str.format()"></a>str.format()</h3><p>这种更新的工作方式是在Python 2.6中引入的</p>
+<p>使用<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"Hello, &#123;&#125;. You are &#123;&#125;."</span>.format(name, age)</span><br></pre></td></tr></table></figure></p>
+<p>可以使用字典</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">person = &#123;<span class="string">'name'</span>: <span class="string">'Eric'</span>, <span class="string">'age'</span>: <span class="number">74</span>&#125;</span><br><span class="line"><span class="string">"Hello, &#123;name&#125;. You are &#123;age&#125;."</span>.format(**person)</span><br></pre></td></tr></table></figure>
+<p>使用str.format()的代码比使用%-formatting的代码更易读，但当处理多个参数和更长的字符串时，str.format()仍然可能非常冗长</p>
+<h3 id="f-Strings"><a href="#f-Strings" class="headerlink" title="f-Strings"></a>f-Strings</h3><p>f-Strings也称为“格式化字符串文字”，F字符串是开头有一个f的字符串文字，以及包含表达式的大括号将被其值替换。表达式在运行时进行渲染，然后使用<code>__format__</code>协议进行格式化。在python3.6中引入.</p>
+<p>使用<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">"Tom"</span></span><br><span class="line">age = <span class="number">74</span></span><br><span class="line"><span class="string">f"Hello, <span class="subst">&#123;name&#125;</span>. You are <span class="subst">&#123;age&#125;</span>."</span></span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/14/sonarqube_create/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/14/sonarqube_create/" itemprop="url">sonarqube 搭建过程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-14T13:34:46+08:00">
+                2018-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index">
+                    <span itemprop="name">tools</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="SonarQube简介"><a href="#SonarQube简介" class="headerlink" title="SonarQube简介"></a>SonarQube简介</h3><p>Sonar 是一个用于代码质量管理的开放平台。通过插件机制，Sonar 可以集成不同的测试工具，代码分析工具，以及持续集成工具。比如pmd-cpd、checkstyle、findbugs、Jenkins。通过不同的插件对这些结果进行再加工处理，通过量化的方式度量代码质量的变化，从而可以方便地对不同规模和种类的工程进行代码质量管理。同时 Sonar 还对大量的持续集成工具提供了接口支持，可以很方便地在持续集成中使用 Sonar。<br>此外，Sonar 的插件还可以对 Java 以外的其他编程语言（支持的语言包括：Java、PHP、C#、C、Cobol、PL/SQL、Flex等）提供支持，对国际化以及报告文档化也有良好的支持。可以说Sonar是目前最强大的代码质量管理工具之一。<br>下面就来揭开Sonar的神秘面纱，看看如何在Centos环境上安装Sonar。</p>
+<h3 id="安装环境："><a href="#安装环境：" class="headerlink" title="安装环境："></a>安装环境：</h3><p>系统环境：centos6.9 -i686（最小化安装）<br>前置条件：jdk1.8 , mysql-5.7<br>软件下载目录：/usr/local/<br>软件安装目录：/usr/local/<br>软件版本：sonarqube-6.7.5，sonar-scanner-cli-3.2.0.1227-linux</p>
+<h3 id="先决条件："><a href="#先决条件：" class="headerlink" title="先决条件："></a>先决条件：</h3><p>vm.max_map_count 大于或等于262144<br>fs.file-max 大于或等于65536<br>运行SonarQube的用户可以打开至少65536个文件描述符<br>运行SonarQube的用户可以打开至少2048个线程</p>
+<p>可以在/etc/sysctl.conf和/etc/security/limits.conf文件中设置</p>
+<p>配置环境变量<br>java安装1.8版本，在/etc/profile添加路径。</p>
+<p>Mysql安装5.7版本，设置mysql的环境通过文档资料<a href="https://blog.csdn.net/Luck_ZZ/article/details/80341693" target="_blank" rel="noopener">https://blog.csdn.net/Luck_ZZ/article/details/80341693</a></p>
+<p>Sonarqube在/etc/profile添加路径</p>
+<p>Sonar-scanner在/etc/profile添加路径</p>
+<h3 id="配置sonar-properties和sonar-scanner"><a href="#配置sonar-properties和sonar-scanner" class="headerlink" title="配置sonar.properties和sonar-scanner"></a>配置sonar.properties和sonar-scanner</h3><p>配置sonar-scanner的项目配置sonar-project.properties<br>模板：<br>sonar.projectKey=my:project<br>sonar.projectName=yaok<br>sonar.projectVersion=1.0</p>
+<p>#Paths to source directories.</p>
+<p>#Paths are relative to the sonar-project.properties file. Replace “\” by “/“ on Windows.</p>
+<p>#Do not put the “sonar-project.properties” file in the same directory with the source code.</p>
+<p>#(i.e. never set the “sonar.sources” property to “.”)<br>sonar.sources=/root/java</p>
+<p>#The value of the property must be the key of the language.<br>sonar.language=java</p>
+<p>#Encoding of the source code<br>sonar.sourceEncoding=UTF-8</p>
+<h3 id="启动sonar"><a href="#启动sonar" class="headerlink" title="启动sonar"></a>启动sonar</h3><p>Root用户无法启动，需要新建用户<br>[root@localhost ]# useradd sonaruser<br>[root@localhost local]# chown sonaruser:sonaruser sonarqube<br>[root@localhost sonarqube]# su sonaruser<br>[sonaruser@localhost sonarqube]$ ./sonar.sh start</p>
+<p>下载插件<br>因为官方插件sonarCFamily需要money，所以使用了其他的插件，下载地址<a href="https://github.com/SonarOpenCommunity/sonar-cxx，下载放在/usr/local/sonarqube/extensions/plugins/里面，然后重启sonarqube。" target="_blank" rel="noopener">https://github.com/SonarOpenCommunity/sonar-cxx，下载放在/usr/local/sonarqube/extensions/plugins/里面，然后重启sonarqube。</a></p>
+<h3 id="安装测试代码环境"><a href="#安装测试代码环境" class="headerlink" title="安装测试代码环境"></a>安装测试代码环境</h3><h4 id="1-安装cppcheck"><a href="#1-安装cppcheck" class="headerlink" title="1.安装cppcheck"></a>1.安装cppcheck</h4><p>Cppcheck是Cppcheck是一个C/C++代码的静态分析工具。与C++编译器和其他许多分析工具不同，Cppcheck不检测代码中的语法错误，只检测那些编译器通常无法检测到的bug类型，目的是只检测代码中真正的错误。</p>
+<p>特点：<br>检查边界溢出<br>检查内存泄漏<br>检查可能的空指针间接引用<br>检查未初始化的变量<br>检查无效的STL使用<br>检查异常安全<br>警告如果过时的或者不安全的函数使用<br>警告未使用的或者冗余的代码<br>检测各种潜在bugs的可疑代码<br>下载地址<a href="http://cppcheck.sourceforge.net/" target="_blank" rel="noopener">http://cppcheck.sourceforge.net/</a></p>
+<h4 id="2-安装rats"><a href="#2-安装rats" class="headerlink" title="2.安装rats"></a>2.安装rats</h4><p>RATS 是一个代码安全审计工具，可扫描 C、C++、Perl、PHP 和 Python 源码，检查出一些常见的安全问题，例如缓冲区溢出和 TOCTOU (Time Of Check, Time Of Use) 。<br>下载地址<a href="https://github.com/andrew-d/rough-auditing-tool-for-security" target="_blank" rel="noopener">https://github.com/andrew-d/rough-auditing-tool-for-security</a></p>
+<h4 id="3-安装valgrind"><a href="#3-安装valgrind" class="headerlink" title="3.安装valgrind"></a>3.安装valgrind</h4><p>Valgrind是一套Linux下，开放源代码（GPL V2）的仿真调试工具的集合。Valgrind由内核（core）以及基于内核的其他调试工具组成。<br>内核类似于一个框架（framework），它模拟了一个CPU环境，并提供服务给其他工具；而其他工具则类似于插件 (plug-in)，利用内核提供的服务完成各种特定的内存调试任务。<br>Valgrind包括如下一些工具：<br>Memcheck：这是valgrind应用最广泛的工具，一个重量级的内存检查器，能够发现开发中绝大多数内存错误使用情况，比如：使用未初始化的内存，使用已经释放了的内存，内存访问越界等。<br>Callgrind：它主要用来检查程序中函数调用过程中出现的问题。<br>Cachegrind：它主要用来检查程序中缓存使用出现的问题。<br>Helgrind：它主要用来检查多线程程序中出现的竞争问题。<br>Massif：它主要用来检查程序中堆栈使用中出现的问题。<br>Extension：可以利用core提供的功能，自己编写特定的内存调试工具。<br>下载地址：<a href="http://valgrind.org/" target="_blank" rel="noopener">http://valgrind.org/</a></p>
+<h4 id="4-安装gcovr"><a href="#4-安装gcovr" class="headerlink" title="4.安装gcovr"></a>4.安装gcovr</h4><p>gcovr是一个将单元测试中的代码覆盖率以多种方式(包括列表方式、XML文件方式、HTML网页方式等)展示出来的工具。<br>下载地址：<a href="https://pypi.python.org/pypi/gcovr" target="_blank" rel="noopener">https://pypi.python.org/pypi/gcovr</a></p>
+<h4 id="5-写一个集成这些工具的脚本"><a href="#5-写一个集成这些工具的脚本" class="headerlink" title="5.写一个集成这些工具的脚本"></a>5.写一个集成这些工具的脚本</h4><p>Makefile脚本如下：<br>上半部为编译项目，通过@$(MAKE) -C src执行src目录下的makefile编译项目<br>下半部为通过cppcheck,rats,valgrind,gcovr工具生成测试扫描代码的报告<br><img src="http://118.25.45.162:8360/static/img/sonarqube.png" alt="alt"></p>
+<h4 id="6-配置报告路径，执行脚本"><a href="#6-配置报告路径，执行脚本" class="headerlink" title="6.配置报告路径，执行脚本"></a>6.配置报告路径，执行脚本</h4><p>配置文件sonar-project.properties</p>
+<p>具体如下<br>sonar.projectKey=ncsrv<br>sonar.projectName=ncsrv<br>sonar.projectVersion=1.0</p>
+<p>#Paths to source directories.</p>
+<p>#Paths are relative to the sonar-project.properties file. Replace “\” by “/“ on Windows.</p>
+<p>#Do not put the “sonar-project.properties” file in the same directory with the source code.</p>
+<p>#(i.e. never set the “sonar.sources” property to “.”)<br>sonar.sources=./src</p>
+<p>#The value of the property must be the key of the language.<br>sonar.language=c++</p>
+<p>#Encoding of the source code<br>sonar.sourceEncoding=UTF-8<br>sonar.cpp.missingIncludeWarnings=true<br>sonar.cxx.includeDirectories=/usr/include/c++/4.4.4,/usr/include,/home/pas36/include,/usr/local/mysql/include,/usr/include/libxml2/,/usr/include/c++/4.4.4/tr1,/usr/include/linux,src</p>
+<p>#paths to the reports<br>sonar.cxx.cppcheck.reportPath=build/cppcheck-report.xml<br>sonar.cxx.pclint.reportPath=build/pclint-report.xml<br>sonar.cxx.coverage.reportPath=build/gcovr-report<em>.xml<br>sonar.cxx.coverage.itReportPath=build/gcovr-report</em>.xml<br>sonar.cxx.coverage.overallReportPath=build/gcovr-report*.xml<br>sonar.cxx.valgrind.reportPath=build/valgrind-report.xml<br>sonar.cxx.rats.reportPath=build/rats-report.xml<br>sonar.cxx.xunit.reportPath=build/xunit-report.xml</p>
+<p>然后执行脚本make &amp; make sonar，如果之前执行过，使用make clean清除一下。</p>
+<h3 id="看测试结果并根据报告改进代码"><a href="#看测试结果并根据报告改进代码" class="headerlink" title="看测试结果并根据报告改进代码"></a>看测试结果并根据报告改进代码</h3><p>在<a href="http://192.168.20.199:9000,用户密码都是admin" target="_blank" rel="noopener">http://192.168.20.199:9000,用户密码都是admin</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/05/sonarqube/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/05/sonarqube/" itemprop="url">sonarqube搭建时遇到的坑</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-05T22:17:01+08:00">
+                2018-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index">
+                    <span itemprop="name">tools</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>SonarQube是管理代码质量一个开放平台，可以快速的定位代码中潜在的或者明显的错误，网上有许多教程，我也是通过网上的教程搭起来的，就不细说了，主要说下搭建的时候遇到的问题。</p>
+<p>我在windows先搭起来，很简单，然后在centos搭建，遇到一些问题</p>
+<p>1.版本要对，java版本要1.8，mysql要5.6以上，我的centos之前有1.7的版本，mysql是5.1版本，所以搭起来执行sonar.sh start没反应<br>。</p>
+<p>重点注意，遇到搭错的问题要勤看日志，不然就像无头苍蝇不知道错在哪，<br>日志在logs目录下，err.log,sonar.log，还有环境没什么问题的时候web服务起来，会出现web.log日志</p>
+<p>查询版本问题 通过<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum -y list java*</span><br><span class="line">yum -y list mysql*</span><br></pre></td></tr></table></figure></p>
+<p>安装的时候有时候yum源没有高版本的mysql需要更新源</p>
+<p>2.安装之前环境要设置好，不然环境跑不起来，环境指这四个指标</p>
+<ul>
+<li>vm.max_map_count is greater or equals to 262144</li>
+<li>fs.file-max is greater or equals to 65536</li>
+<li>the user running SonarQube can open at least 65536 file descriptors</li>
+<li>the user running SonarQube can open at least 2048 threads</li>
+</ul>
+<p>可以通过以下命令查询<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sysctl vm.max_map_count</span><br><span class="line">sysctl fs.file-max</span><br><span class="line">ulimit -n</span><br><span class="line">ulimit -u</span><br></pre></td></tr></table></figure></p>
+<p>3.web环境是sonarqube自带的，不需要自己搭建nginx或apache服务器，只需要在配置文件中设置好；数据库要先建个database，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database sonar</span><br></pre></td></tr></table></figure></p>
+<p>这个数据库名可以自定，只要和配置文件中的数据库名相同就行了，我定的‘sonar’，所以配置文件是这样的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sonar.jdbc.url=jdbc:mysql://192.168.20.199:3306/sonar?useUnicode=true&amp;characterEncoding=utf8&amp;rewriteBatchedStatements=true&amp;useConfigs=maxPerformance</span><br></pre></td></tr></table></figure></p>
+<p>配置文件中设置java虚拟机大小最好2g，配置文件中默认的太小了，才128m-512m<br>，跑web环境的时候根本跑不起来，需要看web.log日志的时候才能看出来。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/29/leetcode_150/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/29/leetcode_150/" itemprop="url">leetcode 150. Evaluate Reverse Polish Notation</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-29T11:26:16+08:00">
+                2018-10-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://leetcode.com/problems/evaluate-reverse-polish-notation/description/" target="_blank" rel="noopener">题目链接</a></p>
+<p>思路：逆波兰用栈来做</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">evalRPN</span><span class="params">(self, tokens)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type tokens: List[str]</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        stack = []</span><br><span class="line">        <span class="keyword">for</span> token <span class="keyword">in</span> tokens:</span><br><span class="line">            <span class="keyword">if</span> token <span class="keyword">in</span> <span class="string">'+-*/'</span>:</span><br><span class="line">                num2 = stack.pop()</span><br><span class="line">                num1 = stack.pop()</span><br><span class="line">                <span class="keyword">if</span> token == <span class="string">'+'</span>:</span><br><span class="line">                    num = int(num1)+int(num2)</span><br><span class="line">                    stack.append(str(num))</span><br><span class="line">                <span class="keyword">elif</span> token == <span class="string">'-'</span>:</span><br><span class="line">                    num = int(num1)-int(num2)</span><br><span class="line">                    stack.append(str(num))</span><br><span class="line">                <span class="keyword">elif</span> token == <span class="string">'*'</span>:</span><br><span class="line">                    num = int(num1)*int(num2)</span><br><span class="line">                    stack.append(str(num))</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    num = int(int(num1)/int(num2))</span><br><span class="line">                    stack.append(str(num))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                stack.append(token)</span><br><span class="line">        <span class="keyword">return</span> int(stack[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/11/design_high_scalability/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/11/design_high_scalability/" itemprop="url">如何设计一个支持高并发的高可用服务</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-11T20:36:40+08:00">
+                2018-10-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index">
+                    <span itemprop="name">tools</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>如何设计一个支持高并发的高可用服务？在前期设计时应该从哪些方面入手？</p>
+<pre><code>明确的一点：没有哪一个系统是从一开始设计时就是高可用的，支持高并发的。都是在产品的发展壮大中，随着业务量的增加，逐渐对系统架构进行一步步升级。所以出现了很多‘XXX系统的架构演进之路，日订单千万级别的系统演进历程’等文章。老系统升级的次数多了，再设计新系统时就会考虑为以后的高可用高并发提供扩展，甚至开始设计时就支持，避免后面的升级痛苦。
+</code></pre><p>系统设计层面：</p>
+<h4 id="一、分布式计算"><a href="#一、分布式计算" class="headerlink" title="一、分布式计算"></a>一、分布式计算</h4><pre><code>一个高并发的系统，需要对系统功能进行分布式部署，核心生产流程进行异构化。特别是现如今微服务热潮，Docker云，更为分布式部署提供了有利条件。一个电商系统，接受用户订单的功能、并完成支付是优先级最高的，其次是对订单的生产，最后是运营人员对用户订单的管理。那么就可以根据优先级把系统设计成：Web_Tomcat 、Order_Produce、Manager_Tomcat三个子系统。如果再进一步，还可以把支付功能从Web_Tomcat中拆出来，做成Pay_Tomcat四个应用。四个应用共同完成一笔订单交易。
+系统拆分成多个应用有以下优点：
+- 1、系统计算订单能力提升，提高扩展性。如果应用HTTP连接数不够，但是CPU和内存占用不高，这时候就可以只扩展Web_Tomcat，因为一个应用只接受用户创建订单，不做其他复杂计算逻辑，可以部署在一个低配置的Docker上。
+
+- 2、应用与应用之间从物理上进行隔离。随着业务的发展，业务逻辑代码也随着改变。虽说在设计时会考虑到以后的可扩展性，但还是会有代码上的更新维护（系统上线后程序员就可以下岗了）。订单的生产逻辑大都在Order_Produce和Manager_Tomcat应用上，Web_Tomcat仅仅接受用户下单，逻辑简单一般不会发生改变。这时候Order_Produce的版本迭代不会对Web_Tomcat造成风险，就算发布失败，也不会影响用户下单。把可预见到的改变和不变进行隔离，也就是关注点分离。
+
+- 3、为以后的团队拆分打好基础。支付应用Pay_Tomcat会涉及到跟银行对接，财务对账等一系列操作，而且这部分操作跟某个具体的业务没有关系。随着公司团队的发展壮大，这个应用就可以建设一个独立的团队进行维护。
+
+- 4、提升对变化的响应速度。因为子系统的功能独立，由独立的团队进行维护，独立的技术栈。对新需求的响应，不需要依赖其他应用，需要升级时可以选择合适的技术栈。代码量小，重构起来也方便。
+</code></pre><p> 任何事物都是双面的，优点与缺点是共存的。缺点是：</p>
+<pre><code>- 1、拆分之后系统的复杂度提高，原来运行在一个JVM进程中的应用会运行在多个JVM中。
+
+- 2、RPC框架的选择
+     多个JVM进程间如何通信，该如何选择RPC框架，是选择同步处理还是异步处理，这都是需要架构师考虑的。一般需要立即获取执行结果的调用选择同步，这类型的框架有dubbo thirft webservice hession等，也可选择HTTP RESTfull。如果不需要立即得到执行结果，只是通知远端的JVM或者只需要发送一条数据，至于远端的JVM什么时候执行无需关注，则可以选择使用MQ，这类型框架有Active MQ  、Rabbit MQ等。
+
+- 3、依赖复杂度提高
+     在一个单体应用上执行可能不需要调用远端服务或者很少涉及到对第三方服务的调用，但是如果把一个单块应用拆分成多个，就会增加依赖，拆分的粒度越细依赖复杂度越高，这也是微服务设计时的一个难点。
+      依赖复杂度高了，相应的对每个依赖的管理越严格了。比如给每个依赖分配的线程个数CPU时间片网络IO等，不能因为某一个外部依赖响应延迟就导致其他服务不可用，这是不可容忍的。关于如何分配资源，监控依赖和实现FastFail可以参考
+
+- 4、分布式事务
+      不论是系统拆分成多个子系统还是一个单块应用拆分成多个微服务，很多时候都会从功能上考虑拆分，指责单一高内聚原则，尽量避免出现分布式事务问题。如果无法避免可以从以下两方面考虑：强一致性和最终一致性。强一致性需要让每一个参与事务的服务都能提供undo操作，类似于2PC（二阶段提交）3PC。弱一致性就可以通过异步实现最终一致性。
+</code></pre><h4 id="二、多机房入口"><a href="#二、多机房入口" class="headerlink" title="二、多机房入口"></a>二、多机房入口</h4><pre><code>用户的请求是从机房进去的，应用部署的再多，入口拥挤，用户请求进不去也是无用。特别是现在动不动就某个机房网络拥堵，动不动就光纤被挖断。增加请求入口，把用户请求分散到多个机房，解决请求入口拥堵问题。只有把这个问题解决了，请求才会打到后端应用上。
+</code></pre><h4 id="三、CDN加速"><a href="#三、CDN加速" class="headerlink" title="三、CDN加速"></a>三、CDN加速</h4><pre><code>任何一个互联网系统面向的用户都遍布于地球的每个角落，每个角落的请求到机房可用多种路径可选，正所谓条条大路通罗马，这里是条条路径通机房。其中有速度快的路径有慢的路径，如何选择最优路径，把每个角落的请求快速的传递到机房，这就是CDN的功能。
+</code></pre><h4 id="四、HTML页面静态化"><a href="#四、HTML页面静态化" class="headerlink" title="四、HTML页面静态化"></a>四、HTML页面静态化</h4><pre><code>这是最长见的一种优化方式，成本也最低，不需要考虑硬件成本。静态页面部署在NGNIX中，收到用户请求，Ngnix不需要访问Webapp即可响应用户，减少应用渲染页面的时间，同时也降低了应用的压力。
+</code></pre><h4 id="五、Cache"><a href="#五、Cache" class="headerlink" title="五、Cache"></a>五、Cache</h4><pre><code>这也是常见的一种优化方式，在数据库层之上加一层缓存，减少对数据库的访问压力。缓存中的数据都是存储在内存里的，而数据库中的数据是写在磁盘上的，访问内存肯定是比访问磁盘快的可不止一个数量级。
+</code></pre><h4 id="六、数据库拆分"><a href="#六、数据库拆分" class="headerlink" title="六、数据库拆分"></a>六、数据库拆分</h4><pre><code>当数据量达到某个阀值时，数据库拆分就会成为一个紧急的需求。一般从业务上进行垂直拆分，如果业务单一，也可从水平上进行拆分。拆分的原则一般是：避免跨数据库事务和如何选择shardingId。跨数据库事务可以选择在前期调研时把同一事务中的表放在一个数据库中。如果数据冷热不均shardingId可以是UserPin或者订单号Hash打散后的值，如果数据冷热均匀可以按段分库也可以对某一个值取模后的值。
+多数据库事务管理，现在业界有很多已成型的中间价，如阿里的Corba 360的  MyBatis本身的代理等。大致可以分为两类，一类是在Webapp层进行选择数据源，一类是在代理层面上对SQL语句解析选择数据源。后者需要配置shardingId，只有通过shardingId作为where的SQL语句才能针对某个数据源进行操作，其余都是对所有数据源操作。
+Spring本身也提供了一部分选择数据源的功能，如AbstractRoutingDataSource和一些懒加载的数据源代理类等，也可以自己包装JdbcDataSourceTransaction实现对多数据源的事务管理。在事务开启时，传入shardingId路由数据源然后对其进行SQL操作。这种方式会比第三方中间件更灵活，但对开发者的要求也更高。
+</code></pre><h4 id="七、多线程"><a href="#七、多线程" class="headerlink" title="七、多线程"></a>七、多线程</h4><pre><code>接下来的方式就是在开发层面上的优化了。现在的机器都是多核的，如果还像之前那样编写串行的代码，那多核机器就是个浪费。如何编写多线程应用比较简单这里就不在赘述了，重点讨论下如何管理线程。线程是机器宝贵且有限的资源，线程数量太多，上下文频繁的切换也会带来性能消耗，太少又不能物尽其用。线程可以交给线程池管理，设置好最大和核心线程数，存活时间等重要参数。
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/09/python_replace/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -816,868 +1761,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/26/leetcode_102/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/26/leetcode_102/" itemprop="url">leetcode 102. 二叉树的层次遍历</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-26T08:44:38+08:00">
-                2018-09-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>题目链接：<a href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal/description/" target="_blank" rel="noopener">leetcode</a></p>
-<p>思路：广度优先遍历</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"># class TreeNode(object):</span></span><br><span class="line"><span class="comment">#     def __init__(self, x):</span></span><br><span class="line"><span class="comment">#         self.val = x</span></span><br><span class="line"><span class="comment">#         self.left = None</span></span><br><span class="line"><span class="comment">#         self.right = None</span></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">levelOrder</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type root: TreeNode</span></span><br><span class="line"><span class="string">        :rtype: List[List[int]]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:<span class="keyword">return</span> []</span><br><span class="line">        q = deque()</span><br><span class="line">        q.append(root)</span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">while</span> q:</span><br><span class="line">            tmp = []</span><br><span class="line">            n = len(q)</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">                node = q.popleft()</span><br><span class="line">                tmp.append(node.val)</span><br><span class="line">                <span class="keyword">if</span> node.left:q.append(node.left)</span><br><span class="line">                <span class="keyword">if</span> node.right:q.append(node.right)</span><br><span class="line">            res.append(tmp)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/25/leetcode_199/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/25/leetcode_199/" itemprop="url">leetcode 199. 二叉树的右视图</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-25T20:05:34+08:00">
-                2018-09-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>题目链接：<a href="https://leetcode-cn.com/problems/binary-tree-right-side-view/description/" target="_blank" rel="noopener">leetcode</a></p>
-<p>思路：使用广度优先算法找到一层上的所有节点，第一个就是最右边的</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"><span class="comment"># Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"># class TreeNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, x):</span></span><br><span class="line"><span class="comment">#         self.val = x</span></span><br><span class="line"><span class="comment">#         self.left = None</span></span><br><span class="line"><span class="comment">#         self.right = None</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rightSideView</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type root: TreeNode</span></span><br><span class="line"><span class="string">        :rtype: List[int]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:<span class="keyword">return</span> []</span><br><span class="line">        q = deque()</span><br><span class="line">        q.append(root)</span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">while</span> q:</span><br><span class="line">            n = len(q)</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">                node = q.popleft()</span><br><span class="line">                <span class="keyword">if</span> i == <span class="number">0</span>:res.append(node.val)</span><br><span class="line">                <span class="keyword">if</span> node.right:q.append(node.right)</span><br><span class="line">                <span class="keyword">if</span> node.left:q.append(node.left)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/25/leetcode_194/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/25/leetcode_194/" itemprop="url">leetcode 194. Transpose File</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-25T16:33:38+08:00">
-                2018-09-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>题目链接：<a href="https://leetcode.com/problems/transpose-file/description/" target="_blank" rel="noopener">leetcode</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Read from the file file.txt and print its transposed content to stdout.</span></span><br><span class="line">awk <span class="string">'</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    for (i = 1; i &lt;= NF; i++) &#123;</span></span><br><span class="line"><span class="string">        if (FNR == 1) &#123;</span></span><br><span class="line"><span class="string">            t[i] = $i;</span></span><br><span class="line"><span class="string">        &#125; else &#123;</span></span><br><span class="line"><span class="string">            t[i] = t[i] " " $i</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">END &#123;</span></span><br><span class="line"><span class="string">    for (i = 1; t[i] != ""; i++) &#123;</span></span><br><span class="line"><span class="string">        print t[i]</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">'</span> file.txt</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/25/leetcode_187/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/25/leetcode_187/" itemprop="url">leetcode 187. Repeated DNA Sequences</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-25T16:18:16+08:00">
-                2018-09-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>题目链接：<a href="https://leetcode.com/problems/repeated-dna-sequences/description/" target="_blank" rel="noopener">leetcode</a></p>
-<p>思路，使用字典存储计数</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findRepeatedDnaSequences</span><span class="params">(self, s)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type s: str</span></span><br><span class="line"><span class="string">        :rtype: List[str]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> len(s) &lt;=<span class="number">10</span>:<span class="keyword">return</span> []</span><br><span class="line">        d = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(s)<span class="number">-9</span>):</span><br><span class="line">            tmp = s[i:i+<span class="number">10</span>]</span><br><span class="line">            <span class="keyword">if</span> tmp <span class="keyword">in</span> d:</span><br><span class="line">                d[tmp] += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                d[tmp] = <span class="number">1</span></span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">for</span> key <span class="keyword">in</span> d.keys():</span><br><span class="line">            <span class="keyword">if</span> d[key] &gt;= <span class="number">2</span>:</span><br><span class="line">                res.append(key)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/25/leetcode_179/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/25/leetcode_179/" itemprop="url">leetcode 179. Largest Number</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-25T16:00:33+08:00">
-                2018-09-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>题目链接：<a href="https://leetcode.com/problems/largest-number/description/" target="_blank" rel="noopener">leetcode</a></p>
-<p>思路：排序</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">largestNumber</span><span class="params">(self, num)</span>:</span></span><br><span class="line">        comp=<span class="keyword">lambda</span> a,b:<span class="number">1</span> <span class="keyword">if</span> a+b&gt;b+a <span class="keyword">else</span> <span class="number">-1</span> <span class="keyword">if</span> a+b&lt;b+a <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">        num=map(str,num)</span><br><span class="line">        num.sort(cmp=comp,reverse=<span class="keyword">True</span>)</span><br><span class="line">        <span class="keyword">return</span> str(int(<span class="string">""</span>.join(num)))</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/25/leetcode_174/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/25/leetcode_174/" itemprop="url">leetcode 174. 地下城游戏</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-25T15:29:03+08:00">
-                2018-09-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>题目链接:<a href="https://leetcode.com/problems/dungeon-game/description/" target="_blank" rel="noopener">leetcode</a></p>
-<p>思路：</p>
-<ul>
-<li>使用动态规划，knight的生命值最少为1</li>
-<li>初始条件，dp[-1][-1] = max(1-dungeon[-1][-1],1);<br>dp[i][-1] = max(dp[i+1][-1]-dungeon[i][-1],1)<br>dp[-1][j] = max(dp[-1][j+1] -dungeon[-1][j],1)</li>
-<li>转移方程，dp[i][j] = max(min(dp[i+1][j],dp[i][j+1])-dungeon[i][j],1)</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">calculateMinimumHP</span><span class="params">(self, dungeon)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type dungeon: List[List[int]]</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment">#dp[i][j] </span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> dungeon <span class="keyword">or</span> <span class="keyword">not</span> dungeon[<span class="number">0</span>]:<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        m,n = len(dungeon),len(dungeon[<span class="number">0</span>])</span><br><span class="line">        dp = [[<span class="number">0</span>]*n <span class="keyword">for</span> _ <span class="keyword">in</span> range(m)]</span><br><span class="line">        dp[<span class="number">-1</span>][<span class="number">-1</span>] = max(<span class="number">1</span>-dungeon[<span class="number">-1</span>][<span class="number">-1</span>],<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(m<span class="number">-2</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">            dp[i][n<span class="number">-1</span>] = max(dp[i+<span class="number">1</span>][n<span class="number">-1</span>]-dungeon[i][n<span class="number">-1</span>],<span class="number">1</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(n<span class="number">-2</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">            dp[m<span class="number">-1</span>][j] = max(dp[m<span class="number">-1</span>][j+<span class="number">1</span>] -dungeon[m<span class="number">-1</span>][j],<span class="number">1</span>)</span><br><span class="line">            </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(m<span class="number">-2</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(n<span class="number">-2</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">                dp[i][j] = max(min(dp[i+<span class="number">1</span>][j],dp[i][j+<span class="number">1</span>])-dungeon[i][j],<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">0</span>][<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1728,7 +1811,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">172</span>
+                  <span class="site-state-item-count">178</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

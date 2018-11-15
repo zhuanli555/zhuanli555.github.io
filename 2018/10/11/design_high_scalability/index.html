@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="design," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="如何设计一个支持高并发的高可用服务？在前期设计时应该从哪些方面入手？ 明确的一点：没有哪一个系统是从一开始设计时就是高可用的，支持高并发的。都是在产品的发展壮大中，随着业务量的增加，逐渐对系统架构进行一步步升级。所以出现了很多‘XXX系统的架构演进之路，日订单千万级别的系统演进历程’等文章。老系统升级的次数多了，再设计新系统时就会考虑为以后的高可用高并发提供扩展，甚至开始设计时就支持，避免后面的升">
+<meta name="keywords" content="design">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何设计一个支持高并发的高可用服务">
+<meta property="og:url" content="http://yoursite.com/2018/10/11/design_high_scalability/index.html">
+<meta property="og:site_name" content="Zhuanli&amp;Blog">
+<meta property="og:description" content="如何设计一个支持高并发的高可用服务？在前期设计时应该从哪些方面入手？ 明确的一点：没有哪一个系统是从一开始设计时就是高可用的，支持高并发的。都是在产品的发展壮大中，随着业务量的增加，逐渐对系统架构进行一步步升级。所以出现了很多‘XXX系统的架构演进之路，日订单千万级别的系统演进历程’等文章。老系统升级的次数多了，再设计新系统时就会考虑为以后的高可用高并发提供扩展，甚至开始设计时就支持，避免后面的升">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-10-11T12:44:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何设计一个支持高并发的高可用服务">
+<meta name="twitter:description" content="如何设计一个支持高并发的高可用服务？在前期设计时应该从哪些方面入手？ 明确的一点：没有哪一个系统是从一开始设计时就是高可用的，支持高并发的。都是在产品的发展壮大中，随着业务量的增加，逐渐对系统架构进行一步步升级。所以出现了很多‘XXX系统的架构演进之路，日订单千万级别的系统演进历程’等文章。老系统升级的次数多了，再设计新系统时就会考虑为以后的高可用高并发提供扩展，甚至开始设计时就支持，避免后面的升">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/11/design_high_scalability/"/>
+
+
+
+
+
+  <title>如何设计一个支持高并发的高可用服务 | Zhuanli&Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhuanli&Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/11/design_high_scalability/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">如何设计一个支持高并发的高可用服务</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-11T20:36:40+08:00">
+                2018-10-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index">
+                    <span itemprop="name">tools</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>如何设计一个支持高并发的高可用服务？在前期设计时应该从哪些方面入手？</p>
+<pre><code>明确的一点：没有哪一个系统是从一开始设计时就是高可用的，支持高并发的。都是在产品的发展壮大中，随着业务量的增加，逐渐对系统架构进行一步步升级。所以出现了很多‘XXX系统的架构演进之路，日订单千万级别的系统演进历程’等文章。老系统升级的次数多了，再设计新系统时就会考虑为以后的高可用高并发提供扩展，甚至开始设计时就支持，避免后面的升级痛苦。
+</code></pre><p>系统设计层面：</p>
+<h4 id="一、分布式计算"><a href="#一、分布式计算" class="headerlink" title="一、分布式计算"></a>一、分布式计算</h4><pre><code>一个高并发的系统，需要对系统功能进行分布式部署，核心生产流程进行异构化。特别是现如今微服务热潮，Docker云，更为分布式部署提供了有利条件。一个电商系统，接受用户订单的功能、并完成支付是优先级最高的，其次是对订单的生产，最后是运营人员对用户订单的管理。那么就可以根据优先级把系统设计成：Web_Tomcat 、Order_Produce、Manager_Tomcat三个子系统。如果再进一步，还可以把支付功能从Web_Tomcat中拆出来，做成Pay_Tomcat四个应用。四个应用共同完成一笔订单交易。
+系统拆分成多个应用有以下优点：
+- 1、系统计算订单能力提升，提高扩展性。如果应用HTTP连接数不够，但是CPU和内存占用不高，这时候就可以只扩展Web_Tomcat，因为一个应用只接受用户创建订单，不做其他复杂计算逻辑，可以部署在一个低配置的Docker上。
+
+- 2、应用与应用之间从物理上进行隔离。随着业务的发展，业务逻辑代码也随着改变。虽说在设计时会考虑到以后的可扩展性，但还是会有代码上的更新维护（系统上线后程序员就可以下岗了）。订单的生产逻辑大都在Order_Produce和Manager_Tomcat应用上，Web_Tomcat仅仅接受用户下单，逻辑简单一般不会发生改变。这时候Order_Produce的版本迭代不会对Web_Tomcat造成风险，就算发布失败，也不会影响用户下单。把可预见到的改变和不变进行隔离，也就是关注点分离。
+
+- 3、为以后的团队拆分打好基础。支付应用Pay_Tomcat会涉及到跟银行对接，财务对账等一系列操作，而且这部分操作跟某个具体的业务没有关系。随着公司团队的发展壮大，这个应用就可以建设一个独立的团队进行维护。
+
+- 4、提升对变化的响应速度。因为子系统的功能独立，由独立的团队进行维护，独立的技术栈。对新需求的响应，不需要依赖其他应用，需要升级时可以选择合适的技术栈。代码量小，重构起来也方便。
+</code></pre><p> 任何事物都是双面的，优点与缺点是共存的。缺点是：</p>
+<pre><code>- 1、拆分之后系统的复杂度提高，原来运行在一个JVM进程中的应用会运行在多个JVM中。
+
+- 2、RPC框架的选择
+     多个JVM进程间如何通信，该如何选择RPC框架，是选择同步处理还是异步处理，这都是需要架构师考虑的。一般需要立即获取执行结果的调用选择同步，这类型的框架有dubbo thirft webservice hession等，也可选择HTTP RESTfull。如果不需要立即得到执行结果，只是通知远端的JVM或者只需要发送一条数据，至于远端的JVM什么时候执行无需关注，则可以选择使用MQ，这类型框架有Active MQ  、Rabbit MQ等。
+
+- 3、依赖复杂度提高
+     在一个单体应用上执行可能不需要调用远端服务或者很少涉及到对第三方服务的调用，但是如果把一个单块应用拆分成多个，就会增加依赖，拆分的粒度越细依赖复杂度越高，这也是微服务设计时的一个难点。
+      依赖复杂度高了，相应的对每个依赖的管理越严格了。比如给每个依赖分配的线程个数CPU时间片网络IO等，不能因为某一个外部依赖响应延迟就导致其他服务不可用，这是不可容忍的。关于如何分配资源，监控依赖和实现FastFail可以参考
+
+- 4、分布式事务
+      不论是系统拆分成多个子系统还是一个单块应用拆分成多个微服务，很多时候都会从功能上考虑拆分，指责单一高内聚原则，尽量避免出现分布式事务问题。如果无法避免可以从以下两方面考虑：强一致性和最终一致性。强一致性需要让每一个参与事务的服务都能提供undo操作，类似于2PC（二阶段提交）3PC。弱一致性就可以通过异步实现最终一致性。
+</code></pre><h4 id="二、多机房入口"><a href="#二、多机房入口" class="headerlink" title="二、多机房入口"></a>二、多机房入口</h4><pre><code>用户的请求是从机房进去的，应用部署的再多，入口拥挤，用户请求进不去也是无用。特别是现在动不动就某个机房网络拥堵，动不动就光纤被挖断。增加请求入口，把用户请求分散到多个机房，解决请求入口拥堵问题。只有把这个问题解决了，请求才会打到后端应用上。
+</code></pre><h4 id="三、CDN加速"><a href="#三、CDN加速" class="headerlink" title="三、CDN加速"></a>三、CDN加速</h4><pre><code>任何一个互联网系统面向的用户都遍布于地球的每个角落，每个角落的请求到机房可用多种路径可选，正所谓条条大路通罗马，这里是条条路径通机房。其中有速度快的路径有慢的路径，如何选择最优路径，把每个角落的请求快速的传递到机房，这就是CDN的功能。
+</code></pre><h4 id="四、HTML页面静态化"><a href="#四、HTML页面静态化" class="headerlink" title="四、HTML页面静态化"></a>四、HTML页面静态化</h4><pre><code>这是最长见的一种优化方式，成本也最低，不需要考虑硬件成本。静态页面部署在NGNIX中，收到用户请求，Ngnix不需要访问Webapp即可响应用户，减少应用渲染页面的时间，同时也降低了应用的压力。
+</code></pre><h4 id="五、Cache"><a href="#五、Cache" class="headerlink" title="五、Cache"></a>五、Cache</h4><pre><code>这也是常见的一种优化方式，在数据库层之上加一层缓存，减少对数据库的访问压力。缓存中的数据都是存储在内存里的，而数据库中的数据是写在磁盘上的，访问内存肯定是比访问磁盘快的可不止一个数量级。
+</code></pre><h4 id="六、数据库拆分"><a href="#六、数据库拆分" class="headerlink" title="六、数据库拆分"></a>六、数据库拆分</h4><pre><code>当数据量达到某个阀值时，数据库拆分就会成为一个紧急的需求。一般从业务上进行垂直拆分，如果业务单一，也可从水平上进行拆分。拆分的原则一般是：避免跨数据库事务和如何选择shardingId。跨数据库事务可以选择在前期调研时把同一事务中的表放在一个数据库中。如果数据冷热不均shardingId可以是UserPin或者订单号Hash打散后的值，如果数据冷热均匀可以按段分库也可以对某一个值取模后的值。
+多数据库事务管理，现在业界有很多已成型的中间价，如阿里的Corba 360的  MyBatis本身的代理等。大致可以分为两类，一类是在Webapp层进行选择数据源，一类是在代理层面上对SQL语句解析选择数据源。后者需要配置shardingId，只有通过shardingId作为where的SQL语句才能针对某个数据源进行操作，其余都是对所有数据源操作。
+Spring本身也提供了一部分选择数据源的功能，如AbstractRoutingDataSource和一些懒加载的数据源代理类等，也可以自己包装JdbcDataSourceTransaction实现对多数据源的事务管理。在事务开启时，传入shardingId路由数据源然后对其进行SQL操作。这种方式会比第三方中间件更灵活，但对开发者的要求也更高。
+</code></pre><h4 id="七、多线程"><a href="#七、多线程" class="headerlink" title="七、多线程"></a>七、多线程</h4><pre><code>接下来的方式就是在开发层面上的优化了。现在的机器都是多核的，如果还像之前那样编写串行的代码，那多核机器就是个浪费。如何编写多线程应用比较简单这里就不在赘述了，重点讨论下如何管理线程。线程是机器宝贵且有限的资源，线程数量太多，上下文频繁的切换也会带来性能消耗，太少又不能物尽其用。线程可以交给线程池管理，设置好最大和核心线程数，存活时间等重要参数。
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/design/" rel="tag"># design</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/09/python_replace/" rel="next" title="python脚本在工作中的应用-复杂替换">
+                <i class="fa fa-chevron-left"></i> python脚本在工作中的应用-复杂替换
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/29/leetcode_150/" rel="prev" title="leetcode 150. Evaluate Reverse Polish Notation">
+                leetcode 150. Evaluate Reverse Polish Notation <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNzMzNS8xMzg2OQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">zhuanli</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">178</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhuanli555" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、分布式计算"><span class="nav-number">1.</span> <span class="nav-text">一、分布式计算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、多机房入口"><span class="nav-number">2.</span> <span class="nav-text">二、多机房入口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、CDN加速"><span class="nav-number">3.</span> <span class="nav-text">三、CDN加速</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、HTML页面静态化"><span class="nav-number">4.</span> <span class="nav-text">四、HTML页面静态化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、Cache"><span class="nav-number">5.</span> <span class="nav-text">五、Cache</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#六、数据库拆分"><span class="nav-number">6.</span> <span class="nav-text">六、数据库拆分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#七、多线程"><span class="nav-number">7.</span> <span class="nav-text">七、多线程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhuanli</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

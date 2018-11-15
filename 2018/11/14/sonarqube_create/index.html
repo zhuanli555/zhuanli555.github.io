@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="tool," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="SonarQube简介Sonar 是一个用于代码质量管理的开放平台。通过插件机制，Sonar 可以集成不同的测试工具，代码分析工具，以及持续集成工具。比如pmd-cpd、checkstyle、findbugs、Jenkins。通过不同的插件对这些结果进行再加工处理，通过量化的方式度量代码质量的变化，从而可以方便地对不同规模和种类的工程进行代码质量管理。同时 Sonar 还对大量的持续集成工具提供了">
+<meta name="keywords" content="tool">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sonarqube 搭建过程">
+<meta property="og:url" content="http://yoursite.com/2018/11/14/sonarqube_create/index.html">
+<meta property="og:site_name" content="Zhuanli&amp;Blog">
+<meta property="og:description" content="SonarQube简介Sonar 是一个用于代码质量管理的开放平台。通过插件机制，Sonar 可以集成不同的测试工具，代码分析工具，以及持续集成工具。比如pmd-cpd、checkstyle、findbugs、Jenkins。通过不同的插件对这些结果进行再加工处理，通过量化的方式度量代码质量的变化，从而可以方便地对不同规模和种类的工程进行代码质量管理。同时 Sonar 还对大量的持续集成工具提供了">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://118.25.45.162:8360/static/img/sonarqube.png">
+<meta property="og:updated_time" content="2018-11-14T05:34:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sonarqube 搭建过程">
+<meta name="twitter:description" content="SonarQube简介Sonar 是一个用于代码质量管理的开放平台。通过插件机制，Sonar 可以集成不同的测试工具，代码分析工具，以及持续集成工具。比如pmd-cpd、checkstyle、findbugs、Jenkins。通过不同的插件对这些结果进行再加工处理，通过量化的方式度量代码质量的变化，从而可以方便地对不同规模和种类的工程进行代码质量管理。同时 Sonar 还对大量的持续集成工具提供了">
+<meta name="twitter:image" content="http://118.25.45.162:8360/static/img/sonarqube.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/14/sonarqube_create/"/>
+
+
+
+
+
+  <title>sonarqube 搭建过程 | Zhuanli&Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhuanli&Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/14/sonarqube_create/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">sonarqube 搭建过程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-14T13:34:46+08:00">
+                2018-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index">
+                    <span itemprop="name">tools</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="SonarQube简介"><a href="#SonarQube简介" class="headerlink" title="SonarQube简介"></a>SonarQube简介</h3><p>Sonar 是一个用于代码质量管理的开放平台。通过插件机制，Sonar 可以集成不同的测试工具，代码分析工具，以及持续集成工具。比如pmd-cpd、checkstyle、findbugs、Jenkins。通过不同的插件对这些结果进行再加工处理，通过量化的方式度量代码质量的变化，从而可以方便地对不同规模和种类的工程进行代码质量管理。同时 Sonar 还对大量的持续集成工具提供了接口支持，可以很方便地在持续集成中使用 Sonar。<br>此外，Sonar 的插件还可以对 Java 以外的其他编程语言（支持的语言包括：Java、PHP、C#、C、Cobol、PL/SQL、Flex等）提供支持，对国际化以及报告文档化也有良好的支持。可以说Sonar是目前最强大的代码质量管理工具之一。<br>下面就来揭开Sonar的神秘面纱，看看如何在Centos环境上安装Sonar。</p>
+<h3 id="安装环境："><a href="#安装环境：" class="headerlink" title="安装环境："></a>安装环境：</h3><p>系统环境：centos6.9 -i686（最小化安装）<br>前置条件：jdk1.8 , mysql-5.7<br>软件下载目录：/usr/local/<br>软件安装目录：/usr/local/<br>软件版本：sonarqube-6.7.5，sonar-scanner-cli-3.2.0.1227-linux</p>
+<h3 id="先决条件："><a href="#先决条件：" class="headerlink" title="先决条件："></a>先决条件：</h3><p>vm.max_map_count 大于或等于262144<br>fs.file-max 大于或等于65536<br>运行SonarQube的用户可以打开至少65536个文件描述符<br>运行SonarQube的用户可以打开至少2048个线程</p>
+<p>可以在/etc/sysctl.conf和/etc/security/limits.conf文件中设置</p>
+<p>配置环境变量<br>java安装1.8版本，在/etc/profile添加路径。</p>
+<p>Mysql安装5.7版本，设置mysql的环境通过文档资料<a href="https://blog.csdn.net/Luck_ZZ/article/details/80341693" target="_blank" rel="noopener">https://blog.csdn.net/Luck_ZZ/article/details/80341693</a></p>
+<p>Sonarqube在/etc/profile添加路径</p>
+<p>Sonar-scanner在/etc/profile添加路径</p>
+<h3 id="配置sonar-properties和sonar-scanner"><a href="#配置sonar-properties和sonar-scanner" class="headerlink" title="配置sonar.properties和sonar-scanner"></a>配置sonar.properties和sonar-scanner</h3><p>配置sonar-scanner的项目配置sonar-project.properties<br>模板：<br>sonar.projectKey=my:project<br>sonar.projectName=yaok<br>sonar.projectVersion=1.0</p>
+<p>#Paths to source directories.</p>
+<p>#Paths are relative to the sonar-project.properties file. Replace “\” by “/“ on Windows.</p>
+<p>#Do not put the “sonar-project.properties” file in the same directory with the source code.</p>
+<p>#(i.e. never set the “sonar.sources” property to “.”)<br>sonar.sources=/root/java</p>
+<p>#The value of the property must be the key of the language.<br>sonar.language=java</p>
+<p>#Encoding of the source code<br>sonar.sourceEncoding=UTF-8</p>
+<h3 id="启动sonar"><a href="#启动sonar" class="headerlink" title="启动sonar"></a>启动sonar</h3><p>Root用户无法启动，需要新建用户<br>[root@localhost ]# useradd sonaruser<br>[root@localhost local]# chown sonaruser:sonaruser sonarqube<br>[root@localhost sonarqube]# su sonaruser<br>[sonaruser@localhost sonarqube]$ ./sonar.sh start</p>
+<p>下载插件<br>因为官方插件sonarCFamily需要money，所以使用了其他的插件，下载地址<a href="https://github.com/SonarOpenCommunity/sonar-cxx，下载放在/usr/local/sonarqube/extensions/plugins/里面，然后重启sonarqube。" target="_blank" rel="noopener">https://github.com/SonarOpenCommunity/sonar-cxx，下载放在/usr/local/sonarqube/extensions/plugins/里面，然后重启sonarqube。</a></p>
+<h3 id="安装测试代码环境"><a href="#安装测试代码环境" class="headerlink" title="安装测试代码环境"></a>安装测试代码环境</h3><h4 id="1-安装cppcheck"><a href="#1-安装cppcheck" class="headerlink" title="1.安装cppcheck"></a>1.安装cppcheck</h4><p>Cppcheck是Cppcheck是一个C/C++代码的静态分析工具。与C++编译器和其他许多分析工具不同，Cppcheck不检测代码中的语法错误，只检测那些编译器通常无法检测到的bug类型，目的是只检测代码中真正的错误。</p>
+<p>特点：<br>检查边界溢出<br>检查内存泄漏<br>检查可能的空指针间接引用<br>检查未初始化的变量<br>检查无效的STL使用<br>检查异常安全<br>警告如果过时的或者不安全的函数使用<br>警告未使用的或者冗余的代码<br>检测各种潜在bugs的可疑代码<br>下载地址<a href="http://cppcheck.sourceforge.net/" target="_blank" rel="noopener">http://cppcheck.sourceforge.net/</a></p>
+<h4 id="2-安装rats"><a href="#2-安装rats" class="headerlink" title="2.安装rats"></a>2.安装rats</h4><p>RATS 是一个代码安全审计工具，可扫描 C、C++、Perl、PHP 和 Python 源码，检查出一些常见的安全问题，例如缓冲区溢出和 TOCTOU (Time Of Check, Time Of Use) 。<br>下载地址<a href="https://github.com/andrew-d/rough-auditing-tool-for-security" target="_blank" rel="noopener">https://github.com/andrew-d/rough-auditing-tool-for-security</a></p>
+<h4 id="3-安装valgrind"><a href="#3-安装valgrind" class="headerlink" title="3.安装valgrind"></a>3.安装valgrind</h4><p>Valgrind是一套Linux下，开放源代码（GPL V2）的仿真调试工具的集合。Valgrind由内核（core）以及基于内核的其他调试工具组成。<br>内核类似于一个框架（framework），它模拟了一个CPU环境，并提供服务给其他工具；而其他工具则类似于插件 (plug-in)，利用内核提供的服务完成各种特定的内存调试任务。<br>Valgrind包括如下一些工具：<br>Memcheck：这是valgrind应用最广泛的工具，一个重量级的内存检查器，能够发现开发中绝大多数内存错误使用情况，比如：使用未初始化的内存，使用已经释放了的内存，内存访问越界等。<br>Callgrind：它主要用来检查程序中函数调用过程中出现的问题。<br>Cachegrind：它主要用来检查程序中缓存使用出现的问题。<br>Helgrind：它主要用来检查多线程程序中出现的竞争问题。<br>Massif：它主要用来检查程序中堆栈使用中出现的问题。<br>Extension：可以利用core提供的功能，自己编写特定的内存调试工具。<br>下载地址：<a href="http://valgrind.org/" target="_blank" rel="noopener">http://valgrind.org/</a></p>
+<h4 id="4-安装gcovr"><a href="#4-安装gcovr" class="headerlink" title="4.安装gcovr"></a>4.安装gcovr</h4><p>gcovr是一个将单元测试中的代码覆盖率以多种方式(包括列表方式、XML文件方式、HTML网页方式等)展示出来的工具。<br>下载地址：<a href="https://pypi.python.org/pypi/gcovr" target="_blank" rel="noopener">https://pypi.python.org/pypi/gcovr</a></p>
+<h4 id="5-写一个集成这些工具的脚本"><a href="#5-写一个集成这些工具的脚本" class="headerlink" title="5.写一个集成这些工具的脚本"></a>5.写一个集成这些工具的脚本</h4><p>Makefile脚本如下：<br>上半部为编译项目，通过@$(MAKE) -C src执行src目录下的makefile编译项目<br>下半部为通过cppcheck,rats,valgrind,gcovr工具生成测试扫描代码的报告<br><img src="http://118.25.45.162:8360/static/img/sonarqube.png" alt="alt"></p>
+<h4 id="6-配置报告路径，执行脚本"><a href="#6-配置报告路径，执行脚本" class="headerlink" title="6.配置报告路径，执行脚本"></a>6.配置报告路径，执行脚本</h4><p>配置文件sonar-project.properties</p>
+<p>具体如下<br>sonar.projectKey=ncsrv<br>sonar.projectName=ncsrv<br>sonar.projectVersion=1.0</p>
+<p>#Paths to source directories.</p>
+<p>#Paths are relative to the sonar-project.properties file. Replace “\” by “/“ on Windows.</p>
+<p>#Do not put the “sonar-project.properties” file in the same directory with the source code.</p>
+<p>#(i.e. never set the “sonar.sources” property to “.”)<br>sonar.sources=./src</p>
+<p>#The value of the property must be the key of the language.<br>sonar.language=c++</p>
+<p>#Encoding of the source code<br>sonar.sourceEncoding=UTF-8<br>sonar.cpp.missingIncludeWarnings=true<br>sonar.cxx.includeDirectories=/usr/include/c++/4.4.4,/usr/include,/home/pas36/include,/usr/local/mysql/include,/usr/include/libxml2/,/usr/include/c++/4.4.4/tr1,/usr/include/linux,src</p>
+<p>#paths to the reports<br>sonar.cxx.cppcheck.reportPath=build/cppcheck-report.xml<br>sonar.cxx.pclint.reportPath=build/pclint-report.xml<br>sonar.cxx.coverage.reportPath=build/gcovr-report<em>.xml<br>sonar.cxx.coverage.itReportPath=build/gcovr-report</em>.xml<br>sonar.cxx.coverage.overallReportPath=build/gcovr-report*.xml<br>sonar.cxx.valgrind.reportPath=build/valgrind-report.xml<br>sonar.cxx.rats.reportPath=build/rats-report.xml<br>sonar.cxx.xunit.reportPath=build/xunit-report.xml</p>
+<p>然后执行脚本make &amp; make sonar，如果之前执行过，使用make clean清除一下。</p>
+<h3 id="看测试结果并根据报告改进代码"><a href="#看测试结果并根据报告改进代码" class="headerlink" title="看测试结果并根据报告改进代码"></a>看测试结果并根据报告改进代码</h3><p>在<a href="http://192.168.20.199:9000,用户密码都是admin" target="_blank" rel="noopener">http://192.168.20.199:9000,用户密码都是admin</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tool/" rel="tag"># tool</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/05/sonarqube/" rel="next" title="sonarqube搭建时遇到的坑">
+                <i class="fa fa-chevron-left"></i> sonarqube搭建时遇到的坑
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/14/python_format/" rel="prev" title="python格式化字符串">
+                python格式化字符串 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNzMzNS8xMzg2OQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">zhuanli</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">178</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhuanli555" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#SonarQube简介"><span class="nav-number">1.</span> <span class="nav-text">SonarQube简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装环境："><span class="nav-number">2.</span> <span class="nav-text">安装环境：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先决条件："><span class="nav-number">3.</span> <span class="nav-text">先决条件：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置sonar-properties和sonar-scanner"><span class="nav-number">4.</span> <span class="nav-text">配置sonar.properties和sonar-scanner</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动sonar"><span class="nav-number">5.</span> <span class="nav-text">启动sonar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装测试代码环境"><span class="nav-number">6.</span> <span class="nav-text">安装测试代码环境</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-安装cppcheck"><span class="nav-number">6.1.</span> <span class="nav-text">1.安装cppcheck</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-安装rats"><span class="nav-number">6.2.</span> <span class="nav-text">2.安装rats</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-安装valgrind"><span class="nav-number">6.3.</span> <span class="nav-text">3.安装valgrind</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-安装gcovr"><span class="nav-number">6.4.</span> <span class="nav-text">4.安装gcovr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-写一个集成这些工具的脚本"><span class="nav-number">6.5.</span> <span class="nav-text">5.写一个集成这些工具的脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-配置报告路径，执行脚本"><span class="nav-number">6.6.</span> <span class="nav-text">6.配置报告路径，执行脚本</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#看测试结果并根据报告改进代码"><span class="nav-number">7.</span> <span class="nav-text">看测试结果并根据报告改进代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhuanli</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
