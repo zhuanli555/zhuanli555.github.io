@@ -249,7 +249,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/leetcode_472/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/21/leetcode_395/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -268,7 +268,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/08/leetcode_472/" itemprop="url">leetcode 472. Concatenated Words</a></h1>
+                <a class="post-title-link" href="/2018/05/21/leetcode_395/" itemprop="url">leetcode 395. Longest Substring with At Least K Repeating Characters</a></h1>
         
 
         <div class="post-meta">
@@ -280,8 +280,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T17:13:56+08:00">
-                2018-04-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-21T14:46:59+08:00">
+                2018-05-21
               </time>
             
 
@@ -342,12 +342,10 @@
       
         
           
-            <p>Given a list of words (<strong>without duplicates</strong>), please write a program that returns all concatenated words in the given list of words.<br>A concatenated word is defined as a string that is comprised entirely of at least two shorter words in the given array.</p>
-<p><strong>Example:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input:[&quot;cat&quot;,&quot;cats&quot;,&quot;catsdogcats&quot;,&quot;dog&quot;,&quot;dogcatsdog&quot;,&quot;hippopotamuses&quot;,&quot;rat&quot;,&quot;ratcatdogcat&quot;]</span><br><span class="line">Output: [&quot;catsdogcats&quot;,&quot;dogcatsdog&quot;,&quot;ratcatdogcat&quot;]</span><br><span class="line">Explanation: &quot;catsdogcats&quot; can be concatenated by &quot;cats&quot;, &quot;dog&quot; and &quot;cats&quot;; </span><br><span class="line"> &quot;dogcatsdog&quot; can be concatenated by &quot;dog&quot;, &quot;cats&quot; and &quot;dog&quot;; </span><br><span class="line">&quot;ratcatdogcat&quot; can be concatenated by &quot;rat&quot;, &quot;cat&quot;, &quot;dog&quot; and &quot;cat&quot;.</span><br></pre></td></tr></table></figure></p>
-<p><strong>Note:</strong></p>
-<p>The number of elements of the given array will not exceed <code>10,000</code></p>
-<p>The length sum of elements in the given array will not exceed <code>600,000.</code></p>
-<p>All the input string will only include lower case letters.<br>The returned elements order does not matter.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findAllConcatenatedWordsInADict</span><span class="params">(self, words)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type words: List[str]</span></span><br><span class="line"><span class="string">        :rtype: List[str]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        word_set = set(words)</span><br><span class="line">        result = []</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(word,cur,cnt)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> cur == len(word):</span><br><span class="line">                <span class="keyword">if</span> cnt &gt; <span class="number">1</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> xrange(cur+<span class="number">1</span>,len(word)+<span class="number">1</span>):</span><br><span class="line">                <span class="keyword">if</span> word[cur:i] <span class="keyword">in</span> word_set <span class="keyword">and</span> dfs(word,i,cnt+<span class="number">1</span>):</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> words:</span><br><span class="line">            <span class="keyword">if</span> dfs(word,<span class="number">0</span>,<span class="number">0</span>):</span><br><span class="line">                result.append(word)</span><br><span class="line">        <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure></p>
+            <p>Find the length of the longest substring T of a given string (consists of lowercase letters only) such that every character in T appears no less than k times.</p>
+<p><strong>Example 1:</strong></p>
+<p><pre><br>Input:<br>s = “aaabb”, k = 3<br>Output:<br>3<br>The longest substring is “aaa”, as ‘a’ is repeated 3 times.<br></pre><br><strong>Example 2:</strong></p>
+<p><pre><br>Input:<br>s = “ababbc”, k = 2<br>Output:<br>5<br>The longest substring is “ababb”, as ‘a’ is repeated 2 times and ‘b’ is repeated 3 times.<br></pre><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestSubstring</span><span class="params">(self, s, k)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type s: str</span></span><br><span class="line"><span class="string">        :type k: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> set(s):</span><br><span class="line">            <span class="keyword">if</span> s.count(c) &lt; k:</span><br><span class="line">                <span class="keyword">return</span> max(self.longestSubstring(t,k) <span class="keyword">for</span> t <span class="keyword">in</span> s.split(c))</span><br><span class="line">        <span class="keyword">return</span> len(s)</span><br></pre></td></tr></table></figure></p>
 
           
         
@@ -396,7 +394,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/05/leetcode_200/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/18/leetcode_376/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -415,7 +413,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/05/leetcode_200/" itemprop="url">leetcode 200. Number of Islands</a></h1>
+                <a class="post-title-link" href="/2018/05/18/leetcode_376/" itemprop="url">leetcode  376. Wiggle Subsequence</a></h1>
         
 
         <div class="post-meta">
@@ -427,8 +425,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-05T20:14:25+08:00">
-                2018-04-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-18T09:30:08+08:00">
+                2018-05-18
               </time>
             
 
@@ -489,13 +487,183 @@
       
         
           
-            <p>Given a 2d grid map of <code>&#39;1&#39;s</code> (land) and <code>&#39;0&#39;s</code>(water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.</p>
-<p><strong><em>Example 1:</em></strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">11110</span><br><span class="line">11010</span><br><span class="line">11000</span><br><span class="line">00000</span><br></pre></td></tr></table></figure>
-<p>Answer: 1</p>
-<p><strong><em>Example 2:</em></strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">11000</span><br><span class="line">11000</span><br><span class="line">00100</span><br><span class="line">00011</span><br></pre></td></tr></table></figure>
-<p>Answer: 3<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numIslands</span><span class="params">(self, grid)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type grid: List[List[str]]</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(grid)):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(len(grid[<span class="number">0</span>])):</span><br><span class="line">                <span class="keyword">if</span> grid[i][j] == <span class="string">'1'</span>:</span><br><span class="line">                    self.dfs(grid,i,j)</span><br><span class="line">                    count += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> count</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(self,grid,i,j)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> i &lt; <span class="number">0</span> <span class="keyword">or</span> j &lt; <span class="number">0</span> <span class="keyword">or</span> i &gt;=len(grid) <span class="keyword">or</span> j &gt;= len(grid[<span class="number">0</span>]) <span class="keyword">or</span> grid[i][j] != <span class="string">'1'</span>:</span><br><span class="line">            <span class="keyword">return</span> </span><br><span class="line">        grid[i][j] = <span class="string">'0'</span></span><br><span class="line">        self.dfs(grid,i<span class="number">-1</span>,j)</span><br><span class="line">        self.dfs(grid,i,j<span class="number">-1</span>)</span><br><span class="line">        self.dfs(grid,i+<span class="number">1</span>,j)</span><br><span class="line">        self.dfs(grid,i,j+<span class="number">1</span>)</span><br></pre></td></tr></table></figure></p>
+            <p>A sequence of numbers is called a <strong>wiggle sequence</strong> if the differences between successive numbers strictly alternate between positive and negative. The first difference (if one exists) may be either positive or negative. A sequence with fewer than two elements is trivially a wiggle sequence.</p>
+<p>For example, <code>[1,7,4,9,2,5]</code>is a wiggle sequence because the differences (6,-3,5,-7,3) are alternately positive and negative. In contrast,<code>[1,4,7,2,5]</code> and <code>[1,7,4,5,5]</code> are not wiggle sequences, the first because its first two differences are positive and the second because its last difference is zero.</p>
+<p>Given a sequence of integers, return the length of the longest subsequence that is a wiggle sequence. A subsequence is obtained by deleting some number of elements (eventually, also zero) from the original sequence, leaving the remaining elements in their original order.</p>
+<p><strong>Examples:</strong>  </p>
+<pre>
+Input: [1,7,4,9,2,5]
+Output: 6
+The entire sequence is a wiggle sequence.
+
+Input: [1,17,5,10,13,15,10,5,16,8]
+Output: 7
+There are several subsequences that achieve this length. One is [1,17,10,13,10,16,8].
+
+Input: [1,2,3,4,5,6,7,8,9]
+Output: 2
+</pre>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wiggleMaxLength</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> len(nums) &lt;= <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> len(nums)</span><br><span class="line">        dp = [<span class="number">0</span>]*len(nums)</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> nums[<span class="number">1</span>] == nums[<span class="number">0</span>]:</span><br><span class="line">            dp[<span class="number">1</span>] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            dp[<span class="number">1</span>] = <span class="number">2</span></span><br><span class="line">        target = nums[<span class="number">1</span>] - nums[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>,len(nums)):</span><br><span class="line">            target2 = nums[i] - nums[i<span class="number">-1</span>]</span><br><span class="line">            <span class="keyword">if</span> target*target2 &lt; <span class="number">0</span> :<span class="comment">#bu tong hao</span></span><br><span class="line">                dp[i] = dp[i<span class="number">-1</span>] + <span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> target == <span class="number">0</span> <span class="keyword">and</span> target2 != <span class="number">0</span>:</span><br><span class="line">                dp[i] = dp[i<span class="number">-1</span>] + <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                dp[i] = dp[i<span class="number">-1</span>]</span><br><span class="line">            <span class="keyword">if</span> target2 != <span class="number">0</span> :</span><br><span class="line">                target = target2</span><br><span class="line">        <span class="keyword">return</span> dp[len(nums)<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/17/leetcode_393/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/17/leetcode_393/" itemprop="url">leetcode 393. UTF-8 Validation</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-17T11:15:39+08:00">
+                2018-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>A character in UTF8 can be from <code>1 to 4 bytes</code> long, subjected to the following rules:</p>
+<ol>
+<li>For 1-byte character, the first bit is a 0, followed by its unicode code.</li>
+<li>For n-bytes character, the first n-bits are all one’s, the n+1 bit is 0, followed by n-1 bytes with most significant 2 bits being 10.</li>
+</ol>
+<p>This is how the UTF-8 encoding would work:</p>
+<table><br><tr><br><th>Char. number range  (hexadecimal)</th><br><th>UTF-8 octet sequence  (binary)</th><br></tr><br><tr><br><td>0000 0000-0000 007F</td><br><td>0xxxxxxx</td><br></tr><br><tr><br><td>0000 0000-0000 07FF</td><br><td>110xxxxx 10xxxxxx</td><br></tr><br><tr><br><td>0000 0800-0000 FFFF</td><br><td>1110xxxx 10xxxxxx 10xxxxxx</td><br></tr><br><tr><br><td>0001 0000-0010 FFFF</td><br><td>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</td><br></tr><br></table>
+
+<p>Given an array of integers representing the data, return whether it is a valid utf-8 encoding.</p>
+<p><strong>Note</strong>:<br>The input is an array of integers. Only the <code>least significant 8 bits</code> of each integer is used to store the data. This means each integer represents only 1 byte of data.</p>
+<p><strong>Example 1</strong>:  </p>
+<pre>
+data = [197, 130, 1], which represents the octet sequence: 11000101 10000010 00000001.
+Return true.
+It is a valid utf-8 encoding for a 2-bytes character followed by a 1-byte character.
+</pre>
+
+<p><strong>Example 2</strong>:</p>
+<p><pre><br>data = [235, 140, 4], which represented the octet sequence: 11101011 10001100 00000100.<br>Return false.<br>The first 3 bits are all one’s and the 4th bit is 0 means it is a 3-bytes character.<br>The next byte is a continuation byte which starts with 10 and that’s correct.<br>But the second continuation byte does not start with 10, so it is invalid.<br></pre><br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">validUtf8</span><span class="params">(<span class="keyword">int</span>* data,<span class="keyword">int</span> length)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> nBytes = <span class="number">0</span>;<span class="comment">//UFT8可用1-4个字节编码,ASCII用一个字节  </span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> chr;  </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; ++i)  </span><br><span class="line">    &#123;  </span><br><span class="line">        chr = data[i];  </span><br><span class="line">        <span class="keyword">if</span>(nBytes == <span class="number">0</span>) <span class="comment">//如果不是ASCII码,应该是多字节符,计算字节数  </span></span><br><span class="line">        &#123;  </span><br><span class="line">            <span class="keyword">if</span>(chr &gt;= <span class="number">0x80</span>)  </span><br><span class="line">            &#123;  </span><br><span class="line">                <span class="keyword">if</span>(chr &gt;= <span class="number">0xF0</span> &amp;&amp; chr &lt;= <span class="number">0xF7</span>)  <span class="comment">//11110xxx</span></span><br><span class="line">                    nBytes=<span class="number">4</span>;  </span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(chr &gt;= <span class="number">0xE0</span> &amp;&amp; chr &lt;= <span class="number">0xEF</span>)  <span class="comment">//1110xxxx</span></span><br><span class="line">                    nBytes=<span class="number">3</span>;  </span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(chr &gt;= <span class="number">0xC0</span> &amp;&amp; chr &lt;= <span class="number">0xDF</span>)  <span class="comment">//110xxxxx</span></span><br><span class="line">                    nBytes=<span class="number">2</span>;  </span><br><span class="line">                <span class="keyword">else</span>  </span><br><span class="line">                    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">                nBytes--;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">else</span> <span class="comment">//多字节符的非首字节,应为 10xxxxxx  </span></span><br><span class="line">        &#123;  </span><br><span class="line">            <span class="keyword">if</span>( (chr&amp;<span class="number">0xC0</span>) != <span class="number">0x80</span> )  </span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">            nBytes--;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">if</span>( nBytes &gt; <span class="number">0</span>) <span class="comment">//违返规则  </span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
           
         
@@ -544,7 +712,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/04/leetcode_394/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/15/url_1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -563,7 +731,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/04/leetcode_394/" itemprop="url">leetcode 394. Decode String</a></h1>
+                <a class="post-title-link" href="/2018/05/15/url_1/" itemprop="url">URL中的#号的作用</a></h1>
         
 
         <div class="post-meta">
@@ -575,8 +743,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-04T14:33:48+08:00">
-                2018-04-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T11:31:30+08:00">
+                2018-05-15
               </time>
             
 
@@ -598,8 +766,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
+                  <a href="/categories/html-css-js/" itemprop="url" rel="index">
+                    <span itemprop="name">html/css/js</span>
                   </a>
                 </span>
 
@@ -637,12 +805,20 @@
       
         
           
-            <p>Given an encoded string, return it’s decoded string.</p>
-<p>The encoding rule is: <code>k[encoded_string]</code>, where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.</p>
-<p>You may assume that the input string is always valid; No extra white spaces, square brackets are well-formed, etc.</p>
-<p>Furthermore, you may assume that the original data does not contain any digits and that digits are only for those repeat numbers, k. For example, there won’t be input like <code>3a</code> or <code>2[4]</code>.</p>
-<p><strong>Examples:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s = &quot;3[a]2[bc]&quot;, return &quot;aaabcbc&quot;.</span><br><span class="line">s = &quot;3[a2[c]]&quot;, return &quot;accaccacc&quot;.</span><br><span class="line">s = &quot;2[abc]3[cd]ef&quot;, return &quot;abcabccdcdcdef&quot;.</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decodeString</span><span class="params">(self, s)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type s: str</span></span><br><span class="line"><span class="string">        :rtype: str</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        stack = []</span><br><span class="line">        stack.append([<span class="string">""</span>,<span class="number">1</span>])</span><br><span class="line">        num = <span class="string">''</span></span><br><span class="line">        <span class="keyword">for</span> ch <span class="keyword">in</span> s:</span><br><span class="line">            <span class="keyword">if</span> ch.isdigit():</span><br><span class="line">                num += ch</span><br><span class="line">            <span class="keyword">elif</span> ch == <span class="string">'['</span>:</span><br><span class="line">                stack.append([<span class="string">""</span>,int(num)])</span><br><span class="line">                num = <span class="string">''</span></span><br><span class="line">            <span class="keyword">elif</span> ch == <span class="string">']'</span>:</span><br><span class="line">                s1,k1 = stack.pop()</span><br><span class="line">                stack[<span class="number">-1</span>][<span class="number">0</span>] += s1*k1</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                stack[<span class="number">-1</span>][<span class="number">0</span>] += ch</span><br><span class="line">        <span class="keyword">return</span> stack[<span class="number">0</span>][<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+            <h3 id="一、-的意思-作用"><a href="#一、-的意思-作用" class="headerlink" title="一、#的意思/作用"></a>一、#的意思/作用</h3><p>　　#代表网页中的一个位置。类似于PPT里面的页内超链接。#右面的字符，就是该位置的标识符（即 这个位置的标记）。比如，<code>http://www.XXX.com/index.html#location</code>就代表<code>www.xxx.com</code>这个网站index.html这个网页的location位置。我想这个例子应该很清楚了。浏览器读取这个URL后，会自动将‘location’位置滚动至可视区域。</p>
+<p>　　为网页位置指定标识符，有两个方法。一是使用锚点，比如<code>&lt;a name=&quot;location&quot;&gt;&lt;/a&gt;</code>，二是使用id属性，比如<code>&lt;div id=&quot;location&quot;&gt;</code>。</p>
+<h3 id="二、HTTP请求不包括"><a href="#二、HTTP请求不包括" class="headerlink" title="二、HTTP请求不包括"></a>二、HTTP请求不包括</h3><p>　　#是用来指导浏览器产生行为的，对服务器端完全没用。我的理解是帮助你锁定/定位这个页面的某个位置的。所以，HTTP请求中不包括#。</p>
+<p>比如，访问下面的网址，<code>http://www.XXX.com/index.html#location</code>，浏览器实际发出的请求是这样的：</p>
+<p>GET /index.html HTTP/1.1<br>Host:<code>www.XXX.com</code></p>
+<h3 id="三、-后的字符"><a href="#三、-后的字符" class="headerlink" title="三、#后的字符"></a>三、#后的字符</h3><p>　　在第一个#后面出现的任何字符，都会被浏览器解读为位置标识符。这意味着，这些字符都不会被发送到服务器端。<br>比如，下面URL的原意是指定一个颜色值：<code>http://www.XXX.com/?color=#fff</code>，但是，浏览器实际发出的请求是：</p>
+<p>GET /?color= HTTP/1.1<br>Host: <code>www.XXX.com</code>
+ 　　</p>
+<h3 id="四、改变-不触发网页重载"><a href="#四、改变-不触发网页重载" class="headerlink" title="四、改变#不触发网页重载"></a>四、改变#不触发网页重载</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;单单改变#后的部分，浏览器只会滚动到相应位置，不会重新加载网页。所以不要看页面有个跳的动作，就以为页面跳转或者服务器端有所响应，其实没有。<br> &nbsp;&nbsp;&nbsp;&nbsp;       比如，从<code>http://www.XXX.com/index.html#location1</code>改成<code>http://www.XXX.com/index.html#location2</code>，浏览器不会重新向服务器请求index.html。</p>
+<h3 id="五、改变-会改变浏览器的访问历史"><a href="#五、改变-会改变浏览器的访问历史" class="headerlink" title="五、改变#会改变浏览器的访问历史"></a>五、改变#会改变浏览器的访问历史</h3><p>　　每一次改变#后的部分，都会在浏览器的访问历史中增加一个记录，使用”后退”按钮，就可以回到上一个位置。这对于ajax应用程序特别有用，可以用不同的#值，表示不同的访问状态，然后向用户给出可以访问某个状态的链接。值得注意的是，上述规则对IE 6和IE 7不成立，它们不会因为#的改变而增加历史记录。</p>
+<h3 id="六、Google抓取-的机制"><a href="#六、Google抓取-的机制" class="headerlink" title="六、Google抓取#的机制"></a>六、Google抓取#的机制</h3><p>　　默认情况下，Google的网络蜘蛛忽视URL的#部分。<br>　　但是，Google还规定，如果你希望Ajax生成的内容被浏览引擎读取，那么URL中可以使用”#!”，Google会自动将其后面的内容转成查询字符串_escaped_fragment_的值。<br>　　比如，Google发现新版twitter的URL：<code>http://twitter.com/#!/username</code><br>　　就会自动抓取另一个URL：<code>http://twitter.com/?_escaped_fragment_=/username</code><br>　　通过这种机制，Google就可以索引动态的Ajax内容。</p>
+<p> 注</p>
+<p>AJAX = 异步 JavaScript和XML（标准通用标记语言的子集）。AJAX 是一种用于创建快速动态网页的技术。</p>
+
           
         
       
@@ -690,7 +866,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/03/leetcode_116/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/10/hash_c/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -709,7 +885,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/03/leetcode_116/" itemprop="url">leetcode 116. Populating Next Right Pointers in Each Node</a></h1>
+                <a class="post-title-link" href="/2018/05/10/hash_c/" itemprop="url">实现hash</a></h1>
         
 
         <div class="post-meta">
@@ -721,8 +897,632 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-03T16:25:00+08:00">
-                2018-04-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-10T17:00:17+08:00">
+                2018-05-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c/" itemprop="url" rel="index">
+                    <span itemprop="name">c</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TABLE_SIZE (1024*1024)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* element of the hash table's chain list */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">kv</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">kv</span>* <span class="title">next</span>;</span></span><br><span class="line">    <span class="keyword">char</span>* key;</span><br><span class="line">    <span class="keyword">void</span>* value;</span><br><span class="line">    <span class="keyword">void</span>(*free_value)(<span class="keyword">void</span>*);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* HashTable */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">HashTable</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">kv</span> **<span class="title">table</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* constructor of struct kv */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">init_kv</span><span class="params">(struct kv* kv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    kv-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    kv-&gt;key = <span class="literal">NULL</span>;</span><br><span class="line">    kv-&gt;value = <span class="literal">NULL</span>;</span><br><span class="line">    kv-&gt;free_value = <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* destructor of struct kv */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">free_kv</span><span class="params">(struct kv* kv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (kv) &#123;</span><br><span class="line">        <span class="keyword">if</span> (kv-&gt;free_value) &#123;</span><br><span class="line">            kv-&gt;free_value(kv-&gt;value);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">free</span>(kv-&gt;key);</span><br><span class="line">        kv-&gt;key = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="built_in">free</span>(kv);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* the classic Times33 hash function */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">hash_33</span><span class="params">(<span class="keyword">char</span>* key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> hash = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (*key) &#123;</span><br><span class="line">        hash = (hash &lt;&lt; <span class="number">5</span>) + hash + *key++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> hash;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* new a HashTable instance */</span></span><br><span class="line"><span class="function">HashTable* <span class="title">hash_table_new</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    HashTable* ht = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(HashTable));</span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">NULL</span> == ht) &#123;</span><br><span class="line">        hash_table_delete(ht);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ht-&gt;table = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct kv*) * TABLE_SIZE);</span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">NULL</span> == ht-&gt;table) &#123;</span><br><span class="line">        hash_table_delete(ht);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">memset</span>(ht-&gt;table, <span class="number">0</span>, <span class="keyword">sizeof</span>(struct kv*) * TABLE_SIZE);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ht;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* delete a HashTable instance */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">hash_table_delete</span><span class="params">(HashTable* ht)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (ht) &#123;</span><br><span class="line">        <span class="keyword">if</span> (ht-&gt;table) &#123;</span><br><span class="line">            <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (i = <span class="number">0</span>; i&lt;TABLE_SIZE; i++) &#123;</span><br><span class="line">                <span class="class"><span class="keyword">struct</span> <span class="title">kv</span>* <span class="title">p</span> = <span class="title">ht</span>-&gt;<span class="title">table</span>[<span class="title">i</span>];</span></span><br><span class="line">                <span class="class"><span class="keyword">struct</span> <span class="title">kv</span>* <span class="title">q</span> = <span class="title">NULL</span>;</span></span><br><span class="line">                <span class="keyword">while</span> (p) &#123;</span><br><span class="line">                    q = p-&gt;next;</span><br><span class="line">                    free_kv(p);</span><br><span class="line">                    p = q;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">free</span>(ht-&gt;table);</span><br><span class="line">            ht-&gt;table = <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">free</span>(ht);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* insert or update a value indexed by key */</span></span><br><span class="line">int hash_table_put(HashTable* ht, char* key, void* value, void(*free_value)(void*))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> i = hash_33(key) % TABLE_SIZE;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">kv</span>* <span class="title">p</span> = <span class="title">ht</span>-&gt;<span class="title">table</span>[<span class="title">i</span>];</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">kv</span>* <span class="title">prep</span> = <span class="title">p</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (p) &#123; <span class="comment">/* if key is already stroed, update its value */</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">strcmp</span>(p-&gt;key, key) == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (p-&gt;free_value) &#123;</span><br><span class="line">                p-&gt;free_value(p-&gt;value);</span><br><span class="line">            &#125;</span><br><span class="line">            p-&gt;value = value;</span><br><span class="line">            p-&gt;free_value = free_value;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        prep = p;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (p == <span class="literal">NULL</span>) &#123;<span class="comment">/* if key has not been stored, then add it */</span></span><br><span class="line">        <span class="keyword">char</span>* kstr = <span class="built_in">malloc</span>(<span class="built_in">strlen</span>(key) + <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span> (kstr == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">kv</span> * <span class="title">kv</span> = <span class="title">malloc</span>(<span class="title">sizeof</span>(<span class="title">struct</span> <span class="title">kv</span>));</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">NULL</span> == kv) &#123;</span><br><span class="line">            <span class="built_in">free</span>(kstr);</span><br><span class="line">            kstr = <span class="literal">NULL</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        init_kv(kv);</span><br><span class="line">        kv-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="built_in">strcpy</span>(kstr, key);</span><br><span class="line">        kv-&gt;key = kstr;</span><br><span class="line">        kv-&gt;value = value;</span><br><span class="line">        kv-&gt;free_value = free_value;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (prep == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            ht-&gt;table[i] = kv;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            prep-&gt;next = kv;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* get a value indexed by key */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">hash_table_get</span><span class="params">(HashTable* ht, <span class="keyword">char</span>* key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = hash_33(key) % TABLE_SIZE;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">kv</span>* <span class="title">p</span> = <span class="title">ht</span>-&gt;<span class="title">table</span>[<span class="title">i</span>];</span></span><br><span class="line">    <span class="keyword">while</span> (p) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">strcmp</span>(key, p-&gt;key) == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> p-&gt;value;</span><br><span class="line">        &#125;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* remove a value indexed by key */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">hash_table_rm</span><span class="params">(HashTable* ht, <span class="keyword">char</span>* key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = hash_33(key) % TABLE_SIZE;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">kv</span>* <span class="title">p</span> = <span class="title">ht</span>-&gt;<span class="title">table</span>[<span class="title">i</span>];</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">kv</span>* <span class="title">prep</span> = <span class="title">p</span>;</span></span><br><span class="line">    <span class="keyword">while</span> (p) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">strcmp</span>(key, p-&gt;key) == <span class="number">0</span>) &#123;</span><br><span class="line">            free_kv(p);</span><br><span class="line">            <span class="keyword">if</span> (p == prep) &#123;</span><br><span class="line">                ht-&gt;table[i] = <span class="literal">NULL</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                prep-&gt;next = p-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        prep = p;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/10/climb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/10/climb/" itemprop="url">由爬楼梯问题与斐波那契数列的关联到一般化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-10T14:41:59+08:00">
+                2018-05-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>问题：</p>
+<p>有<code>10</code>阶楼梯，每次只能走<code>1-2</code>步，不能后退，问有几种走法？</p>
+<p>设F(n)表示n阶一共有多少走法，从简单的一步步看：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">F(1) = 1</span><br><span class="line">F(2) = 2</span><br><span class="line">F(3) = 3</span><br><span class="line">F(4) = 5</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>可以看到<code>F(n) = F(n-2) + F(n-1)</code></p>
+<p>推想到更一般化的问题：</p>
+<p>有<code>n</code>阶楼梯，每次只能走<code>1-m</code>步，不能后退，问有几种走法？</p>
+<p>可以推测:<br><code>F(n) =  F(n-1) + F(n-2) + ... + F(n-m)</code></p>
+<p>代码实现：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">climb</span><span class="params">(m,n)</span>:</span></span><br><span class="line">    dp = [<span class="number">0</span>]*(n+<span class="number">1</span>)</span><br><span class="line">    dp[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>,m+<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> i &lt; j:<span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                dp[i] += dp[i-j]</span><br><span class="line">    <span class="keyword">return</span> dp[n]</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/09/character_utf_or_not/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/09/character_utf_or_not/" itemprop="url">如何判断一个字符串是否是UTF8编码</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-09T16:30:51+08:00">
+                2018-05-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c/" itemprop="url" rel="index">
+                    <span itemprop="name">c</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="编码原理"><a href="#编码原理" class="headerlink" title="编码原理"></a>编码原理</h3><p>　　先看这个模板：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">　　UCS-4 range (hex.) UTF-8 octet sequence (binary)</span><br><span class="line">　　0000 0000-0000 007F 0xxxxxxx</span><br><span class="line">　　0000 0080-0000 07FF 110xxxxx 10xxxxxx</span><br><span class="line">　　0000 0800-0000 FFFF 1110xxxx 10xxxxxx 10xxxxxx</span><br><span class="line">　　0001 0000-001F FFFF 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</span><br><span class="line">　　0020 0000-03FF FFFF 111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx</span><br><span class="line">　　0400 0000-7FFF FFFF 1111110x 10xxxxxx ... 10xxxxxx</span><br></pre></td></tr></table></figure></p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">IsTextUTF8</span><span class="params">(<span class="keyword">char</span>* str,ULONGLONG length)</span>  </span></span><br><span class="line"><span class="function">    </span>&#123;  </span><br><span class="line">        DWORD nBytes=<span class="number">0</span>;<span class="comment">//UFT8可用1-6个字节编码,ASCII用一个字节  </span></span><br><span class="line">        UCHAR chr;  </span><br><span class="line">        BOOL bAllAscii=TRUE; <span class="comment">//如果全部都是ASCII, 说明不是UTF-8  </span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;length; ++i)  </span><br><span class="line">        &#123;  </span><br><span class="line">            chr= *(str+i);  </span><br><span class="line">            <span class="keyword">if</span>( (chr&amp;<span class="number">0x80</span>) != <span class="number">0</span> ) <span class="comment">// 判断是否ASCII编码,如果不是,说明有可能是UTF-8,ASCII用7位编码,但用一个字节存,最高位标记为0,o0xxxxxxx  </span></span><br><span class="line">                bAllAscii= FALSE;  </span><br><span class="line">            <span class="keyword">if</span>(nBytes==<span class="number">0</span>) <span class="comment">//如果不是ASCII码,应该是多字节符,计算字节数  </span></span><br><span class="line">            &#123;  </span><br><span class="line">                <span class="keyword">if</span>(chr&gt;=<span class="number">0x80</span>)  </span><br><span class="line">                &#123;  </span><br><span class="line">                    <span class="keyword">if</span>(chr&gt;=<span class="number">0xFC</span>&amp;&amp;chr&lt;=<span class="number">0xFD</span>)  </span><br><span class="line">                        nBytes=<span class="number">6</span>;  </span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(chr&gt;=<span class="number">0xF8</span>)  </span><br><span class="line">                        nBytes=<span class="number">5</span>;  </span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(chr&gt;=<span class="number">0xF0</span>)  </span><br><span class="line">                        nBytes=<span class="number">4</span>;  </span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(chr&gt;=<span class="number">0xE0</span>)  </span><br><span class="line">                        nBytes=<span class="number">3</span>;  </span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(chr&gt;=<span class="number">0xC0</span>)  </span><br><span class="line">                        nBytes=<span class="number">2</span>;  </span><br><span class="line">                    <span class="keyword">else</span>  </span><br><span class="line">                        <span class="keyword">return</span> FALSE;  </span><br><span class="line">      </span><br><span class="line">                    nBytes--;  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  </span><br><span class="line">            <span class="keyword">else</span> <span class="comment">//多字节符的非首字节,应为 10xxxxxx  </span></span><br><span class="line">            &#123;  </span><br><span class="line">                <span class="keyword">if</span>( (chr&amp;<span class="number">0xC0</span>) != <span class="number">0x80</span> )  </span><br><span class="line">                    <span class="keyword">return</span> FALSE;  </span><br><span class="line">      </span><br><span class="line">                nBytes--;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">if</span>( nBytes &gt; <span class="number">0</span> ) <span class="comment">//违返规则  </span></span><br><span class="line">            <span class="keyword">return</span> FALSE;  </span><br><span class="line">        <span class="keyword">if</span>( bAllAscii ) <span class="comment">//如果全部都是ASCII, 说明不是UTF-8  </span></span><br><span class="line">            <span class="keyword">return</span> FALSE;  </span><br><span class="line">      </span><br><span class="line">        <span class="keyword">return</span> TRUE;  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/04/asm_1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/04/asm_1/" itemprop="url">libxx.a的反汇编</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-04T17:12:32+08:00">
+                2018-05-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前提是知道 libxxx.a 是用什么平台编译出来的,就采用相应的工具链来操作:</p>
+<p>(1) ar  -x  libxxx.a   命令可将 .a 文件生成若干个.o 文件</p>
+<p>(2) objdump -D -S yyy.o 把 yyy.o 反汇编成 asm 汇编文件</p>
+<p>具体命令的使用:</p>
+<hr>
+<p>nm libxxx.a  可查看 .a 所依赖的库文件及源码中的函数接口名称</p>
+<p>objdump -S libxxx.a  反汇编成汇编语言 但与平台严重相关, 有可能命令无法识别是什么平台的</p>
+<p>ar  -x  libxxx.a   命令可将 .a 文件生成若干个.o 文件</p>
+<pre>
+  创建一个库，请输入：    ar -v -q lib.a strlen.o strcpy.o
+  显示库的目录，请输入：    ar -v -t lib.a
+  替换或添加新成员到库中，请输入： ar -v -r lib.a strlen.o strcat.o
+  指定在何处插入新成员，请输入：     ar -v -r -b strlen.o lib.a strcmp.o
+  更新一个已经更改过的成员，请输入： ar -v -r -u lib.a strcpy.o
+  更改库成员的顺序，请输入：   ar -v -m -a strcmp.o lib.a strcat.o strcpy.o
+  解压缩库成员，请输入：    ar -v -x lib.a strcat.o strcpy.o
+  解压缩并重命名一个成员，请输入： ar -p lib.a strcpy.o >stringcopy.o
+  删除一个成员，请输入：    ar -v -d lib.a strlen.o
+  从多个用 ld 命令创建的共享模块中创建一个压缩文档库，请输入： ar -r -v libshr.a shrsub.o shrsub2.o shrsub3.o ...
+  编译并链接使用 libshr.a 压缩文档库的 main 程序，请使用以下命令：cc -o main main.c -L/u/sharedlib -lshr
+  列出 lib.a 的内容（忽略任何 32 位目标文件），请输入：   ar -X64 -t -v lib.a
+  从 lib.a 解压缩所有 32 位的目标文件，请输入：     ar -X32 -x lib.a
+  列出 lib.a 中的所有文件，无论是 32 位、64 位或非对象，请输入： ar -X32_64 -t -v lib.a
+</pre>
+
+
+
+
+<p>可以用“objdump -D”命令来反编译 .o 文件, 看你在编译c/c++用的-g级数， 如果-g3编译的，用objdump返汇编出来可以看到部分c/c++代码</p>
+<p><strong>Usage: objdump</strong></p>
+<p> Display information from object .<br> At least one of the following switches must be given:</p>
+<p>  -a, –archive-headers    Display archive header information</p>
+<p>  -f, –file-headers       Display the contents of the overall file header</p>
+<p>  -p, –private-headers    Display object format specific file header contents</p>
+<p>  -h, –[section-]headers  Display the contents of the section headers</p>
+<p>  -x, –all-headers        Display the contents of all headers</p>
+<p>  -d, –disassemble        Display assembler contents of executable sections</p>
+<p>  -D, –disassemble-all    Display assembler contents of all sections</p>
+<p>  -S, –source             Intermix source code with disassembly</p>
+<p>  -s, –full-contents      Display the full contents of all sections requested</p>
+<p>  -g, –debugging          Display debug information in object file</p>
+<p>  -e, –debugging-tags     Display debug information using ctags style</p>
+<p>  -G, –stabs              Display (in raw form) any STABS info in the file</p>
+<p>  -W, –dwarf              Display DWARF info in the file</p>
+<p>  -t, –syms               Display the contents of the symbol table(s)</p>
+<p>  -T, –dynamic-syms       Display the contents of the dynamic symbol table</p>
+<p>  -r, –reloc              Display the relocation entries in the file</p>
+<p>  -R, –dynamic-reloc      Display the dynamic relocation entries in the file</p>
+<p>  -v, –version            Display this program’s version number</p>
+<p>  -i, –info               List object formats and architectures supported</p>
+<p>  -H, –help              </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/26/leetcode_813/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhuanli">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhuanli&Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/26/leetcode_813/" itemprop="url">leetcode 813. Largest Sum of Averages</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-26T15:40:08+08:00">
+                2018-04-26
               </time>
             
 
@@ -783,176 +1583,16 @@
       
         
           
-            <p>Given a binary tree</p>
-<pre><code>struct TreeLinkNode {
-  TreeLinkNode *left;
-  TreeLinkNode *right;
-  TreeLinkNode *next;
-}
-</code></pre><p>Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.</p>
-<p>Initially, all next pointers are set to <code>NULL.</code></p>
-<p><strong>Note:</strong></p>
+            <p>We partition a row of numbers A into at most K adjacent (non-empty) groups, then our score is the sum of the average of each group. What is the largest score we can achieve?</p>
+<p>Note that our partition must use every number in A, and that scores are not necessarily integers.</p>
+<p><strong>Example</strong>:</p>
+<p><pre><br>Input:<br>A = [9,1,2,3,9]<br>K = 3<br>Output: 20<br>Explanation:<br>The best choice is to partition A into [9], [1, 2, 3], [9]. The answer is 9 + (1 + 2 + 3) / 3 + 9 = 20.<br>We could have also partitioned A into [9, 1], [2], [3, 9], for example.<br>That partition would lead to a score of 5 + 2 + 6 = 13, which is worse.<br></pre><br><strong>Note:</strong></p>
 <ul>
-<li>You may only use constant extra space.</li>
-<li>You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).</li>
+<li><code>1 &lt;= A.length &lt;= 100.</code></li>
+<li><code>1 &lt;= A[i] &lt;= 10000.</code></li>
+<li><code>1 &lt;= K &lt;= A.length.</code></li>
 </ul>
-<p>For example,</p>
-<p>Given the following perfect binary tree,</p>
-<pre><code>     1
-   /  \
-  2    3
- / \  / \
-4  5  6  7
-</code></pre><p>After calling your function, the tree should look like:</p>
-<pre><code>     1 -&gt; NULL
-   /  \
-  2 -&gt; 3 -&gt; NULL
- / \  / \
-4-&gt;5-&gt;6-&gt;7 -&gt; NULL
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for binary tree with next pointer.</span></span><br><span class="line"><span class="comment"># class TreeLinkNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, x):</span></span><br><span class="line"><span class="comment">#         self.val = x</span></span><br><span class="line"><span class="comment">#         self.left = None</span></span><br><span class="line"><span class="comment">#         self.right = None</span></span><br><span class="line"><span class="comment">#         self.next = None</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="comment"># @param root, a tree link node</span></span><br><span class="line">    <span class="comment"># @return nothing</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connect</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> root <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">        pre = root</span><br><span class="line">        <span class="keyword">while</span> pre.left:</span><br><span class="line">            cur = pre</span><br><span class="line">            <span class="keyword">while</span> cur:</span><br><span class="line">                cur.left.next = cur.right</span><br><span class="line">                <span class="keyword">if</span> cur.next:</span><br><span class="line">                    cur.right.next = cur.next.left</span><br><span class="line">                cur = cur.next</span><br><span class="line">            pre = pre.left</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/30/leetcode_93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/30/leetcode_93/" itemprop="url">leetcode 93. Restore IP Addresses</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T14:16:45+08:00">
-                2018-03-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a string containing only digits, restore it by returning all possible valid IP address combinations.</p>
-<p>For example:<br>Given <code>&quot;25525511135&quot;,</code></p>
-<p>return <code>[&quot;255.255.11.135&quot;, &quot;255.255.111.35&quot;]</code>. (Order does not matter)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">restoreIpAddresses</span><span class="params">(self, s)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type s: str</span></span><br><span class="line"><span class="string">        :rtype: List[str]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        ans = []</span><br><span class="line">        self.dfs(ans,s,<span class="number">4</span>,[])</span><br><span class="line">        <span class="keyword">return</span> [<span class="string">'.'</span>.join(x) <span class="keyword">for</span> x <span class="keyword">in</span> ans]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(self,ans,s,k,temp)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> len(s) &gt; <span class="number">3</span>*k:</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line">        <span class="keyword">if</span> k == <span class="number">0</span>:</span><br><span class="line">            ans.append(temp[:])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(min(<span class="number">3</span>,len(s)-k+<span class="number">1</span>)):</span><br><span class="line">                <span class="keyword">if</span> i == <span class="number">2</span> <span class="keyword">and</span> int(s[:<span class="number">3</span>]) &gt; <span class="number">255</span> <span class="keyword">or</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> int(s[<span class="number">0</span>]) == <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                self.dfs(ans,s[i+<span class="number">1</span>:],k<span class="number">-1</span>,temp+[s[:i+<span class="number">1</span>]])</span><br></pre></td></tr></table></figure></p>
+<p>Answers within <code>10^-6</code> of the correct answer will be accepted as correct.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">largestSumOfAverages</span><span class="params">(self, A, K)</span>:</span></span><br><span class="line">		</span><br><span class="line">        dp = [<span class="number">0</span>]*len(A)</span><br><span class="line">        s = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(A)):</span><br><span class="line">            s += A[i]</span><br><span class="line">            dp[i] = s/(i+<span class="number">1</span>)</span><br><span class="line">            </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,K):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(len(A)<span class="number">-1</span>, i<span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">                s = <span class="number">0</span></span><br><span class="line">                count = <span class="number">0</span></span><br><span class="line">                <span class="keyword">for</span> k <span class="keyword">in</span> range(j, i<span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">                    s += A[k]</span><br><span class="line">                    count += <span class="number">1</span></span><br><span class="line">                    dp[j] = max(dp[j], dp[k<span class="number">-1</span>] + s/count)</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">-1</span>]</span><br></pre></td></tr></table></figure></p>
 
           
         
@@ -1001,7 +1641,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/vim_use/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/26/test/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhuanli">
@@ -1020,7 +1660,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/28/vim_use/" itemprop="url">vim使用说明</a></h1>
+                <a class="post-title-link" href="/2018/04/26/test/" itemprop="url">冰雪奇缘</a></h1>
         
 
         <div class="post-meta">
@@ -1032,8 +1672,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T11:29:52+08:00">
-                2018-03-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-26T10:10:21+08:00">
+                2018-04-26
               </time>
             
 
@@ -1042,28 +1682,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -1094,715 +1712,8 @@
       
         
           
-            <h2 id="vi-vim-按键说明"><a href="#vi-vim-按键说明" class="headerlink" title="vi/vim 按键说明"></a>vi/vim 按键说明</h2><hr>
-<h3 id="第一部份：一般模式可用的光标移动、复制粘贴、搜索替换等"><a href="#第一部份：一般模式可用的光标移动、复制粘贴、搜索替换等" class="headerlink" title="第一部份：一般模式可用的光标移动、复制粘贴、搜索替换等"></a>第一部份：一般模式可用的光标移动、复制粘贴、搜索替换等</h3><h4 id="移动光标的方法"><a href="#移动光标的方法" class="headerlink" title="移动光标的方法"></a><strong>移动光标的方法</strong></h4><ul>
-<li>h 或 向左箭头键(←)    光标向左移动一个字符</li>
-<li>j 或 向下箭头键(↓)    光标向下移动一个字符</li>
-<li>k 或 向上箭头键(↑)    光标向上移动一个字符</li>
-<li><p>l 或 向右箭头键(→)    光标向右移动一个字符</p>
-<p>  如果你将右手放在键盘上的话，你会发现 hjkl 是排列在一起的，因此可以使用这四个按钮来移动光标。 如果想要进行多次移动的话，例如向下移动 30 行，可以使用 “30j” 或 “30↓” 的组合按键， 亦即加上想要进行的次数(数字)后，按下动作即可！</p>
-</li>
-<li>[Ctrl] + [f]    屏幕『向下』移动一页，相当于 [Page Down]按键 (常用)</li>
-<li>[Ctrl] + [b]    屏幕『向上』移动一页，相当于 [Page Up] 按键 (常用)</li>
-<li>[Ctrl] + [d]    屏幕『向下』移动半页</li>
-<li>[Ctrl] + [u]    屏幕『向上』移动半页</li>
-<li>[+]    光标移动到非空格符的下一行</li>
-<li>[-]    光标移动到非空格符的上一行</li>
-<li>n<space>    那个 n 表示『数字』，例如 20 。按下数字后再按空格键，光标会向右移动这一行的 n 个字符。例如 20<space> 则光标会向后面移动 20 个字符距离。</space></space></li>
-<li>0 或功能键[Home]    这是数字『 0 』：移动到这一行的最前面字符处 (常用)</li>
-<li>$ 或功能键[End]    移动到这一行的最后面字符处(常用)</li>
-<li>H    光标移动到这个屏幕的最上方那一行的第一个字符</li>
-<li>M    光标移动到这个屏幕的中央那一行的第一个字符</li>
-<li>L    光标移动到这个屏幕的最下方那一行的第一个字符</li>
-<li>G    移动到这个档案的最后一行(常用)</li>
-<li>nG    n 为数字。移动到这个档案的第 n 行。例如 20G 则会移动到这个档案的第 20 行(可配合 :set nu)</li>
-<li>gg    移动到这个档案的第一行，相当于 1G 啊！ (常用)</li>
-<li><p>n<enter>    n 为数字。光标向下移动 n 行(常用)</enter></p>
-<p>  <strong>搜索替换</strong></p>
-</li>
-<li>/word    向光标之下寻找一个名称为 word 的字符串。例如要在档案内搜寻 vbird 这个字符串，就输入 /vbird 即可！ (常用)</li>
-<li>?word    向光标之上寻找一个字符串名称为 word 的字符串。</li>
-<li>n    这个 n 是英文按键。代表重复前一个搜寻的动作。举例来说， 如果刚刚我们执行 /vbird 去向下搜寻 vbird 这个字符串，则按下 n 后，会向下继续搜寻下一个名称为 vbird 的字符串。如果是执行 ?vbird 的话，那么按下 n 则会向上继续搜寻名称为 vbird 的字符串！</li>
-<li><p>N    这个 N 是英文按键。与 n 刚好相反，为『反向』进行前一个搜寻动作。 例如 /vbird 后，按下 N 则表示『向上』搜寻 vbird 。</p>
-<p>  使用 /word 配合 n 及 N 是非常有帮助的！可以让你重复的找到一些你搜寻的关键词！</p>
-</li>
-<li>:n1,n2s/word1/word2/g    n1 与 n2 为数字。在第 n1 与 n2 行之间寻找 word1 这个字符串，并将该字符串取代为 word2 ！举例来说，在 100 到 200 行之间搜寻 vbird 并取代为 VBIRD 则：<br>『:100,200s/vbird/VBIRD/g』。(常用)</li>
-<li>:1,$s/word1/word2/g    从第一行到最后一行寻找 word1 字符串，并将该字符串取代为 word2 ！(常用)</li>
-<li><p>:1,$s/word1/word2/gc    从第一行到最后一行寻找 word1 字符串，并将该字符串取代为 word2 ！且在取代前显示提示字符给用户确认 (confirm) 是否需要取代！(常用)</p>
-<p>  <strong>删除、复制与贴上</strong></p>
-</li>
-<li>x, X    在一行字当中，x 为向后删除一个字符 (相当于 [del] 按键)， X 为向前删除一个字符(相当于 [backspace] 亦即是退格键) (常用)</li>
-<li>nx    n 为数字，连续向后删除 n 个字符。举例来说，我要连续删除 10 个字符， 『10x』。</li>
-<li>dd    删除游标所在的那一整行(常用)</li>
-<li>ndd    n 为数字。删除光标所在的向下 n 行，例如 20dd 则是删除 20 行 (常用)</li>
-<li>d1G    删除光标所在到第一行的所有数据</li>
-<li>dG    删除光标所在到最后一行的所有数据</li>
-<li>d$    删除游标所在处，到该行的最后一个字符</li>
-<li>d0    那个是数字的 0 ，删除游标所在处，到该行的最前面一个字符</li>
-<li>yy    复制游标所在的那一行(常用)</li>
-<li>nyy    n 为数字。复制光标所在的向下 n 行，例如 20yy 则是复制 20 行(常用)</li>
-<li>y1G    复制游标所在行到第一行的所有数据</li>
-<li>yG    复制游标所在行到最后一行的所有数据</li>
-<li>y0    复制光标所在的那个字符到该行行首的所有数据</li>
-<li>y$    复制光标所在的那个字符到该行行尾的所有数据</li>
-<li>p, P    p 为将已复制的数据在光标下一行贴上，P 则为贴在游标上一行！ 举例来说，我目前光标在第 20 行，且已经复制了 10 行数据。则按下 p 后， 那 10 行数据会贴在原本的 20 行之后，亦即由 21 行开始贴。但如果是按下 P 呢？ 那么原本的第 20 行会被推到变成 30 行。 (常用)</li>
-<li>J    将光标所在行与下一行的数据结合成同一行</li>
-<li>c    重复删除多个数据，例如向下删除 10 行，[ 10cj ]</li>
-<li>u    复原前一个动作。(常用)</li>
-<li><p>[Ctrl]+r    重做上一个动作。(常用)</p>
-<p>  这个 u 与 [Ctrl]+r 是很常用的指令！一个是复原，另一个则是重做一次-<br>～ 利用这两个功能按键，你的编辑，嘿嘿！很快乐的啦！</p>
-</li>
-<li><p>.    不要怀疑！这就是小数点！意思是重复前一个动作的意思。 如果你想要重复删除、重复贴上等等动作，按下小数点『.』就好了！ (常用)</p>
-<h3 id="第二部份：一般模式切换到编辑模式的可用的按钮说明"><a href="#第二部份：一般模式切换到编辑模式的可用的按钮说明" class="headerlink" title="第二部份：一般模式切换到编辑模式的可用的按钮说明"></a>第二部份：一般模式切换到编辑模式的可用的按钮说明</h3><p><strong>进入输入或取代的编辑模式</strong></p>
-</li>
-<li><p>i, I    进入输入模式(Insert mode)：<br>i 为『从目前光标所在处输入』， I 为『在目前所在行的第一个非空格符处开始输入』。 (常用)</p>
-</li>
-<li>a, A    进入输入模式(Insert mode)：<br>a 为『从目前光标所在的下一个字符处开始输入』， A 为『从光标所在行的最后一个字符处开始输入』。(常用)</li>
-<li>o, O    进入输入模式(Insert mode)：<br>这是英文字母 o 的大小写。o 为『在目前光标所在的下一行处输入新的一行』； O 为在目前光标所在处的上一行输入新的一行！(常用)</li>
-<li><p>r, R    进入取代模式(Replace mode)：<br>r 只会取代光标所在的那一个字符一次；R会一直取代光标所在的文字，直到按下 ESC 为止；(常用)</p>
-<p>  上面这些按键中，在 vi 画面的左下角处会出现『–INSERT–』或『–REPLACE–』的字样。 由名称就知道该动作了吧！！特别注意的是，我们上面也提过了，你想要在档案里面输入字符时， 一定要在左下角处看到 INSERT 或 REPLACE 才能输入喔！</p>
-</li>
-<li><p>[Esc]    退出编辑模式，回到一般模式中(常用)</p>
-<h3 id="第三部份：一般模式切换到指令行模式的可用的按钮说明"><a href="#第三部份：一般模式切换到指令行模式的可用的按钮说明" class="headerlink" title="第三部份：一般模式切换到指令行模式的可用的按钮说明"></a>第三部份：一般模式切换到指令行模式的可用的按钮说明</h3><p><strong>指令行的储存、离开等指令</strong></p>
-</li>
-<li><p>:w    将编辑的数据写入硬盘档案中(常用)</p>
-</li>
-<li>:w!    若文件属性为『只读』时，强制写入该档案。不过，到底能不能写入， 还是跟你对该档案的档案权限有关啊！</li>
-<li>:q    离开 vi (常用)</li>
-<li><p>:q!    若曾修改过档案，又不想储存，使用 ! 为强制离开不储存档案。</p>
-<p>  注意一下啊，那个惊叹号 (!) 在 vi 当中，常常具有『强制』的意思～</p>
-</li>
-<li>:wq    储存后离开，若为 :wq! 则为强制储存后离开 (常用)</li>
-<li>ZZ    这是大写的 Z 喔！若档案没有更动，则不储存离开，若档案已经被更动过，则储存后离开！</li>
-<li>:w [filename]    将编辑的数据储存成另一个档案（类似另存新档）</li>
-<li>:r [filename]    在编辑的数据中，读入另一个档案的数据。亦即将 『filename』 这个档案内容加到游标所在行后面</li>
-<li>:n1,n2 w [filename]    将 n1 到 n2 的内容储存成 filename 这个档案。</li>
-<li>:! command    暂时离开 vi 到指令行模式下执行 command 的显示结果！例如</li>
-<li>『:! ls /home』即可在 vi 当中察看 /home 底下以 ls 输出的档案信息！<br>vim 环境的变更</li>
-<li>:set nu    显示行号，设定之后，会在每一行的前缀显示该行的行号</li>
-<li><p>:set nonu    与 set nu 相反，为取消行号！</p>
-<p>  特别注意，在 vi/vim 中，数字是很有意义的！数字通常代表重复做几次的意思！ 也有可能是代表去到第几个什么什么的意思。</p>
-<p>  举例来说，要删除 50 行，则是用 『50dd』 对吧！ 数字加在动作之前，如我要向下移动 20 行呢？那就是『20j』或者是『20↓』即可。</p>
-</li>
-</ul>
-<h3 id="vim小技巧"><a href="#vim小技巧" class="headerlink" title="vim小技巧"></a>vim小技巧</h3><h4 id="代码自动对齐"><a href="#代码自动对齐" class="headerlink" title="代码自动对齐"></a>代码自动对齐</h4><p>自动对齐：（gg=G）</p>
-<p>在命令模式下（即非“插入”等编辑模式），先输入gg，这时候光标会移动到第一行第一个字符，然后按 “=” 号之后切换成大写，再按一下G，这时候光标会移到最后一行的第一个字符，这时候就可以看到代码被排得整整齐齐了！</p>
-<h4 id="自动补全变量名"><a href="#自动补全变量名" class="headerlink" title="自动补全变量名"></a>自动补全变量名</h4><p>ctrl+p</p>
+            <h2 id="冰雪奇缘"><a href="#冰雪奇缘" class="headerlink" title="冰雪奇缘"></a>冰雪奇缘</h2><iframe height="498" width="510" src="http://player.youku.com/embed/XNjcyMDU4Njg0"></iframe>
 
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/26/leetcode_86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/26/leetcode_86/" itemprop="url">leetcode 86. Partition List</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-26T17:33:25+08:00">
-                2018-03-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.</p>
-<p>You should preserve the original relative order of the nodes in each of the two partitions.</p>
-<p>For example,</p>
-<p>Given <code>1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;2 and x = 3,</code></p>
-<p>return <code>1-&gt;2-&gt;2-&gt;4-&gt;3-&gt;5.</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"># class ListNode(object):</span></span><br><span class="line"><span class="comment">#     def __init__(self, x):</span></span><br><span class="line"><span class="comment">#         self.val = x</span></span><br><span class="line"><span class="comment">#         self.next = None</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">partition</span><span class="params">(self, head, x)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type head: ListNode</span></span><br><span class="line"><span class="string">        :type x: int</span></span><br><span class="line"><span class="string">        :rtype: ListNode</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        head1 = list1 = ListNode(<span class="number">0</span>)</span><br><span class="line">        head2 = list2 = ListNode(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">while</span> head:</span><br><span class="line">            <span class="keyword">if</span> head.val &lt; x:</span><br><span class="line">                list1.next = head</span><br><span class="line">                list1 = list1.next</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                list2.next = head</span><br><span class="line">                list2 = list2.next</span><br><span class="line">            head = head.next</span><br><span class="line">        list2.next = <span class="keyword">None</span></span><br><span class="line">        list1.next = head2.next</span><br><span class="line">        <span class="keyword">return</span> head1.next</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/26/leetcode_84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/26/leetcode_84/" itemprop="url">leetcode 84. Largest Rectangle in Histogram</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-26T14:25:55+08:00">
-                2018-03-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given <em>n</em> non-negative integers representing the histogram’s bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.</p>
-<p><img src="/static/img/histogram.png" alt="image"></p>
-<p>Above is a histogram where width of each bar is 1, given height = <code>[2,1,5,6,2,3]</code>.</p>
-<p><img src="/static/img/histogram_area.png" alt="image"></p>
-<p>The largest rectangle is shown in the shaded area, which has area = <code>10</code>unit.</p>
-<p>For example,<br>Given heights = <code>[2,1,5,6,2,3],</code><br>return <code>10</code>.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">largestRectangleArea</span><span class="params">(self, heights)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type heights: List[int]</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        heights.append(<span class="number">0</span>)</span><br><span class="line">        stack = [<span class="number">-1</span>]</span><br><span class="line">        ans = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(heights)):</span><br><span class="line">            <span class="keyword">while</span> heights[i] &lt; heights[stack[<span class="number">-1</span>]]:</span><br><span class="line">                h = heights[stack.pop()]</span><br><span class="line">                w = i - stack[<span class="number">-1</span>] - <span class="number">1</span></span><br><span class="line">                ans = max(ans,w*h)</span><br><span class="line">            stack.append(i)</span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/26/leetcode_85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/26/leetcode_85/" itemprop="url">leetcode 85. Maximal Rectangle</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-26T14:20:03+08:00">
-                2018-03-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a 2D binary matrix filled with 0’s and 1’s, find the largest rectangle containing only 1’s and return its area.</p>
-<p>For example, given the following matrix:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1 0 1 0 0</span><br><span class="line">1 0 1 1 1</span><br><span class="line">1 1 1 1 1</span><br><span class="line">1 0 0 1 0</span><br></pre></td></tr></table></figure>
-<p>Return 6.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maximalRectangle</span><span class="params">(self, matrix)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type matrix: List[List[str]]</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> len(matrix) == <span class="number">0</span> <span class="keyword">or</span> len(matrix[<span class="number">0</span>]) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        n = len(matrix[<span class="number">0</span>])<span class="comment">#列</span></span><br><span class="line">        height = [<span class="number">0</span>]*(n+<span class="number">1</span>)</span><br><span class="line">        ans = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> matrix:</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">                <span class="keyword">if</span> row[i] == <span class="string">'0'</span>:</span><br><span class="line">                    height[i] = <span class="number">0</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    height[i] += <span class="number">1</span></span><br><span class="line">            stack = [<span class="number">-1</span>]</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(n+<span class="number">1</span>):</span><br><span class="line">                <span class="keyword">while</span> height[i] &lt; height[stack[<span class="number">-1</span>]]:</span><br><span class="line">                    h = height[stack.pop()]</span><br><span class="line">                    w = i - stack[<span class="number">-1</span>] - <span class="number">1</span></span><br><span class="line">                    ans = max(ans,w*h)</span><br><span class="line">                stack.append(i)</span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/19/awk_1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhuanli">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhuanli&Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/19/awk_1/" itemprop="url">awk详解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T15:37:25+08:00">
-                2018-03-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="输出文件的前10行（模拟-head-n-10-）"><a href="#输出文件的前10行（模拟-head-n-10-）" class="headerlink" title="输出文件的前10行（模拟 head -n 10 ）"></a>输出文件的前10行（模拟 head -n 10 ）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk ' NR &lt; 11 '</span><br></pre></td></tr></table></figure>
-<p>如前所述，这里省略了动作，即为打印输出。匹配模式是变量NR需要小于11，NR即为当前的行号。这个写法很简单，但是有一个问题，在NR大于10的时候，awk其实还是对每行进行了判断，如果文件很大，比如说有上万行，浪费的时间是无法忽略的。所以，更好的写法是</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk '1; NR = 10 &#123; exit &#125;'</span><br></pre></td></tr></table></figure>
-<p>第一句对当前行进行输出。第二句判断是不是已经到了第10行，如果是则退出。</p>
-<h3 id="输出文件的第一行（模拟-head-n-1-）"><a href="#输出文件的第一行（模拟-head-n-1-）" class="headerlink" title="输出文件的第一行（模拟 head -n 1 ）"></a>输出文件的第一行（模拟 head -n 1 ）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk 'NR &gt; 1 &#123; exit &#125;; 1'</span><br></pre></td></tr></table></figure>
-<p>这个例子与前一个很相似，中心思想就是第二行就退出。</p>
-<h3 id="输出文件的最后两行（模拟-tail-n-2-）"><a href="#输出文件的最后两行（模拟-tail-n-2-）" class="headerlink" title="输出文件的最后两行（模拟 tail -n 2 ）"></a>输出文件的最后两行（模拟 tail -n 2 ）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk '&#123; y=x "\n" $0; x=$0&#125;; END &#123; print y &#125;'</span><br></pre></td></tr></table></figure>
-<p>的确，这一句看起来确实有些别扭。第一句总是把一个在当前行前面再加上变量x的内容赋值给y，然后用x记录当前行内容。这样的效果是y的内容始终是上一行加上当前行的内容。在最后，输出y的内容。如果仔细看的话，不难发现这个写法是很不高效的，因为它不停的进行赋值和字符串连接，只为了找到最后一行！所以，如果你想要输出文件的最后两行，tail -n 2是最好的选择。</p>
-<h3 id="输出文件的最后一行（模拟-tail-n-1-）"><a href="#输出文件的最后一行（模拟-tail-n-1-）" class="headerlink" title="输出文件的最后一行（模拟 tail -n 1 ）"></a>输出文件的最后一行（模拟 tail -n 1 ）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk 'END &#123; print &#125;'</span><br></pre></td></tr></table></figure>
-<p>句法方面没什么好说的，print省略参数即是等价于print $0。但是这个语句可能不能被非GNU awk的某些awk版本正常执行，如果为了兼容，下面的写法是最安全的：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk '&#123; rec = $0 &#125;; END &#123; print rec &#125;'</span><br></pre></td></tr></table></figure>
-<h3 id="输出只匹配某些模式的行（模拟-grep-）"><a href="#输出只匹配某些模式的行（模拟-grep-）" class="headerlink" title="输出只匹配某些模式的行（模拟 grep ）"></a>输出只匹配某些模式的行（模拟 grep ）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk '/regex/'</span><br></pre></td></tr></table></figure>
-<p>似乎没什么好说的了。</p>
-<h3 id="输出不匹配某些模式的行（模拟-grep-v-）"><a href="#输出不匹配某些模式的行（模拟-grep-v-）" class="headerlink" title="输出不匹配某些模式的行（模拟 grep -v ）"></a>输出不匹配某些模式的行（模拟 grep -v ）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk '!/regex/'</span><br></pre></td></tr></table></figure>
-<p>匹配模式前加“!”就是否定判断结果。</p>
-<h3 id="输出匹配模式的行的上一行，而非当前行"><a href="#输出匹配模式的行的上一行，而非当前行" class="headerlink" title="输出匹配模式的行的上一行，而非当前行"></a>输出匹配模式的行的上一行，而非当前行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk '/regex/ &#123; print x &#125;; &#123; x = $0 &#125;'</span><br></pre></td></tr></table></figure>
-<p>变量x总是用来记录上一行的内容，如果模式匹配了当前行，则输出x的内容。</p>
-<h3 id="输出匹配模式的下一行"><a href="#输出匹配模式的下一行" class="headerlink" title="输出匹配模式的下一行"></a>输出匹配模式的下一行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk '/regex/ &#123; getline; print &#125;'</span><br></pre></td></tr></table></figure>
-<p>这里使用了getline函数取得下一行的内容并输出。getline的作用是将$0的内容置为下一行的内容，并同时更新NR，NF，FNR变量。如果匹配的是最后一行，getline会出错，$0不会被更新，最后一行会被打印。</p>
-<h3 id="输出匹配AA或者BB或者CC的行"><a href="#输出匹配AA或者BB或者CC的行" class="headerlink" title="输出匹配AA或者BB或者CC的行"></a>输出匹配AA或者BB或者CC的行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk '/AA|BB|CC/'</span><br></pre></td></tr></table></figure>
-<p>没什么好说的，正则表达式。如果有看不懂的朋友，请自行学习正则表达式。</p>
-<h3 id="输出长过65个字符的行"><a href="#输出长过65个字符的行" class="headerlink" title="输出长过65个字符的行"></a>输出长过65个字符的行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk 'length &gt; 64'</span><br></pre></td></tr></table></figure>
-<p>length([str])返回字符串的长度，如果参数省略，即是以$0作为参数，括号也可以省略了。</p>
-<h3 id="输出短于65个字符的行"><a href="#输出短于65个字符的行" class="headerlink" title="输出短于65个字符的行"></a>输出短于65个字符的行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk 'length &lt; 65'</span><br></pre></td></tr></table></figure>
-<p>和上例基本一样。</p>
-<h3 id="输出从匹配行到最后一样的内容"><a href="#输出从匹配行到最后一样的内容" class="headerlink" title="输出从匹配行到最后一样的内容"></a>输出从匹配行到最后一样的内容</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk '/regex/,0'</span><br></pre></td></tr></table></figure>
-<p>这里使用了“pattern1,pattern2”的形式来指定一个匹配的范围，其中pattern2这里为0，也就是false，所以一直会匹配到文件结束。</p>
-<h3 id="从第8行输出到第12行"><a href="#从第8行输出到第12行" class="headerlink" title="从第8行输出到第12行"></a>从第8行输出到第12行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk 'NR==8,NR==12'</span><br></pre></td></tr></table></figure>
-<p>同上例，这也是个范围匹配。</p>
-<h3 id="输出第52行"><a href="#输出第52行" class="headerlink" title="输出第52行"></a>输出第52行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk 'NR==52'</span><br></pre></td></tr></table></figure>
-<p>如果想要少执行些不必要的循环，就这样写：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk 'NR==52 &#123;print;exit&#125;'</span><br></pre></td></tr></table></figure>
-<h3 id="输出两次正则表达式匹配之间的行"><a href="#输出两次正则表达式匹配之间的行" class="headerlink" title="输出两次正则表达式匹配之间的行"></a>输出两次正则表达式匹配之间的行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk '/regex1/, /regex2/'</span><br></pre></td></tr></table></figure>
-<h3 id="删除所有的空行"><a href="#删除所有的空行" class="headerlink" title="删除所有的空行"></a>删除所有的空行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk NF</span><br></pre></td></tr></table></figure>
-<p>NF为真即是非空行。另外一种写法是用正则表达式：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk '/./'</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1841,7 +1752,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1887,7 +1798,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">178</span>
+                  <span class="site-state-item-count">194</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1909,7 +1820,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1956,7 +1867,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

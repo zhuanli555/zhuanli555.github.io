@@ -342,7 +342,7 @@
 
       
         <p>闲着无聊，想看看其他用户在我的服务器上什么时候登录，在干些什么，写了个脚本设置每小时查一次。</p>
-<p>login.sh<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">str=`w|grep userxx`</span><br><span class="line">i=0</span><br><span class="line">if [ ! $&#123;#str&#125; -eq 0 ] </span><br><span class="line">then</span><br><span class="line">    for line in `echo $str`</span><br><span class="line">    do  </span><br><span class="line">        let "i++"</span><br><span class="line">        if [ $(($i % 8)) -eq 0 ] </span><br><span class="line">        then</span><br><span class="line">            #查询干了些什么，在什么时候</span><br><span class="line">            echo "`date`,$line"&gt;&gt; login.log</span><br><span class="line">        fi  </span><br><span class="line">    done</span><br><span class="line">fi</span><br></pre></td></tr></table></figure></p>
+<p>login.sh<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line">str=`w|grep userxx`</span><br><span class="line">i=0</span><br><span class="line">if [ ! $&#123;#str&#125; -eq 0 ] </span><br><span class="line">then</span><br><span class="line">    for line in `echo $str`</span><br><span class="line">    do  </span><br><span class="line">        let "i++"</span><br><span class="line">        if [ $(($i % 8)) -eq 0 ] </span><br><span class="line">        then</span><br><span class="line">            #查询干了些什么，在什么时候</span><br><span class="line">            echo "`date`,$line"&gt;&gt; login.log</span><br><span class="line">        fi  </span><br><span class="line">    done</span><br><span class="line">fi</span><br></pre></td></tr></table></figure></p>
 <p>设置定时<br>crontab -e<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* */1 * * * /home/xxx/login.sh &gt; /dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure></p>
 
       
@@ -377,6 +377,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/20/gcc_2/" rel="prev" title="gcc和程序生成的过程">
+                gcc和程序生成的过程 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -449,7 +453,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">178</span>
+                  <span class="site-state-item-count">194</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -471,7 +475,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -518,7 +522,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
